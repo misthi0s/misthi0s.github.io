@@ -3,7 +3,7 @@ title: From BAT to AsyncRAT
 author: misthi0s
 categories: ["malware"]
 tags: [malware, .net, bat, powershell, AsyncRAT]
-date: 2023-01-29 18:54:00
+date: 2023-02-08 21:37:00
 ---
 
 While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found [here](https://tria.ge/230131-vwe3wahc28/behavioral2).
