@@ -1,0 +1,49 @@
+baseURL = 'https://misthi0s.github.io/'
+languageCode = 'en-us'
+title = 'misthi0s.dev'
+theme = 'LoveIt'
+
+[menu]
+	[[menu.main]]
+		weight = 1
+		identifier = "posts"
+		name = "Blog"
+		url = "/posts/"
+	[[menu.main]]
+		weight = 2
+		identifier = "categories"
+		name = "Categories"
+		url = "/categories/"
+	[[menu.main]]
+		weight = 3
+		identifier = "tags"
+		name = "Tags"
+		url = "/tags/"
+	[[menu.main]]
+		weight = 4
+		identifier = "about"
+		name = "About"
+		url = "/about/"
+
+[markup]
+	[markup.highlight]
+		codeFences = true
+		lineNos = true
+		guessSyntax = true
+		noClasses = false
+
+[params.header.title]
+	name = "misthi0s.dev"
+
+[params.home.profile]
+	avatarUrl = "/images/avatar.png"
+	title = "misthi0s.dev"
+	subtitle = "Welcome to misthi0s.dev!"
+	description = "Welcome to misthi0s.dev"
+	social = true
+
+[params.social]
+	GitHub = "misthi0s"
+	Twitter = "_misthi0s"
+	HackTheBox = "misthi0s"
+	Email = "misthi0s_sec@protonmail.com"
