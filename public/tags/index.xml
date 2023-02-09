@@ -1,0 +1,47 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - Tag - misthi0s.dev</title>
+        <link>https://misthi0s.github.io/tags/</link>
+        <description>Tags - Tag - misthi0s.dev</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>.net</title>
+    <link>https://misthi0s.github.io/tags/.net/</link>
+    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/.net/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>AsyncRAT</title>
+    <link>https://misthi0s.github.io/tags/asyncrat/</link>
+    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/asyncrat/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>bat</title>
+    <link>https://misthi0s.github.io/tags/bat/</link>
+    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/bat/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>malware</title>
+    <link>https://misthi0s.github.io/tags/malware/</link>
+    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/malware/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>powershell</title>
+    <link>https://misthi0s.github.io/tags/powershell/</link>
+    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/powershell/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>

