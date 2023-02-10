@@ -47,3 +47,10 @@ theme = 'LoveIt'
 	Twitter = "_misthi0s"
 	HackTheBox = "misthi0s"
 	Email = "misthi0s_sec@protonmail.com"
+
+[params.analytics]
+	enable = true
+
+	[params.analytics.google]
+		id = "G-GPNGKH3S27"
+		anonymizeIP = true
