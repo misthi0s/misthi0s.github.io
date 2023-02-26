@@ -21,6 +21,11 @@ theme = 'LoveIt'
 		url = "/tags/"
 	[[menu.main]]
 		weight = 4
+		identifier = "projects"
+		name = "Projects"
+		url = "/projects/"
+	[[menu.main]]
+		weight = 6
 		identifier = "about"
 		name = "About"
 		url = "/about/"
