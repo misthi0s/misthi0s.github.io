@@ -1,5 +1,6 @@
 ---
 title: "Franky"
+url: "/projects/franky"
 ---
 
 {{< style "text-align:center;" >}}
