@@ -3,12 +3,12 @@
         <title>impacket - Tag - misthi0s.dev</title>
         <link>https://misthi0s.github.io/tags/impacket/</link>
         <description>impacket - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 08 Apr 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/impacket/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/impacket/" rel="self" type="application/rss+xml" /><item>
     <title>Hunting for Impacket&#39;s Remote Code Execution Tools</title>
-    <link>https://misthi0s.github.io/posts/2023-04-08-hunting-impacket-rce-tools/</link>
-    <pubDate>Sat, 08 Apr 2023 16:20:00 &#43;0000</pubDate>
+    <link>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
     <author>misthi0s</author>
-    <guid>https://misthi0s.github.io/posts/2023-04-08-hunting-impacket-rce-tools/</guid>
+    <guid>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</guid>
     <description><![CDATA[Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found here.
 Within the repository, Impacket contains a number of example scripts on how its modules can be utilized. These scripts show just how powerful Impacket can be in an offensive context; there are example scripts that allow for such things as performing a Kerberoasting or DCSync attack, relaying NTLM credentials, and generating Kerberos tickets.]]></description>
 </item>

@@ -3,7 +3,55 @@
         <title>Tags - Tag - misthi0s.dev</title>
         <link>https://misthi0s.github.io/tags/</link>
         <description>Tags - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>dcom</title>
+    <link>https://misthi0s.github.io/tags/dcom/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/dcom/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>detections</title>
+    <link>https://misthi0s.github.io/tags/detections/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/detections/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>impacket</title>
+    <link>https://misthi0s.github.io/tags/impacket/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/impacket/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>rce</title>
+    <link>https://misthi0s.github.io/tags/rce/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/rce/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>smb</title>
+    <link>https://misthi0s.github.io/tags/smb/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/smb/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>wmi</title>
+    <link>https://misthi0s.github.io/tags/wmi/</link>
+    <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
+    <author>Author</author>
+    <guid>https://misthi0s.github.io/tags/wmi/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>.net</title>
     <link>https://misthi0s.github.io/tags/.net/</link>
     <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
@@ -33,14 +81,6 @@
     <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
     <author>Author</author>
     <guid>https://misthi0s.github.io/tags/malware/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>powershell</title>
-    <link>https://misthi0s.github.io/tags/powershell/</link>
-    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
-    <author>Author</author>
-    <guid>https://misthi0s.github.io/tags/powershell/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

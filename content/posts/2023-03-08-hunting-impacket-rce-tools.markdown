@@ -2,8 +2,9 @@
 title: Hunting for Impacket's Remote Code Execution Tools
 author: misthi0s
 categories: ["detections"]
-tags: [detections, impacket, smb, wmi, dcom. rce]
-date: 2023-04-08 16:20:00
+tags: [detections, impacket, smb, wmi, dcom, rce]
+date: 2023-03-08 16:20:00
+draft: false
 ---
 
 Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found [here](https://github.com/fortra/impacket).
