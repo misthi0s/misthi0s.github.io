@@ -15,7 +15,7 @@ Shellcode loader and generation tool. Franky can take an executable and convert 
 ---
 
 {{< style "width:120px;height:120px;float:left;padding-right:30px;" >}}
-![Robin](/images/91c01672baddca82cd2f4341b4964c728e5d81f2.png) 
+![Robin](/images/624965d33e41a9f596ebb406641f2133fee6b5df.png) 
 {{< /style >}}
 {{< style "float:none;" >}}
 ## [Robin](/projects/robin)
