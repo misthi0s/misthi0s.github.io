@@ -4,7 +4,7 @@ url: "/projects/robin"
 ---
 
 {{< style "text-align:center;" >}}
-![Franky](/images/89f084bcea128dc837d3e8778e32c468a70e9f94.gif)
+![Robin](/images/89f084bcea128dc837d3e8778e32c468a70e9f94.gif)
 {{< /style >}}
 
 # Project GitHub Page
