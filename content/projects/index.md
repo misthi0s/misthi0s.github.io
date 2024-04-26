@@ -31,3 +31,13 @@ Persistence payload generation tool. Robin can create a payload that will persis
 ## [Sanji](/projects/sanji)
 Information stealer. Sanji is a proof-of-concept tool that can gather and decrypt password information saved in various web browsers, as well as authentication tokens from common instant messaging programs.
 {{< /style >}}
+
+---
+
+{{< style "width:120px;height:120px;float:left;padding-right:30px;" >}}
+![Nami](/images/71f2f555b007783f3d9f49ee6d346bf4ec32b386.png)
+{{< /style >}}
+{{< style "float:none;" >}}
+## [Nami](/projects/nami)
+Command & Control (C2) framework. Nami is a client/server application that can run remote commands on the target system as well as run a number of built-in techniques to perform various functions. 
+{{< /style >}}
