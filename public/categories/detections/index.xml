@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>detections - Category - misthi0s.dev</title>
+        <title>Detections - Category - misthi0s.dev</title>
         <link>https://misthi0s.github.io/categories/detections/</link>
-        <description>detections - Category - misthi0s.dev</description>
+        <description>Detections - Category - misthi0s.dev</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/categories/detections/" rel="self" type="application/rss+xml" /><item>
     <title>Hunting for Impacket&#39;s Remote Code Execution Tools</title>
     <link>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</link>
