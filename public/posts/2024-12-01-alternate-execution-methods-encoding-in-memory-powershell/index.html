@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/">
+  <meta property="og:site_name" content="misthi0s.dev">
+  <meta property="og:title" content="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell">
+  <meta property="og:description" content="In this post, we’ll go over a fun little project I’ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there’s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-01T12:42:00+00:00">
+    <meta property="article:modified_time" content="2024-12-01T12:42:00+00:00">
+    <meta property="article:tag" content="Execution">
+    <meta property="article:tag" content=".Net">
+    <meta property="article:tag" content="Powershell">
+    <meta property="article:tag" content="Encoding">
+    <meta property="article:tag" content="Reflection">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell">
+<meta name="twitter:description" content="In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed.">
+      <meta name="twitter:site" content="@_misthi0s">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" /><link rel="prev" href="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/posts\/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell\/"
+        },"genre": "posts","keywords": "execution, .net, powershell, encoding, reflection","wordcount":  1470 ,
+        "url": "http:\/\/localhost:1313\/posts\/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell\/","datePublished": "2024-12-01T12:42:00+00:00","dateModified": "2024-12-01T12:42:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "misthi0s"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Blog </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/projects/"> Projects </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/projects/" title="">Projects</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/execution/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Execution</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-12-01">2024-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1470 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#creating-the-main-payload">Creating the Main Payload</a></li>
+    <li><a href="#encoding-the-payload">Encoding the Payload</a></li>
+    <li><a href="#creating-the-powershell-script">Creating the PowerShell Script</a></li>
+    <li><a href="#powershell-script-explained">PowerShell Script Explained</a></li>
+    <li><a href="#putting-it-all-together">Putting It All Together</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed. While this example will be rather simplistic in nature, it will hopefully outline how easy such a technique can be performed and provide some insight into one of many ways that threat actors will try to get their payload executed on their target.</p>
+<h2 id="creating-the-main-payload">Creating the Main Payload</h2>
+<p>For this example, we&rsquo;ll be using a benign C# executable as our &ldquo;malicious&rdquo; payload. The main requirement of this payload is to prove that it executed properly, so it doesn&rsquo;t really matter what it does, as long as it produces something tangible for us to see. To achieve this, the program will simply launch a message box stating that the execution was successful. The C# code for this executable can be seen below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">using System.Windows.Forms;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">namespace MsgBox
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    internal class Program
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        static void Main()
+</span></span><span class="line"><span class="cl">        {
+</span></span><span class="line"><span class="cl">            MessageBox.Show(&#34;Successful execution!&#34;, &#34;misthi0s&#34;, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Successful execution of this program produces the following:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png"
+        data-srcset="/images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png, /images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png 1.5x, /images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png 2x"
+        data-sizes="auto"
+        alt="/images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png"
+        title="/images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png" /></p>
+<h2 id="encoding-the-payload">Encoding the Payload</h2>
+<p>To help obfuscate the payload, we&rsquo;ll encode it by transposing each byte of the binary to something else. Obfuscation is another technique heavily employed by malware to hide its malicious nature, and encoding is one such way to achieve this. While we could use something like Base64 encoding, that&rsquo;s a bit too well-known and monitored for, so we&rsquo;ll employ our own encoding algorithm instead. For this, we&rsquo;ll use a tool that I created called Astartes. <a href="https://github.com/misthi0s/Astartes" target="_blank" rel="noopener noreffer ">Astartes</a> is a Python-based encoding tool that will take each byte of an input dataset and convert it to the name of an Adeptus Astartes chapter (for those unfamiliar with Warhammer 40k, an Adeptus Astartes is a Space Marine).</p>
+<p>To obfuscate our payload even further, Astartes uses a seed to randomize the master list of chapter names on execution, requiring a person to know the seed used to properly decode the information. We&rsquo;ll use the seed &ldquo;Sororitas&rdquo; (another 40k reference) to encode our payload; the full command-line for this Astartes execution can be seen below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python astartes.py --file D:\repo\_CS\MessageBox\MessageBox\bin\Release\MessageBox.exe --seed Sororitas
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This will create a file called <code>astartes_encoded.txt</code> that contains our encoded <code>MessageBox.exe</code> payload. A small snippet of this file can be seen below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CRIMSONLEGION,CHARNELGUARD,RAPTORS,NIGHTSWORDS,BURNINGBLOOD,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,BLOODTIGERS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,SONSOFTHEPHOENIX,SONSOFTHEPHOENIX,NIGHTSWORDS,NIGHTSWORDS,WHITESCARS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,DOOMEAGLES,NIGHTSWORDS,NIGHTSWORDS,...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>As mentioned before, each value (comma-separated) represents a byte from the <code>MessageBox.exe</code> binary, concealing its true nature in a seemingly random collection of strings.</p>
+<h2 id="creating-the-powershell-script">Creating the PowerShell Script</h2>
+<p>Now that we have the encoded blob of our malicious payload, we need to create a PowerShell script to decode it and execute it in-memory. Below is the full PowerShell script that will do this (explanation of major components to follow):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Initialize empty byte array</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">byte</span><span class="p">[]]</span> <span class="o">$</span><span class="n">DecodedBytes</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get encoded blob</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Encoded</span> <span class="o">=</span> <span class="n">Get</span><span class="o">-</span><span class="n">Content</span> <span class="o">-</span><span class="ne">Path</span> <span class="n">D</span><span class="p">:</span>\<span class="n">repo</span>\<span class="n">_Python</span>\<span class="n">Astartes</span>\<span class="n">astartes_encoded</span><span class="o">.</span><span class="n">txt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get decoding key</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Response</span> <span class="o">=</span> <span class="n">IWR</span> <span class="o">-</span><span class="n">URI</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="err">?</span><span class="n">_</span><span class="o">=</span><span class="n">Sororitas</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Content</span> <span class="o">=</span> <span class="o">$</span><span class="n">Response</span><span class="o">.</span><span class="n">Content</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">DecodingKey</span> <span class="o">=</span> <span class="o">$</span><span class="n">Content</span> <span class="o">|</span> <span class="n">ConvertFrom</span><span class="o">-</span><span class="n">Json</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Convert encoded blob to array</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="ne">Array</span> <span class="o">=</span> <span class="o">$</span><span class="n">Encoded</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Loop through array, decoding byte, saving to byte array</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="ne">Array</span> <span class="o">|</span> <span class="n">ForEach</span><span class="o">-</span><span class="ne">Object</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="o">$</span><span class="n">Decoded</span> <span class="o">=</span> <span class="o">$</span><span class="n">DecodingKey</span><span class="o">.</span><span class="n">indexOf</span><span class="p">(</span><span class="o">$</span><span class="n">_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="o">$</span><span class="n">DecodedBytes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">byte</span><span class="p">[]]</span><span class="o">$</span><span class="n">Decoded</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Convert byte array to Base64 then convert back.</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Base64String</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Convert</span><span class="p">]::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="o">$</span><span class="n">DecodedBytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">FullBytes</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Convert</span><span class="p">]::</span><span class="n">FromBase64String</span><span class="p">(</span><span class="o">$</span><span class="n">Base64String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load the executable reflectively</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Assembly</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Reflection</span><span class="o">.</span><span class="n">Assembly</span><span class="p">]::</span><span class="n">Load</span><span class="p">(</span><span class="o">$</span><span class="n">FullBytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get the &#34;Main&#34; function in the loaded exe</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span> <span class="o">=</span> <span class="o">$</span><span class="n">Assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">()</span><span class="o">.</span><span class="n">Where</span><span class="p">({</span> <span class="o">$</span><span class="n">_</span><span class="o">.</span><span class="n">Name</span> <span class="o">-</span><span class="n">eq</span> <span class="s1">&#39;Program&#39;</span> <span class="p">},</span> <span class="s1">&#39;First&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">GetMethod</span><span class="p">(</span><span class="s1">&#39;Main&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Reflection</span><span class="o">.</span><span class="n">BindingFlags</span><span class="p">]</span> <span class="s1">&#39;Static, Public, NonPublic&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Execute the exe</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span><span class="o">.</span><span class="n">Invoke</span><span class="p">(</span><span class="o">$</span><span class="n">null</span><span class="p">,</span> <span class="o">$</span><span class="n">null</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="powershell-script-explained">PowerShell Script Explained</h2>
+<p>The following section handles the decoding of the payload:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Get encoded blob
+</span></span><span class="line"><span class="cl">$Encoded = Get-Content -Path D:\repo\_Python\Astartes\astartes_encoded.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Get decoding key
+</span></span><span class="line"><span class="cl">$Response = IWR -URI http://127.0.0.1:5000/?_=Sororitas
+</span></span><span class="line"><span class="cl">$Content = $Response.Content
+</span></span><span class="line"><span class="cl">$DecodingKey = $Content | ConvertFrom-Json
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Convert encoded blob to array
+</span></span><span class="line"><span class="cl">$Array = $Encoded.Split(&#34;,&#34;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Loop through array, decoding byte, saving to byte array
+</span></span><span class="line"><span class="cl">$Array | ForEach-Object {
+</span></span><span class="line"><span class="cl">	$Decoded = $DecodingKey.indexOf($_)
+</span></span><span class="line"><span class="cl">	$DecodedBytes += [byte[]]$Decoded
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For this example, we&rsquo;re first getting the encoded contents from the file <code>D:\repo\_Python\Astartes\astartes_encoded.txt</code> and storing it into variable <code>$Encoded</code>. The encoded string can (and most likely would, in a real world scenario) be saved directly in the PowerShell script, but I chose to do it this way for brevity&rsquo;s sake.</p>
+<p>Next, we need to get the decoding key to actually be able to decode the payload. This key will be the master list of chapter names, randomized according to the seed provided, to let us translate each chapter name to the byte value that was encoded. Astartes supports accessing this list via a web request (and includes an example <a href="https://github.com/misthi0s/Astartes/blob/main/examples/server_test/server.py" target="_blank" rel="noopener noreffer ">server script</a> to achieve this), which is what is going on with the command <code>$Response = IWR -URI http://127.0.0.1:5000/?_=Sororitas</code>. Just like the encoded string, this list can be hardcoded into the script as a variable, but would also provide anyone analyzing the script the master decoder key, losing a bit of OpSec in the process.</p>
+<p>After some formatting commands, we&rsquo;ll have two array variables: <code>$Array</code> containing the encoded blob and <code>$DecodingKey</code> containing the decoder list. The following <code>ForEach-Object</code> loop will go through each value in <code>$Array</code>, determine where that value exists in <code>$DecodingKey</code>, then get the index value of that item. This index value will be the exact byte value of that part of the encoded executable. In this example, this means that the string <code>NIGHTSWORDS</code> represents the byte value <code>0</code>, <code>GORGONS</code> represents <code>1</code>, <code>LEGIONOFTHEDAMNED</code> represents <code>2</code>, and so on. Once the entire <code>$Array</code> variable has been processed through this loop, we&rsquo;ll have the array variable <code>$DecodedBytes</code>, which will be the full byte representation of the <code>MessageBox.exe</code> binary.</p>
+<p>The next portion of the script will handle the in-memory execution of our <code>MessageBox.exe</code> binary:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Convert byte array to Base64 then convert back.</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Base64String</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Convert</span><span class="p">]::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="o">$</span><span class="n">DecodedBytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">FullBytes</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Convert</span><span class="p">]::</span><span class="n">FromBase64String</span><span class="p">(</span><span class="o">$</span><span class="n">Base64String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load the executable reflectively</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Assembly</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Reflection</span><span class="o">.</span><span class="n">Assembly</span><span class="p">]::</span><span class="n">Load</span><span class="p">(</span><span class="o">$</span><span class="n">FullBytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get the &#34;Main&#34; function in the loaded exe</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span> <span class="o">=</span> <span class="o">$</span><span class="n">Assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">()</span><span class="o">.</span><span class="n">Where</span><span class="p">({</span> <span class="o">$</span><span class="n">_</span><span class="o">.</span><span class="n">Name</span> <span class="o">-</span><span class="n">eq</span> <span class="s1">&#39;Program&#39;</span> <span class="p">},</span> <span class="s1">&#39;First&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">GetMethod</span><span class="p">(</span><span class="s1">&#39;Main&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Reflection</span><span class="o">.</span><span class="n">BindingFlags</span><span class="p">]</span> <span class="s1">&#39;Static, Public, NonPublic&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Execute the exe</span>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span><span class="o">.</span><span class="n">Invoke</span><span class="p">(</span><span class="o">$</span><span class="n">null</span><span class="p">,</span> <span class="o">$</span><span class="n">null</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For some reason, this script would only work if I first re-encoded the payload bytes to Base64 and then decoded them back into the original bytes. I&rsquo;m really not sure why this was required, but it was the only way to get it to work (I suspect some weird PowerShell behavior, as loading the binary directly from the source worked without doing this, and I confirmed that the decoded bytes and the directly loaded bytes of the payload were 100% exactly the same).</p>
+<p>Once this is done, the <code>MessageBox.exe</code> byte blob is loaded via Reflective Code Loading by the code <code>$Assembly = [System.Reflection.Assembly]::Load($FullBytes)</code>. Reflection is a technique used extensively by malware, and is something that I&rsquo;ve even covered a sample doing in a <a href="https://misthi0s.dev/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" target="_blank" rel="noopener noreffer ">previous blog post</a>.</p>
+<p>To actually execute the loaded assembly, the <code>Main</code> function needs to be found and accessed, so the program knows where the starting point of the payload is. This is achieved by the code <code>$EntryPoint = $Assembly.GetTypes().Where({ $_.Name -eq 'Program' }, 'First').GetMethod('Main', [Reflection.BindingFlags] 'Static, Public, NonPublic')</code></p>
+<p>Finally, now that the entry point of the payload has been found, it needs to be executed. This can be done with the <code>Invoke</code> command found in the line: <code>$EntryPoint.Invoke($null, $null)</code>. The second parameter of <code>Invoke</code> denotes the arguments that the loaded program requires, but since ours has no input arguments, <code>$null</code> is used.</p>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>If everything works properly, upon script execution, our encoded payload should be decoded and then executed in-memory by the running PowerShell process. All that&rsquo;s left to do is to test it out.</p>
+<p>First, we need to make sure the web server is running to obtain the master decoder list. This can be done by running the <code>server.py</code> script in the Astartes repo with the following command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python server.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now, we simply execute the PowerShell script and, if everything works, we should see our message box.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/026c439a114ee381abbfb44ab2dfbd0425113267.png"
+        data-srcset="/images/026c439a114ee381abbfb44ab2dfbd0425113267.png, /images/026c439a114ee381abbfb44ab2dfbd0425113267.png 1.5x, /images/026c439a114ee381abbfb44ab2dfbd0425113267.png 2x"
+        data-sizes="auto"
+        alt="/images/026c439a114ee381abbfb44ab2dfbd0425113267.png"
+        title="/images/026c439a114ee381abbfb44ab2dfbd0425113267.png" /></p>
+<p>Success! We have successfully taken our executable payload, encoded it, then decoded it and executed it in-memory in the context of a PowerShell process. While this particular example isn&rsquo;t actually malicious in nature, it does outline how threat actors and malware can use multiple techniques to try and evade defensive measures to get their payloads to execute on a system.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-12-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-via="_misthi0s" data-hashtags="execution,.net,powershell,encoding,reflection"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-hashtag="execution"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/execution/">Execution</a>,&nbsp;<a href="/tags/.net/">.Net</a>,&nbsp;<a href="/tags/powershell/">Powershell</a>,&nbsp;<a href="/tags/encoding/">Encoding</a>,&nbsp;<a href="/tags/reflection/">Reflection</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" class="prev" rel="prev" title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.125.7">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

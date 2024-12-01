@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Detections - Tag - misthi0s.dev</title>
-        <link>https://misthi0s.github.io/tags/detections/</link>
+        <link>http://localhost:1313/tags/detections/</link>
         <description>Detections - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/detections/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/detections/" rel="self" type="application/rss+xml" /><item>
     <title>Hunting for Impacket&#39;s Remote Code Execution Tools</title>
-    <link>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</link>
+    <link>http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/</link>
     <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
     <author>misthi0s</author>
-    <guid>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</guid>
+    <guid>http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/</guid>
     <description><![CDATA[Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found here.
 Within the repository, Impacket contains a number of example scripts on how its modules can be utilized. These scripts show just how powerful Impacket can be in an offensive context; there are example scripts that allow for such things as performing a Kerberoasting or DCSync attack, relaying NTLM credentials, and generating Kerberos tickets.]]></description>
 </item>
