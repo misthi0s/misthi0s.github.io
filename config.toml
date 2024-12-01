@@ -57,5 +57,5 @@ theme = 'LoveIt'
 	enable = true
 
 	[params.analytics.google]
-		id = "G-GPNGKH3S27"
+		id = "G-FJ64J9XPBT"
 		anonymizeIP = true
