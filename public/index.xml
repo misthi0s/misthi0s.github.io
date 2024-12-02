@@ -11,9 +11,7 @@
     <pubDate>Sun, 01 Dec 2024 12:42:00 &#43;0000</pubDate>
     <author>misthi0s</author>
     <guid>http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg" referrerpolicy="no-referrer">
-            </div>In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed.]]></description>
+    <description><![CDATA[In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed.]]></description>
 </item>
 <item>
     <title>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</title>

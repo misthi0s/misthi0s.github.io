@@ -4,7 +4,6 @@ author: misthi0s
 categories: ["execution"]
 tags: [execution, .net, powershell, encoding, reflection]
 date: 2024-12-01 12:42:00
-featuredImage: "/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
 featuredImagePreview: "/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
 images:
     - "/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
