@@ -18,7 +18,9 @@
     <meta property="article:tag" content="Powershell">
     <meta property="article:tag" content="Encoding">
     <meta property="article:tag" content="Reflection">
-<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell">
+    <meta property="og:image" content="http://localhost:1313/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"><meta name="twitter:title" content="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell">
 <meta name="twitter:description" content="In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed.">
       <meta name="twitter:site" content="@_misthi0s">
 <meta name="application-name" content="My cool site">
@@ -79,7 +81,14 @@
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/execution/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Execution</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-12-01">2024-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1470 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
+        data-srcset="/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg, /images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg 1.5x, /images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg 2x"
+        data-sizes="auto"
+        alt="/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
+        title="/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg" /></div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
@@ -336,7 +345,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-via="_misthi0s" data-hashtags="execution,.net,powershell,encoding,reflection"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-hashtag="execution"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-via="_misthi0s" data-hashtags="execution,.net,powershell,encoding,reflection"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-hashtag="execution"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-image="/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
