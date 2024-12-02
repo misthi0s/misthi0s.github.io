@@ -6,7 +6,7 @@ tags: [execution, .net, powershell, encoding, reflection]
 date: 2024-12-01 12:42:00
 resources:
     - name: "featured-image-preview"
-      src: "8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
+      src: "/images/8a1ef8a480285b6c263d4dac97a3e6d3941aaba5.jpg"
 ---
 
 In this post, we'll go over a fun little project I've been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there's less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed. While this example will be rather simplistic in nature, it will hopefully outline how easy such a technique can be performed and provide some insight into one of many ways that threat actors will try to get their payload executed on their target.
