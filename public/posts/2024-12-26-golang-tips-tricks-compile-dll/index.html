@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="Golang Quick Tips &amp; Tricks - Compile Project as DLL" />
+<meta property="og:description" content="In this installment of &ldquo;Golang Quick Tips &amp; Tricks&rdquo;, we&rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &ldquo;CreateProcess&rdquo; within the &ldquo;kernel32.dll&rdquo; library file to do this." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-12-26T12:42:00+00:00" />
+<meta property="article:modified_time" content="2024-12-26T12:42:00+00:00" /><meta property="og:site_name" content="My cool site" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang Quick Tips &amp; Tricks - Compile Project as DLL"/>
+<meta name="twitter:description" content="In this installment of &ldquo;Golang Quick Tips &amp; Tricks&rdquo;, we&rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &ldquo;CreateProcess&rdquo; within the &ldquo;kernel32.dll&rdquo; library file to do this."/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" /><link rel="prev" href="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang Quick Tips \u0026 Tricks - Compile Project as DLL",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/misthi0s.github.io\/posts\/2024-12-26-golang-tips-tricks-compile-dll\/"
+        },"genre": "posts","keywords": "golang, tips, tricks, go, dll, programming","wordcount":  963 ,
+        "url": "https:\/\/misthi0s.github.io\/posts\/2024-12-26-golang-tips-tricks-compile-dll\/","datePublished": "2024-12-26T12:42:00+00:00","dateModified": "2024-12-26T12:42:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "misthi0s"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Blog </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/projects/"> Projects </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/projects/" title="">Projects</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Golang Quick Tips & Tricks - Compile Project as DLL</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/golang/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-12-26">2024-12-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;963 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#pre-requisites">Pre-Requisites</a></li>
+    <li><a href="#writing-the-code">Writing the Code</a></li>
+    <li><a href="#building-the-dll">Building the DLL</a></li>
+    <li><a href="#testing-the-dll">Testing the DLL</a></li>
+    <li><a href="#going-further---multiple-exports">Going Further - Multiple Exports</a></li>
+    <li><a href="#tldr-recap">TLDR; Recap</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>In this installment of &ldquo;Golang Quick Tips &amp; Tricks&rdquo;, we&rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &ldquo;CreateProcess&rdquo; within the &ldquo;kernel32.dll&rdquo; library file to do this. Creating a DLL allows you to easily re-purpose common functions that your different programs need to use without having to re-write it in every single program that needs it.</p>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<p>For this to work properly, you&rsquo;ll need a few pre-requisites before compilation:</p>
+<ul>
+<li>Go version 1.10+ (for Windows; earlier versions will work if running on a Linux system)</li>
+<li>GCC installed and in the PATH directory (MinGW is an excellent choice for Windows systems to achieve this)</li>
+<li>Go environment variable &ldquo;CGO_ENABLED&rdquo; set to &ldquo;1&rdquo; (To apply globally, you can run <code>go env -w CGO_ENABLED=1</code>)</li>
+</ul>
+<p>With those few requirements met, your system should be all set to compile a DLL!</p>
+<h2 id="writing-the-code">Writing the Code</h2>
+<p>For this example, we&rsquo;ll make a simple Go program that creates a file (called &ldquo;dll_test.txt&rdquo;) and writes the string &ldquo;Hello from DLL!&rdquo; into it. We&rsquo;ll create this as a function named &ldquo;CreateFile&rdquo; in the program. The code for this can be seen below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">CreateFile</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">string</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;Hello from DLL!\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">os</span><span class="p">.</span><span class="nf">WriteFile</span><span class="p">(</span><span class="s">&#34;dll_test.txt&#34;</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="mo">0644</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">CreateFile</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This program will work, as written, as a normal exe file if desired. However, since we want to make this a DLL, there&rsquo;s a few extra steps we need to take to allow it to function properly.</p>
+<p>The first step is to include another import statement of <code>import &quot;C&quot;</code>. This tells Go that you want to use cgo, the Golang feature that allows you to call C code from within Go.</p>
+<p>The second step is to include an export command above the function you want to export in the commented format of <code>//export &lt;function_name&gt;</code>, where &lt;function_name&gt; is the name of the function to export. In the above example, this would be <code>//export CreateFile</code>, since we want to allow the &ldquo;CreateFile&rdquo; function to be accessed by other programs.</p>
+<p>The final code for our program would then look like the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;C&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//export CreateFile
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">CreateFile</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">string</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;Hello from DLL!\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">os</span><span class="p">.</span><span class="nf">WriteFile</span><span class="p">(</span><span class="s">&#34;dll_test.txt&#34;</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="mo">0644</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">CreateFile</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>With this finalized, we can now build our program!</p>
+<h2 id="building-the-dll">Building the DLL</h2>
+<p>To tell the compiler to build as a DLL, you need to include the <code>-buildmode=c-shared</code> directive in the <code>build</code> command line. Using the above as an example, we can build our program to <code>test_dll.dll</code> with the following command:</p>
+<p><code>go build -buildmode=c-shared -o test_dll.dll dll.go</code></p>
+<p>where &ldquo;dll.go&rdquo; is the name of our source file. Remember, this will only work if you first have the variable &ldquo;CGO_ENABLED&rdquo; set to &ldquo;1&rdquo; and the GCC compiler installed on the system.</p>
+<p>If everything works successfully, you should see two new files created: <code>test_dll.dll</code> and <code>test_dll.h</code>.</p>
+<h2 id="testing-the-dll">Testing the DLL</h2>
+<p>To test the compilation to make sure everything is worked as expected, we can use <code>rundll32.exe</code>. While, under normal circumstances, you&rsquo;ll likely be using the exported functions in other programs, <code>rundll32.exe</code> is a great way to manually run a function without needing to wrap the call in further code. Rundll32 uses the following syntax to execute a function in a DLL:</p>
+<p><code>rundll32.exe &lt;dll_path&gt;,&lt;function_name&gt;</code></p>
+<p>The &lt;function_name&gt; in the above code can refer to the name itself (in our case, CreateFile) OR the ordinal number of the function (in our case, #1). So our test run command would look like the following:</p>
+<p><code>rundll32.exe test_dll.dll,CreateFile</code></p>
+<p>Running this in our command window, we can see that the &ldquo;dll_test.txt&rdquo; file is successfully created and contains the string &ldquo;Hello from DLL!&rdquo;. There we have it; we now have a functioning DLL that we can use in other programs to run common functions!</p>
+<h2 id="going-further---multiple-exports">Going Further - Multiple Exports</h2>
+<p>Another thing I wanted to mention; while our example only has one exported function (CreateFile), you can always add more if you need to. Like normal DLLs, you can have multiple exported functions to allow you to compile all the useful features you need to access within one DLL. To do this, all you need to do is create more functions and add the <code>//export &lt;function_name&gt;</code> code snippet above them.</p>
+<p>With our example, let&rsquo;s say we want to add three more exported functions: <code>WriteFile</code>, <code>ReadFile</code>, and <code>DeleteFile</code>. All we need to do is create the Go functions for them and then add the export commands like above. The new source code would look like the following for this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;C&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//export CreateFile
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">CreateFile</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">string</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;Hello from DLL!\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">os</span><span class="p">.</span><span class="nf">WriteFile</span><span class="p">(</span><span class="s">&#34;dll_test.txt&#34;</span><span class="p">,</span> <span class="kt">string</span><span class="p">,</span> <span class="mo">0644</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//export WriteFile
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">WriteFile</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//export ReadFile
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">ReadFile</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//export DeleteFile
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">DeleteFile</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">CreateFile</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Once compiled, we can then use <code>rundll32.exe</code> to call the new functions like shown before. Now, the above functions won&rsquo;t actually do anything if run, since they are empty functions and have no code within them, but it shows you how you can include multiple exports into one DLL file if you need to.</p>
+<h2 id="tldr-recap">TLDR; Recap</h2>
+<p>Pre-Requisites:</p>
+<ul>
+<li>Go Version 1.10+</li>
+<li>GCC installed</li>
+<li>CGO_ENABLED set to 1</li>
+</ul>
+<p>In Code:</p>
+<ul>
+<li><code>import &quot;C&quot;</code></li>
+<li><code>//export &lt;function_name&gt;</code> above each &lt;function_name&gt; that you want to export</li>
+</ul>
+<p>Compilation:</p>
+<ul>
+<li><code>go build -buildmode=c-shared -o &lt;output_dll_name&gt; &lt;go_file&gt;</code></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-12-26</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" data-title="Golang Quick Tips &amp; Tricks - Compile Project as DLL" data-via="_misthi0s" data-hashtags="golang,tips,tricks,go,dll,programming"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" data-title="Golang Quick Tips &amp; Tricks - Compile Project as DLL"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" data-title="Golang Quick Tips &amp; Tricks - Compile Project as DLL"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" data-title="Golang Quick Tips &amp; Tricks - Compile Project as DLL"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/tips/">tips</a>,&nbsp;<a href="/tags/tricks/">tricks</a>,&nbsp;<a href="/tags/go/">go</a>,&nbsp;<a href="/tags/dll/">dll</a>,&nbsp;<a href="/tags/programming/">programming</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" class="prev" rel="prev" title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.112.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-GPNGKH3S27', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-GPNGKH3S27" async></script></body>
+</html>
