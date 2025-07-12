@@ -14,7 +14,7 @@
 | [Gitalk](https://github.com/gitalk/gitalk)                                          | gitalk            |   1.7.2 |
 | [KaTeX](https://github.com/KaTeX/KaTeX)                                             | katex             | 0.16.21 |
 | [lazysizes](https://github.com/aFarkas/lazysizes)                                   | lazysizes         |   5.3.2 |
-| [lightGallery](https://github.com/sachinchoolur/lightgallery)                       | lightgallery      |   2.5.0 |
+| [lightGallery](https://github.com/sachinchoolur/lightgallery)                       | lightgallery      |   2.7.0 |
 | [Lunr.js](https://github.com/olivernn/lunr.js)                                      | lunr              |   2.3.9 |
 | [Mapbox GL JS](https://github.com/mapbox/mapbox-gl-js)                              | mapbox-gl         |   2.9.1 |
 | [Mermaid](https://github.com/mermaid-js/mermaid)                                    | mermaid           |  11.5.0 |
@@ -24,6 +24,7 @@
 | [sharer.js](https://github.com/ellisonleao/sharer.js)                               | sharer            |   0.5.2 |
 | [Simple Icons](https://github.com/simple-icons/simple-icons)                        | simple-icons      |  14.9.0 |
 | [Twemoji](https://github.com/twitter/twemoji)                                       | twemoji           |  14.0.2 |
+| [Twikoo](https://github.com/imaegoo/twikoo)                                         | twikoo            |  1.6.42 |
 | [TypeIt](https://github.com/alexmacarthur/typeit)                                   | typeit            |   8.6.0 |
 | [Valine](https://github.com/xCss/Valine)                                            | valine            |   1.5.3 |
 | [Waline](https://github.com/walinejs/waline)                                        | waline            |   2.6.1 |

@@ -20,7 +20,12 @@
     color: $global-font-secondary-color;
 
     span {
+      margin-right: .75rem;
       display: inline-block;
+
+      i {
+        margin-right: .2rem;
+      }
     }
 
     [theme=dark] & {
@@ -34,8 +39,12 @@
     }
   }
 
+  .post-visitor-count > span {
+    margin-right: 0;
+  }
+
   .featured-image {
-    margin: .5rem 0 1rem 0;
+    margin: 2rem auto 0;
 
     img {
       display: block;
@@ -265,6 +274,7 @@
     @import "../_partial/_single/admonition";
     @import "../_partial/_single/echarts";
     @import "../_partial/_single/mapbox";
+    @import "../_partial/_single/mermaid";
     @import "../_partial/_single/music";
     @import "../_partial/_single/bilibili";
 
@@ -308,10 +318,10 @@
     .person-mention.h-card {
       display: inline-block;
       img {
-        vertical-align: -12%;
-        max-height: 1.1em;
+        height: 1.1em;
+        vertical-align: text-top;
         margin-right: 0;
-        border-radius: 50%;
+        @include border-radius(50%);
       }
     }
   }

@@ -1,5 +1,5 @@
 .home {
-  padding-bottom: 5rem;
+  padding-bottom: 1rem;
 
   .home-profile {
     @include transform(translateY( 16vh));
@@ -11,8 +11,8 @@
 
       img {
         display: inline-block;
-        width: 8rem;
-        height: auto;
+        width: 6rem;
+        height: 6rem;
         margin: 0 auto;
         @include border-radius(100%);
         @include box-shadow(0 0 0 .3618em rgba(0, 0, 0, .05));
@@ -28,20 +28,20 @@
     .home-title {
       font-size: 1.25rem;
       font-weight: bold;
-      margin: 0;
-      padding: .5rem;
+      margin: .5rem;
     }
 
     .home-subtitle {
+      height: var(--global-line-height);
       font-size: 1rem;
       font-weight: normal;
-      margin: 0;
-      padding: .5rem;
+      margin: .5rem;
     }
 
     .links {
-      padding: .5rem;
+      height: var(--global-line-height);
       font-size: 1.5rem;
+      margin: .5rem;
 
       a * {
         vertical-align: text-bottom;
@@ -72,10 +72,6 @@
   .home-profile {
     @include transform(translateY(0));
     padding-top: 2rem;
-  }
-
-  .home-avatar img {
-    width: 6rem;
   }
 
   .summary {
@@ -121,9 +117,10 @@
 
     .content {
       @include box(vertical);
-      -webkit-line-clamp: 3;
+      @include line-clamp(3);
       margin-top: .3rem;
       width: 100%;
+      max-height: $global-line-height * 3;
       overflow: hidden;
       text-overflow: ellipsis;
       @include overflow-wrap(break-word);
@@ -167,14 +164,13 @@
     .post-footer {
       margin-top: .4rem;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: right;
+      align-items: flex-end;
       font-size: .875rem;
 
-      @include link(false, false);
-
       .post-tags {
-        padding: 0;
+        line-height: 1.5em;
+        text-align: right;
 
         @include link(true, true);
       }
