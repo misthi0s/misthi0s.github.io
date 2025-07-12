@@ -1,30 +1,30 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Powershell - Tag - misthi0s.dev</title>
-        <link>https://misthi0s.github.io/tags/powershell/</link>
+        <link>http://localhost:1313/tags/powershell/</link>
         <description>Powershell - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 01 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/powershell/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 01 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/powershell/" rel="self" type="application/rss+xml" /><item>
     <title>Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell</title>
-    <link>https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/</link>
+    <link>http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/</link>
     <pubDate>Sun, 01 Dec 2024 12:42:00 &#43;0000</pubDate>
     <author>misthi0s</author>
-    <guid>https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/</guid>
+    <guid>http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/</guid>
     <description><![CDATA[<p>In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed. While this example will be rather simplistic in nature, it will hopefully outline how easy such a technique can be performed and provide some insight into one of many ways that threat actors will try to get their payload executed on their target.</p>]]></description>
 </item>
 <item>
     <title>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</title>
-    <link>https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</link>
+    <link>http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</link>
     <pubDate>Sun, 12 May 2024 12:42:00 &#43;0000</pubDate>
     <author>misthi0s</author>
-    <guid>https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</guid>
+    <guid>http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</guid>
     <description><![CDATA[<p>Reflective DLL injection is a common technique used by malware that allows an attacker to inject a DLL into a running process without first having to write that DLL to disk. Keeping the DLL binary in memory as opposed to writing to disk provides a few different advantages, particularly in the case of security tools. Files written to disk are commonly scanned by anti-malware tools on creation as well as loading, making malicious DLLs more likely to be discovered and quarantined if created on the system. Keeping the DLL completely within memory during each point of the infection makes it less likely that any security products on the target will discover and stop it. Likewise, by keeping the DLL within memory and never writing it to disk, it can make it harder for incident responders or malware analysts to determine what the DLL&rsquo;s purpose is. This second point, however, is still possible if one knows how to extract it from memory or from the originating location where the DLL&rsquo;s contents are stored.</p>]]></description>
 </item>
 <item>
     <title>From BAT to AsyncRAT</title>
-    <link>https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/</link>
+    <link>http://localhost:1313/posts/2023-02-08-from-bat-to-asyncrat/</link>
     <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
     <author>misthi0s</author>
-    <guid>https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/</guid>
+    <guid>http://localhost:1313/posts/2023-02-08-from-bat-to-asyncrat/</guid>
     <description><![CDATA[<p>While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found <a href="https://tria.ge/230131-vwe3wahc28/behavioral2" target="_blank" rel="noopener noreferrer ">here</a>.</p>]]></description>
 </item>
 </channel>
