@@ -186,7 +186,7 @@ header {
         }
 
         &.search {
-          margin: 0 -.25rem 0 0;
+          margin: 0 -.5rem 0 0;
         }
       }
 
@@ -313,10 +313,6 @@ header {
       .menu-item {
         display: block;
         line-height: 2.5rem;
-
-        i {
-          margin-right: .2rem;
-        }
       }
 
       &.active {
@@ -405,7 +401,7 @@ header {
         .suggestion-context {
           line-height: 1.25rem;
           @include box(vertical);
-          @include line-clamp(2);
+          -webkit-line-clamp: 2;
           overflow: hidden;
           text-overflow: ellipsis;
           @include overflow-wrap(break-word);

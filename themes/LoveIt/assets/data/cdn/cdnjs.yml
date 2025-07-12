@@ -17,11 +17,11 @@ libFiles:
   lazysizesJS: lazysizes/5.3.2/lazysizes.min.js
   # object-fit-images@3.2.4 https://github.com/fregante/object-fit-images
   objectFitImagesJS: object-fit-images/3.2.4/ofi.min.js
-  # lightgallery@2.7.0 https://github.com/sachinchoolur/lightgallery
-  lightgalleryCSS: lightgallery/2.7.0/css/lightgallery-bundle.min.css
-  lightgalleryJS: lightgallery/2.7.0/lightgallery.min.js
-  lightgalleryThumbnailJS: lightgallery/2.7.0/plugins/thumbnail/lg-thumbnail.min.js
-  lightgalleryZoomJS: lightgallery/2.7.0/plugins/zoom/lg-zoom.min.js
+  # lightgallery@2.5.0 https://github.com/sachinchoolur/lightgallery
+  lightgalleryCSS: lightgallery/2.5.0/css/lightgallery-bundle.min.css
+  lightgalleryJS: lightgallery/2.5.0/lightgallery.min.js
+  lightgalleryThumbnailJS: lightgallery/2.5.0/plugins/thumbnail/lg-thumbnail.min.js
+  lightgalleryZoomJS: lightgallery/2.5.0/plugins/zoom/lg-zoom.min.js
   # clipboard.js@2.0.11 https://github.com/zenorocha/clipboard.js
   clipboardJS: clipboard.js/2.0.11/clipboard.min.js
   # sharer.js@0.5.2 https://github.com/ellisonleao/sharer.js
@@ -41,7 +41,6 @@ libFiles:
   # mapbox-gl@2.9.1 https://docs.mapbox.com/mapbox-gl-js
   mapboxGLCSS: mapbox-gl/2.9.1/mapbox-gl.min.css
   mapboxGLJS: mapbox-gl/2.9.1/mapbox-gl.min.js
-  mapboxGLLanguageJs: '@mapbox/mapbox-gl-language/1.0.1/index.min.js'
   # aplayer@1.10.1 https://github.com/MoePlayer/APlayer
   aplayerCSS: aplayer/1.10.1/APlayer.min.css
   #aplayerJS: aplayer/1.10.1/APlayer.min.js
@@ -50,8 +49,6 @@ libFiles:
   gitalkJS: gitalk/1.7.2/gitalk.min.js
   # valine@1.5.3 https://valine.js.org/
   valineJS: valine/1.5.3/Valine.min.js
-  # twikoo@1.6.42 https://github.com/imaegoo/twikoo
-  twikooJS: twikoo/1.6.42/twikoo.min.js
   # cookieconsent@3.1.1 https://github.com/osano/cookieconsent
   cookieconsentCSS: cookieconsent/3.1.1/cookieconsent.min.css
   cookieconsentJS: cookieconsent/3.1.1/cookieconsent.min.js
