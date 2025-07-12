@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>smb - Tag - misthi0s.dev</title>
+        <title>Smb - Tag - misthi0s.dev</title>
         <link>https://misthi0s.github.io/tags/smb/</link>
-        <description>smb - Tag - misthi0s.dev</description>
+        <description>Smb - Tag - misthi0s.dev</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/smb/" rel="self" type="application/rss+xml" /><item>
     <title>Hunting for Impacket&#39;s Remote Code Execution Tools</title>
     <link>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</link>
     <pubDate>Wed, 08 Mar 2023 16:20:00 &#43;0000</pubDate>
     <author>misthi0s</author>
     <guid>https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/</guid>
-    <description><![CDATA[Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found here.
-Within the repository, Impacket contains a number of example scripts on how its modules can be utilized. These scripts show just how powerful Impacket can be in an offensive context; there are example scripts that allow for such things as performing a Kerberoasting or DCSync attack, relaying NTLM credentials, and generating Kerberos tickets.]]></description>
+    <description><![CDATA[<p>Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found <a href="https://github.com/fortra/impacket" target="_blank" rel="noopener noreferrer ">here</a>.</p>
+<p>Within the repository, Impacket contains a number of example scripts on how its modules can be utilized. These scripts show just how powerful Impacket can be in an offensive context; there are example scripts that allow for such things as performing a <a href="https://github.com/fortra/impacket/blob/master/examples/GetUserSPNs.py" target="_blank" rel="noopener noreferrer ">Kerberoasting</a> or <a href="https://github.com/fortra/impacket/blob/master/examples/secretsdump.py" target="_blank" rel="noopener noreferrer ">DCSync</a> attack, <a href="https://github.com/fortra/impacket/blob/master/examples/ntlmrelayx.py" target="_blank" rel="noopener noreferrer ">relaying NTLM credentials</a>, and generating <a href="https://github.com/fortra/impacket/blob/master/examples/getTGT.py" target="_blank" rel="noopener noreferrer ">Kerberos tickets</a>. It also includes scripts to remotely execute commands on a system via a number of different protocols.</p>]]></description>
 </item>
 </channel>
 </rss>
