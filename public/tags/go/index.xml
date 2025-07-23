@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Go - Tag - misthi0s.dev</title>
-        <link>http://localhost:1313/tags/go/</link>
+        <link>https://misthi0s.github.io/tags/go/</link>
         <description>Go - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/go/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/tags/go/" rel="self" type="application/rss+xml" /><item>
     <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL</title>
-    <link>http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
+    <link>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
     <pubDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</pubDate>
     <author>misthi0s</author>
-    <guid>http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/</guid>
+    <guid>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</guid>
     <description><![CDATA[<p>In this installment of &ldquo;Golang Quick Tips &amp; Tricks&rdquo;, we&rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &ldquo;CreateProcess&rdquo; within the &ldquo;kernel32.dll&rdquo; library file to do this. Creating a DLL allows you to easily re-purpose common functions that your different programs need to use without having to re-write it in every single program that needs it.</p>]]></description>
 </item>
 </channel>

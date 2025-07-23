@@ -6,4 +6,4 @@ Hey there, I'm misthi0s! I'm an information security specialist that has been in
 
 My goal with this blog is to both provide a creative outlet for myself where I can post my thoughts and ideas, as well as (hopefully) provide useful insight to others. If I can provide inspiration or knowledge to even a single person, then I have accomplished my mission!
 
-Certifications: GSEC, OSWP, Splunk Core User, AWS CCP
+Certifications: GSEC, GREM, OSWP, Splunk Core User, AWS CCP
