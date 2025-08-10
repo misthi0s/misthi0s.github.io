@@ -59,3 +59,7 @@ theme = 'LoveIt'
 	[params.analytics.google]
 		id = "G-GPNGKH3S27"
 		anonymizeIP = true
+
+[taxonomies]
+	tag = "tags"
+	category = "categories"

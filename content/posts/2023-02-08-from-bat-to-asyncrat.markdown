@@ -1,8 +1,14 @@
 ---
 title: From BAT to AsyncRAT
 author: misthi0s
-categories: ["malware"]
-tags: [malware, .net, bat, powershell, AsyncRAT]
+categories:
+- malware
+tags:
+- malware
+- .net
+- bat
+- powershell
+- AsyncRAT
 date: 2023-02-08 21:37:00
 ---
 
