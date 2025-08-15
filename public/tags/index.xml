@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on misthi0s.dev</title>
+    <link>https://misthi0s.github.io/tags/</link>
+    <description>Recent content in Tags on misthi0s.dev</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Dec 2024 12:42:00 +0000</lastBuildDate>
+    <atom:link href="https://misthi0s.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dll</title>
+      <link>https://misthi0s.github.io/tags/dll/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/dll/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>https://misthi0s.github.io/tags/go/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Golang</title>
+      <link>https://misthi0s.github.io/tags/golang/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>https://misthi0s.github.io/tags/programming/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tips</title>
+      <link>https://misthi0s.github.io/tags/tips/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/tips/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tricks</title>
+      <link>https://misthi0s.github.io/tags/tricks/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/tricks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>.Net</title>
+      <link>https://misthi0s.github.io/tags/.net/</link>
+      <pubDate>Sun, 01 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/.net/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Encoding</title>
+      <link>https://misthi0s.github.io/tags/encoding/</link>
+      <pubDate>Sun, 01 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/encoding/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Execution</title>
+      <link>https://misthi0s.github.io/tags/execution/</link>
+      <pubDate>Sun, 01 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/execution/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Powershell</title>
+      <link>https://misthi0s.github.io/tags/powershell/</link>
+      <pubDate>Sun, 01 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/powershell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reflection</title>
+      <link>https://misthi0s.github.io/tags/reflection/</link>
+      <pubDate>Sun, 01 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/reflection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AsyncRAT</title>
+      <link>https://misthi0s.github.io/tags/asyncrat/</link>
+      <pubDate>Sun, 12 May 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/asyncrat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Malware</title>
+      <link>https://misthi0s.github.io/tags/malware/</link>
+      <pubDate>Sun, 12 May 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/malware/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dcom</title>
+      <link>https://misthi0s.github.io/tags/dcom/</link>
+      <pubDate>Wed, 08 Mar 2023 16:20:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/dcom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Detections</title>
+      <link>https://misthi0s.github.io/tags/detections/</link>
+      <pubDate>Wed, 08 Mar 2023 16:20:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/detections/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Impacket</title>
+      <link>https://misthi0s.github.io/tags/impacket/</link>
+      <pubDate>Wed, 08 Mar 2023 16:20:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/impacket/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rce</title>
+      <link>https://misthi0s.github.io/tags/rce/</link>
+      <pubDate>Wed, 08 Mar 2023 16:20:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/rce/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Smb</title>
+      <link>https://misthi0s.github.io/tags/smb/</link>
+      <pubDate>Wed, 08 Mar 2023 16:20:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/smb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wmi</title>
+      <link>https://misthi0s.github.io/tags/wmi/</link>
+      <pubDate>Wed, 08 Mar 2023 16:20:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/wmi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bat</title>
+      <link>https://misthi0s.github.io/tags/bat/</link>
+      <pubDate>Wed, 08 Feb 2023 21:37:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/tags/bat/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

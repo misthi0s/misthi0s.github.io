@@ -1,8 +1,15 @@
 ---
 title: Golang Quick Tips & Tricks - Compile Project as DLL
 author: misthi0s
-categories: ["golang"]
-tags: [golang, tips, tricks, go, dll, programming]
+categories:
+- "golang"
+tags:
+- golang
+- tips
+- tricks
+- go
+- dll
+- programming
 date: 2024-12-26 12:42:00
 ---
 

@@ -2,6 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://misthi0s.github.io/categories/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/dll/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/go/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/categories/golang/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
@@ -10,6 +11,7 @@
             <loc>https://misthi0s.github.io/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/posts/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/programming/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/tips/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/tricks/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/.net/</loc><lastmod>2024-12-01T12:42:00&#43;00:00</lastmod></url><url>
@@ -34,10 +36,8 @@
             <loc>https://misthi0s.github.io/tags/bat/</loc><lastmod>2023-02-08T21:37:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/</loc><lastmod>2023-02-08T21:37:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/about/</loc></url><url>
-            <loc>https://misthi0s.github.io/categories/</loc></url><url>
             <loc>https://misthi0s.github.io/projects/franky/</loc></url><url>
             <loc>https://misthi0s.github.io/projects/nami/</loc></url><url>
             <loc>https://misthi0s.github.io/projects/</loc></url><url>
             <loc>https://misthi0s.github.io/projects/robin/</loc></url><url>
-            <loc>https://misthi0s.github.io/projects/sanji/</loc></url><url>
-            <loc>https://misthi0s.github.io/tags/</loc></url></urlset>
+            <loc>https://misthi0s.github.io/projects/sanji/</loc></url></urlset>

@@ -1,8 +1,14 @@
 ---
 title: Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell
 author: misthi0s
-categories: ["execution"]
-tags: [execution, .net, powershell, encoding, reflection]
+categories:
+- "execution"
+tags: 
+- execution
+- .net
+- powershell
+- encoding
+- reflection
 date: 2024-12-01 12:42:00
 ---
 

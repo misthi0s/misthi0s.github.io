@@ -1,8 +1,15 @@
 ---
 title: Hunting for Impacket's Remote Code Execution Tools
 author: misthi0s
-categories: ["detections"]
-tags: [detections, impacket, smb, wmi, dcom, rce]
+categories:
+    - detections
+tags: 
+    - detections
+    - impacket
+    - smb
+    - wmi
+    - dcom
+    - rce
 date: 2023-03-08 16:20:00
 draft: false
 ---

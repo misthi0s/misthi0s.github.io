@@ -1,8 +1,15 @@
 ---
 title: Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1
 author: misthi0s
-categories: ["malware"]
-tags: [malware, .net, powershell, AsyncRAT, dll, reflection]
+categories:
+- malware
+tags: 
+- malware
+- .net
+- powershell
+- AsyncRAT
+- dll
+- reflection
 date: 2024-05-12 12:42:00
 ---
 
