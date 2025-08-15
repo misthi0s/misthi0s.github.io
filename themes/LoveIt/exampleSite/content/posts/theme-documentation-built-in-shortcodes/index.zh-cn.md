@@ -26,7 +26,7 @@ Hugo 使用 Markdown 为其简单的内容格式. 但是, Markdown 在很多方�
 
 但这恰好是一个坏主意. 大家使用 Markdown, 正是因为它即使不经过渲染也可以轻松阅读. 应该尽可能避免使用 HTML 以保持内容简洁.
 
-为了避免这种限制, Hugo 创建了 [shortcodes](https://gohugo.io/content-management/shortcodes/).
+为了避免这种限制, Hugo 创建了 [shortcodes](https://gohugo.io/extras/shortcodes/).
 shortcode 是一个简单代码段, 可以生成合理的 HTML 代码, 并且符合 Markdown 的设计哲学.
 
 Hugo 附带了一组预定义的 shortcodes, 它们实现了一些非常常见的用法.
@@ -34,46 +34,32 @@ Hugo 附带了一组预定义的 shortcodes, 它们实现了一些非常常见�
 
 ## 1 figure {#figure}
 
-[`figure` 的文档](https://gohugo.io/shortcodes/figure/)
+[`figure` 的文档](https://gohugo.io/content-management/shortcodes#figure)
 
 一个 `figure` 示例:
 
 ```markdown
-{{</* figure
-    src="/images/zion-national-park.jpg"
-    alt="A photograph of Zion National Park"
-    link="https://www.nps.gov/zion/index.htm"
-    caption="Zion National Park"
-    class="ma0 w-75"
-*/>}}
+{{</* figure src="/images/lighthouse.jpg" title="Lighthouse (figure)" */>}}
 ```
 
 呈现的输出效果如下:
 
-{{< figure
-    src="/images/zion-national-park.jpg"
-    alt="A photograph of Zion National Park"
-    link="https://www.nps.gov/zion/index.htm"
-    caption="Zion National Park"
-    class="ma0 w-75"
->}}
+{{< figure src="/images/lighthouse.jpg" title="Lighthouse (figure)" >}}
 
 输出的 HTML 看起来像这样:
 
 ```html
-<figure class="ma0 w-75">
-    <a href="https://www.nps.gov/zion/index.htm">
-        <img src="/images/zion-national-park.jpg" alt="A photograph of Zion National Park">
-    </a>
+<figure>
+    <img src="/images/lighthouse.jpg"/>
     <figcaption>
-        <p>Zion National Park</p>
+        <h4>Lighthouse (figure)</h4>
     </figcaption>
 </figure>
 ```
 
 ## 2 gist
 
-[`gist` 的文档](https://gohugo.io/shortcodes/gist/)
+[`gist` 的文档](https://gohugo.io/content-management/shortcodes#gist)
 
 一个 `gist` 示例:
 
@@ -93,51 +79,49 @@ Hugo 附带了一组预定义的 shortcodes, 它们实现了一些非常常见�
 
 ## 3 highlight
 
-[`highlight` 的文档](https://gohugo.io/shortcodes/highlight/)
+[`highlight` 的文档](https://gohugo.io/content-management/shortcodes#instagram)
 
 一个 `highlight` 示例:
 
 ```markdown
-{{</* highlight go */>}}
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, 世界")
-}
+{{</* highlight html */>}}
+<section id="main">
+    <div>
+        <h1 id="title">{{ .Title }}</h1>
+        {{ range .Pages }}
+            {{ .Render "summary"}}
+        {{ end }}
+    </div>
+</section>
 {{</* /highlight */>}}
 ```
 
 呈现的输出效果如下:
 
-{{< highlight go >}}
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, 世界")
-}
+{{< highlight html >}}
+<section id="main">
+    <div>
+        <h1 id="title">{{ .Title }}</h1>
+        {{ range .Pages }}
+            {{ .Render "summary"}}
+        {{ end }}
+    </div>
+</section>
 {{< /highlight >}}
 
 ## 4 instagram
 
-[`instagram` 的文档](https://gohugo.io/shortcodes/instagram/)
+[`instagram` 的文档](https://gohugo.io/content-management/shortcodes#instagram)
 
-一个 `instagram` 示例:
-
-```markdown
-{{</* instagram CxOWiQNP2MO */>}}
-```
-
-呈现的输出效果如下:
-
-{{< instagram CxOWiQNP2MO >}}
+{{< admonition question "Instagram’s API was deprecated since October 24th, 2020" >}}
+The instagram-shortcode refers an endpoint of Instagram’s API, that’s deprecated since October 24th, 2020.
+Thus, no images can be fetched from this API endpoint, resulting in an error when the instagram-shortcode is used.
+For more information please have a look at GitHub issue [#7879](https://github.com/gohugoio/hugo/issues/7879).
+{{< /admonition >}}
 
 ## 5 param
 
-[`param` 的文档](https://gohugo.io/shortcodes/param/)
+[`param` 的文档](https://gohugo.io/content-management/shortcodes#param)
 
 一个 `param` 示例:
 
@@ -149,23 +133,27 @@ func main() {
 
 {{< param description >}}
 
-## 6 x
+## 6 ref 和 relref {#ref-and-relref}
 
-[`x` 的文档](https://gohugo.io/shortcodes/x/)
+[`ref` 和 `relref` 的文档](https://gohugo.io/content-management/shortcodes#ref-and-relref)
 
-一个 `x` 示例:
+## 7 tweet
+
+[`tweet` 的文档](https://gohugo.io/content-management/shortcodes#tweet)
+
+一个 `tweet` 示例:
 
 ```markdown
-{{</* x user=GoHugoIO id=917359331535966209 */>}}
+{{</* tweet user=GoHugoIO id=917359331535966209 */>}}
 ```
 
 呈现的输出效果如下:
 
-{{< x user=GoHugoIO id=917359331535966209 >}}
+{{< tweet user=GoHugoIO id=917359331535966209 >}}
 
-## 7 vimeo
+## 8 vimeo
 
-[`vimeo` 的文档](https://gohugo.io/shortcodes/vimeo/)
+[`vimeo` 的文档](https://gohugo.io/content-management/shortcodes#vimeo)
 
 一个 `vimeo` 示例:
 
@@ -177,9 +165,9 @@ func main() {
 
 {{< vimeo 146022717 >}}
 
-## 8 youtube
+## 9 youtube
 
-[`youtube` 的文档](https://gohugo.io/shortcodes/youtube/)
+[`youtube` 的文档](https://gohugo.io/content-management/shortcodes#youtube)
 
 一个 `youtube` 示例:
 
@@ -190,11 +178,3 @@ func main() {
 呈现的输出效果如下:
 
 {{< youtube w7Ft2ymGmfc >}}
-
-## 9 ref
-
-[`ref` 的文档](https://gohugo.io/shortcodes/ref/)
-
-## 10 relref
-
-[`relref` 的文档](https://gohugo.io/shortcodes/relref/)

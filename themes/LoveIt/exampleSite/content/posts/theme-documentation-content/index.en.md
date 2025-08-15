@@ -239,33 +239,6 @@ This part is shown in the [basic markdown syntax page](../basic-markdown-syntax/
 
 **LoveIt** theme has some extended syntax elements for you to write articles.
 
-### Diagrams
-
-#### GoAT Diagrams (ASCII)
-
-```goat
-      .               .                .               .--- 1          .-- 1     / 1
-     / \              |                |           .---+            .-+         +
-    /   \         .---+---.         .--+--.        |   '--- 2      |   '-- 2   / \ 2
-   +     +        |       |        |       |    ---+            ---+          +
-  / \   / \     .-+-.   .-+-.     .+.     .+.      |   .--- 3      |   .-- 3   \ / 3
- /   \ /   \    |   |   |   |    |   |   |   |     '---+            '-+         +
- 1   2 3   4    1   2   3   4    1   2   3   4         '--- 4          '-- 4     \ 4
-```
-
-#### Mermaid Diagrams
-
-```mermaid
-graph TD
-    A[Enter Chart Definition] --> B(Preview)
-    B --> C{decide}
-    C --> D[Keep]
-    C --> E[Edit Definition]
-    E --> B
-    D --> F[Save Image and Code]
-    F --> B
-```
-
 ### Emoji Support
 
 This part is shown in the [emoji support page](../emoji-support/).

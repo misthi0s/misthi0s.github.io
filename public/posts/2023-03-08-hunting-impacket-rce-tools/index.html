@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Hunting for Impacket&#39;s Remote Code Execution Tools - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/">
+        <title>Hunting for Impacket&#39;s Remote Code Execution Tools - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/">
   <meta property="og:site_name" content="misthi0s.dev">
   <meta property="og:title" content="Hunting for Impacket&#39;s Remote Code Execution Tools">
   <meta property="og:description" content="Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found here.
@@ -29,9 +29,9 @@ Within the repository, Impacket contains a number of example scripts on how its 
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" /><link rel="prev" href="http://localhost:1313/posts/2023-02-08-from-bat-to-asyncrat/" /><link rel="next" href="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" /><link rel="prev" href="https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/" /><link rel="next" href="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -39,9 +39,9 @@ Within the repository, Impacket contains a number of example scripts on how its 
         "inLanguage": "en-us",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:1313\/posts\/2023-03-08-hunting-impacket-rce-tools\/"
-        },"genre": "posts","keywords": "detections, impacket, smb, wmi, dcom, rce","wordcount":  1612 ,
-        "url": "http:\/\/localhost:1313\/posts\/2023-03-08-hunting-impacket-rce-tools\/","datePublished": "2023-03-08T16:20:00+00:00","dateModified": "2023-03-08T16:20:00+00:00","publisher": {
+            "@id": "https:\/\/misthi0s.github.io\/posts\/2023-03-08-hunting-impacket-rce-tools\/"
+        },"genre": "posts","keywords": "detections, impacket, smb, wmi, dcom, rce","wordcount":  1672 ,
+        "url": "https:\/\/misthi0s.github.io\/posts\/2023-03-08-hunting-impacket-rce-tools\/","datePublished": "2023-03-08T16:20:00+00:00","dateModified": "2023-03-08T16:20:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -49,7 +49,7 @@ Within the repository, Impacket contains a number of example scripts on how its 
             },"description": ""
     }
     </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
@@ -72,28 +72,24 @@ Within the repository, Impacket contains a number of example scripts on how its 
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/">Blog</a><a class="menu-item" href="/categories/">Categories</a><a class="menu-item" href="/tags/">Tags</a><a class="menu-item" href="/projects/">Projects</a><a class="menu-item" href="/about/">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>Switch Theme</a></div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/projects/" title="">Projects</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
     </div>
 </header><main class="main">
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><div class="single-card"><h1 class="single-title animate__animated animate__flipInX">Hunting for Impacket's Remote Code Execution Tools</h1><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span><span class="post-category">included in <a href="/categories/detections/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Detections</a></span></div>
-                <div class="post-meta-line"><span class="post-publish">
-                            <i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i><time datetime="2023-03-08">2023-03-08</time>
-                        </span><span class="post-word-count">
-                            <i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>1612 words
-                        </span><span class="post-reading-time">
-                            <i class="far fa-clock fa-fw" aria-hidden="true"></i>8 minutes
-                        </span></div>
-            </div><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hunting for Impacket's Remote Code Execution Tools</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/detections/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Detections</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-08">2023-03-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1672 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;8 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#smbexec">SMBExec</a>
       <ul>
@@ -114,8 +110,8 @@ Within the repository, Impacket contains a number of example scripts on how its 
     <li><a href="#detections-summary">Detections Summary</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found <a href="https://github.com/fortra/impacket" target="_blank" rel="noopener noreferrer ">here</a>.</p>
-<p>Within the repository, Impacket contains a number of example scripts on how its modules can be utilized. These scripts show just how powerful Impacket can be in an offensive context; there are example scripts that allow for such things as performing a <a href="https://github.com/fortra/impacket/blob/master/examples/GetUserSPNs.py" target="_blank" rel="noopener noreferrer ">Kerberoasting</a> or <a href="https://github.com/fortra/impacket/blob/master/examples/secretsdump.py" target="_blank" rel="noopener noreferrer ">DCSync</a> attack, <a href="https://github.com/fortra/impacket/blob/master/examples/ntlmrelayx.py" target="_blank" rel="noopener noreferrer ">relaying NTLM credentials</a>, and generating <a href="https://github.com/fortra/impacket/blob/master/examples/getTGT.py" target="_blank" rel="noopener noreferrer ">Kerberos tickets</a>. It also includes scripts to remotely execute commands on a system via a number of different protocols.</p>
+            </div><div class="content" id="content"><p>Impacket is an open-source collection of Python libraries that can be used to construct and manipulate network protocols. At its core, it provides low-level programmatic access to packets and, in some cases, complete protocol implementations. The GitHub repository for Impacket can be found <a href="https://github.com/fortra/impacket" target="_blank" rel="noopener noreffer ">here</a>.</p>
+<p>Within the repository, Impacket contains a number of example scripts on how its modules can be utilized. These scripts show just how powerful Impacket can be in an offensive context; there are example scripts that allow for such things as performing a <a href="https://github.com/fortra/impacket/blob/master/examples/GetUserSPNs.py" target="_blank" rel="noopener noreffer ">Kerberoasting</a> or <a href="https://github.com/fortra/impacket/blob/master/examples/secretsdump.py" target="_blank" rel="noopener noreffer ">DCSync</a> attack, <a href="https://github.com/fortra/impacket/blob/master/examples/ntlmrelayx.py" target="_blank" rel="noopener noreffer ">relaying NTLM credentials</a>, and generating <a href="https://github.com/fortra/impacket/blob/master/examples/getTGT.py" target="_blank" rel="noopener noreffer ">Kerberos tickets</a>. It also includes scripts to remotely execute commands on a system via a number of different protocols.</p>
 <h2 id="smbexec">SMBExec</h2>
 <p>smbexec.py is an Impacket script that allows for the execution of commands against a remote system via SMB. SMBExec works by creating a temporary service on the target machine with a specially crafted command set as the service execution. This service command contains the following properties:
 - The command to be executed, <code>echo</code>&lsquo;ed into a bat file
@@ -143,24 +139,42 @@ Once the above service command is run, the Python script pulls the output file v
         title="/images/a34c492ca3e9cf57410dfef52600b5dc3d774481.png" /></p>
 <h3 id="smbexec-detection">SMBExec Detection</h3>
 <p>Let&rsquo;s take a look at the SMBExec source code from the GitHub repository. Near the beginning, we can see the following hardcoded variables:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;__output&#39;</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;__output&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="n">SMBSERVER_DIR</span>   <span class="o">=</span> <span class="s1">&#39;__tmp&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="n">DUMMY_SHARE</span>     <span class="o">=</span> <span class="s1">&#39;TMP&#39;</span>
 </span></span><span class="line"><span class="cl"><span class="n">SERVICE_NAME</span>    <span class="o">=</span> <span class="s1">&#39;BTOBTO&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="n">CODEC</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">encoding</span></span></span></code></pre></div></div>
-<p>In the Sysmon log, we can see the <code>OUTPUT_FILENAME</code> value in the commandline shortly after the <code>whoami</code> command specified, following the format: <code>\\127.0.0.1\C$\__output</code>. We also can see that the service name being created is set to <code>BTOBTO</code>, based on the variable name.</p>
+</span></span><span class="line"><span class="cl"><span class="n">CODEC</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">encoding</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>In the Sysmon log, we can see the <code>OUTPUT_FILENAME</code> value in the commandline shortly after the <code>whoami</code> command specified, following the format: <code>\\127.0.0.1\C$\__output</code>. We also can see that the service name being created is set to <code>BTOBTO</code>, based on the variable name.</p>
 <p>Back in the source code, we can see where this OUTPUT_FILENAME is being crafted in the <code>RemoteShell</code> class:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">share</span><span class="p">,</span> <span class="n">rpc</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">serviceName</span><span class="p">,</span> <span class="n">shell_type</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">share</span><span class="p">,</span> <span class="n">rpc</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">serviceName</span><span class="p">,</span> <span class="n">shell_type</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__share</span> <span class="o">=</span> <span class="n">share</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__mode</span> <span class="o">=</span> <span class="n">mode</span>
@@ -172,29 +186,40 @@ Once the above service command is run, the Python script pulls the output file v
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__pwsh</span> <span class="o">=</span> <span class="s1">&#39;powershell.exe -NoP -NoL -sta -NonI -W Hidden -Exec Bypass -Enc &#39;</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__serviceName</span> <span class="o">=</span> <span class="n">serviceName</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__rpc</span> <span class="o">=</span> <span class="n">rpc</span>
-</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">intro</span> <span class="o">=</span> <span class="s1">&#39;[!] Launching semi-interactive shell - Careful what you execute&#39;</span></span></span></code></pre></div></div>
-<p>We can also see from this that SMBExec supports executing commands via either <code>cmd.exe</code> (which is the value of the <code>%COMSPEC%</code> environment variable on Windows systems) or <code>powershell.exe</code>.</p>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">intro</span> <span class="o">=</span> <span class="s1">&#39;[!] Launching semi-interactive shell - Careful what you execute&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can also see from this that SMBExec supports executing commands via either <code>cmd.exe</code> (which is the value of the <code>%COMSPEC%</code> environment variable on Windows systems) or <code>powershell.exe</code>.</p>
 <p>Looking further into the code, we can see where all the different variables (output filename, command to execute, etc) are combined to make the full commandline value we saw in the Sysmon log:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shell</span> <span class="o">+</span> <span class="s1">&#39;echo &#39;</span> <span class="o">+</span> <span class="n">data</span> <span class="o">+</span> <span class="s1">&#39; ^&gt; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__output</span> <span class="o">+</span> <span class="s1">&#39; 2^&gt;^&amp;1 &gt; &#39;</span> <span class="o">+</span> <span class="n">batchFile</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> \
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shell</span> <span class="o">+</span> <span class="s1">&#39;echo &#39;</span> <span class="o">+</span> <span class="n">data</span> <span class="o">+</span> <span class="s1">&#39; ^&gt; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__output</span> <span class="o">+</span> <span class="s1">&#39; 2^&gt;^&amp;1 &gt; &#39;</span> <span class="o">+</span> <span class="n">batchFile</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> \
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__shell</span> <span class="o">+</span> <span class="n">batchFile</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mode</span> <span class="o">==</span> <span class="s1">&#39;SERVER&#39;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__copyBack</span>
-</span></span><span class="line"><span class="cl"><span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="s1">&#39;del &#39;</span> <span class="o">+</span> <span class="n">batchFile</span></span></span></code></pre></div></div>
-<p>We can use all of the above information to craft detections for potential SMBExec execution within an environment. The best way to do this would be to use specially crafted RegEx strings against the <code>CommandLine</code> value found in the log.</p>
+</span></span><span class="line"><span class="cl"><span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; &amp; &#39;</span> <span class="o">+</span> <span class="s1">&#39;del &#39;</span> <span class="o">+</span> <span class="n">batchFile</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can use all of the above information to craft detections for potential SMBExec execution within an environment. The best way to do this would be to use specially crafted RegEx strings against the <code>CommandLine</code> value found in the log.</p>
 <p>Since we know the <code>OUTPUT_FILENAME</code> portion will always be <code>__output</code>, based on the hardcoded variable, we can use that to key off of. Likewise, we can see that the redirect string <code>2^&gt;^&amp;1 &gt;</code> is hardcoded when creating the command, which can also be used in the detection. With this in mind, we can create the following RegEx to match on an SMBExec-formatted string in a <code>CommandLine</code>, regardless of what command was executed:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-RegEx">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\__output\s2\^&gt;\^&amp;1</span></span></code></pre></div></div>
-<h2 id="wmiexec">WMIExec</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\__output\s2\^&gt;\^&amp;1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="wmiexec">WMIExec</h2>
 <p>wmiexec.py is another Impacket script used to execute commands on a remote system using WMI. Unlike SMBExec, WMIExec does not require the creation of a service to execute commands, instead relying on DCOM and WMI providers to do so.</p>
 <p>Below is an example of a WMIExec shell executing a <code>whoami</code> command on a remote system:</p>
 <p><img
@@ -216,20 +241,35 @@ Once the above service command is run, the Python script pulls the output file v
         title="/images/d5ad599c996e568d86473fda1c62c2037c8b1f43.png" /></p>
 <h3 id="wmiexec-detection">WMIExec Detection</h3>
 <p>Let&rsquo;s take a look at the WMIExec source code. Like SMBExec, there is a hardcoded <code>OUTPUT_FILENAME</code> variable as follows:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span></span></span></code></pre></div></div>
-<p>Unlike SMBExec, this variable is not a hardcoded string, but instead created using Python&rsquo;s <code>time</code> module. According to <a href="https://docs.python.org/3/library/time.html#time.time" target="_blank" rel="noopener noreferrer ">Python&rsquo;s documentation</a>, <code>time.time()</code> returns the current &ldquo;time in seconds since the epoch as a floating point number.&rdquo; Basically, it returns what is commonly known as Unix time. This Unix time value is then appended to a <code>__</code> string and used as the <code>OUTPUT_FILENAME</code> variable in the script. In our test execution, this translated to <code>1677980195.873835</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Unlike SMBExec, this variable is not a hardcoded string, but instead created using Python&rsquo;s <code>time</code> module. According to <a href="https://docs.python.org/3/library/time.html#time.time" target="_blank" rel="noopener noreffer ">Python&rsquo;s documentation</a>, <code>time.time()</code> returns the current &ldquo;time in seconds since the epoch as a floating point number.&rdquo; Basically, it returns what is commonly known as Unix time. This Unix time value is then appended to a <code>__</code> string and used as the <code>OUTPUT_FILENAME</code> variable in the script. In our test execution, this translated to <code>1677980195.873835</code>.</p>
 <p>WMIExec includes a <code>RemoteShell</code> class very similar to SMBExec, as seen in the following:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">share</span><span class="p">,</span> <span class="n">win32Process</span><span class="p">,</span> <span class="n">smbConnection</span><span class="p">,</span> <span class="n">shell_type</span><span class="p">,</span> <span class="n">silentCommand</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">share</span><span class="p">,</span> <span class="n">win32Process</span><span class="p">,</span> <span class="n">smbConnection</span><span class="p">,</span> <span class="n">shell_type</span><span class="p">,</span> <span class="n">silentCommand</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__share</span> <span class="o">=</span> <span class="n">share</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">OUTPUT_FILENAME</span>
@@ -242,23 +282,29 @@ Once the above service command is run, the Python script pulls the output file v
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__silentCommand</span> <span class="o">=</span> <span class="n">silentCommand</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__pwd</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">__noOutput</span> <span class="o">=</span> <span class="kc">False</span>
-</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">intro</span> <span class="o">=</span> <span class="s1">&#39;[!] Launching semi-interactive shell - Careful what you execute</span><span class="se">\n</span><span class="s1">[!] Press help for extra shell commands&#39;</span></span></span></code></pre></div></div>
-<p>Just like SMBExec, we can see that these commands can be executed via either <code>cmd.exe</code> or <code>powershell.exe</code>.</p>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">intro</span> <span class="o">=</span> <span class="s1">&#39;[!] Launching semi-interactive shell - Careful what you execute</span><span class="se">\n</span><span class="s1">[!] Press help for extra shell commands&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Just like SMBExec, we can see that these commands can be executed via either <code>cmd.exe</code> or <code>powershell.exe</code>.</p>
 <p>We can also see in the source code where all of these factors are combined into the full commandline, giving us the structure the code uses for each command passed:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; 1&gt; &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\\</span><span class="s1">127.0.0.1</span><span class="se">\\</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__share</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__output</span> <span class="o">+</span> <span class="s1">&#39; 2&gt;&amp;1&#39;</span></span></span></code></pre></div></div>
-<p>Since the <code>time.time()</code> module follows a specific structure, we can use RegEx formatting to account for the variability in the <code>OUTPUT_FILENAME</code> variable for this script. This, combined with the hardcoded redirect <code>2&gt;&amp;1</code> allows us to craft a RegEx to find a potential WMIExec execution via a <code>CommandLine</code> query:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-RegEx">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\__[0-9]{10}\.[0-9]{6,7}\s2&gt;&amp;1</span></span></code></pre></div></div>
-<h2 id="dcomexec">DCOMExec</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; 1&gt; &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\\</span><span class="s1">127.0.0.1</span><span class="se">\\</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__share</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__output</span> <span class="o">+</span> <span class="s1">&#39; 2&gt;&amp;1&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Since the <code>time.time()</code> module follows a specific structure, we can use RegEx formatting to account for the variability in the <code>OUTPUT_FILENAME</code> variable for this script. This, combined with the hardcoded redirect <code>2&gt;&amp;1</code> allows us to craft a RegEx to find a potential WMIExec execution via a <code>CommandLine</code> query:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\__[0-9]{10}\.[0-9]{6,7}\s2&gt;&amp;1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="dcomexec">DCOMExec</h2>
 <p>dcomexec.py is yet another Impacket script that can be used to execute remote commands against a system, using DCOM endpoints. However, unlike WMIExec which uses a specific DCOM endpoint, DCOMExec allows for using a number of different DCOM endpoints. At the time of this writing, DCOMExec supports the following DCOM endpoints:</p>
 <ul>
 <li>MMC20.Application (49B2791A-B1AE-4C90-9B8E-E860BA07F889)</li>
@@ -285,20 +331,36 @@ Once the above service command is run, the Python script pulls the output file v
         title="/images/6b7d82652d06b096baf3d5831322c923746caa32.png" /></p>
 <h3 id="dcomexec-detection">DCOMExec Detection</h3>
 <p>Looking at the source code for DCOMExec, we can see that the <code>OUTPUT_FILENAME</code> variable is very similar to WMIExec, with one important distinction; rather than using the entire results of <code>time.time()</code>, only the first five numbers are returned. The code can be seen here:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())[:</span><span class="mi">5</span><span class="p">]</span></span></span></code></pre></div></div>
-<p>These five digits are then appended to the <code>__</code> string, similarly to WMIExec. In our test execution, this translated to <code>__16779</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">OUTPUT_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;__&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())[:</span><span class="mi">5</span><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>These five digits are then appended to the <code>__</code> string, similarly to WMIExec. In our test execution, this translated to <code>__16779</code>.</p>
 <p>Below is DCOMExec&rsquo;s <code>RemoteShell</code> class, again very similar to WMIExec&rsquo;s class, and shows that this script can also execute commands via <code>cmd.exe</code> or <code>powershell.exe</code>:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">share</span><span class="p">,</span> <span class="n">quit</span><span class="p">,</span> <span class="n">executeShellCommand</span><span class="p">,</span> <span class="n">smbConnection</span><span class="p">,</span> <span class="n">shell_type</span><span class="p">,</span> <span class="n">silentCommand</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">share</span><span class="p">,</span> <span class="n">quit</span><span class="p">,</span> <span class="n">executeShellCommand</span><span class="p">,</span> <span class="n">smbConnection</span><span class="p">,</span> <span class="n">shell_type</span><span class="p">,</span> <span class="n">silentCommand</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">        <span class="n">cmd</span><span class="o">.</span><span class="n">Cmd</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_share</span> <span class="o">=</span> <span class="n">share</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">OUTPUT_FILENAME</span>
@@ -312,22 +374,28 @@ Once the above service command is run, the Python script pulls the output file v
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_silentCommand</span> <span class="o">=</span> <span class="n">silentCommand</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_pwd</span> <span class="o">=</span> <span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">windows</span><span class="se">\\</span><span class="s1">system32&#39;</span>
 </span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">_noOutput</span> <span class="o">=</span> <span class="kc">False</span>
-</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">intro</span> <span class="o">=</span> <span class="s1">&#39;[!] Launching semi-interactive shell - Careful what you execute</span><span class="se">\n</span><span class="s1">[!] Press help for extra shell commands&#39;</span></span></span></code></pre></div></div>
-<p>Finally, we can also see a similar looking <code>command</code> variable that concatenates all of the specified options into the full commandline string to be used:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-Python">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; 1&gt; &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\\</span><span class="s1">127.0.0.1</span><span class="se">\\</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_share</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">+</span> <span class="s1">&#39; 2&gt;&amp;1&#39;</span></span></span></code></pre></div></div>
-<p>Since the commandlines between DCOMExec and WMIExec are the same with the exception of the length of the <code>time.time()</code> string, we can use a RegEx similar to the one for WMIExec, just with a slightly different matching format for the digit string:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-RegEx">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\__[0-9]{5}\s2&gt;&amp;1</span></span></code></pre></div></div>
-<h2 id="final-thoughts">Final Thoughts</h2>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">intro</span> <span class="o">=</span> <span class="s1">&#39;[!] Launching semi-interactive shell - Careful what you execute</span><span class="se">\n</span><span class="s1">[!] Press help for extra shell commands&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Finally, we can also see a similar looking <code>command</code> variable that concatenates all of the specified options into the full commandline string to be used:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="n">command</span> <span class="o">+=</span> <span class="s1">&#39; 1&gt; &#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\\</span><span class="s1">127.0.0.1</span><span class="se">\\</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_share</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">+</span> <span class="s1">&#39; 2&gt;&amp;1&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Since the commandlines between DCOMExec and WMIExec are the same with the exception of the length of the <code>time.time()</code> string, we can use a RegEx similar to the one for WMIExec, just with a slightly different matching format for the digit string:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">\\__[0-9]{5}\s2&gt;&amp;1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="final-thoughts">Final Thoughts</h2>
 <p>It is important to remember that these RegEx strings provided will match on these Impacket scripts <em>in their default state.</em> Since these are simply variables in a script, they can be easily modified by a threat actor to be something completely different. That being said, a lot of the time threat actors, with the exception of the most sophisticated ones, tend to run these types of open source tools as is, making the detections still viable in most situations. Beyond the RegEx strings, the parent to child process chains can be a great way to detect the behavior of these scripts, as those will be much more difficult to modify. For instance, <code>wmiprvse.exe</code> (for WMIExec) or <code>mmc.exe</code> (For DCOMExec using the <code>MMC20.Application</code> endpoint) spawning a <code>cmd.exe</code> or <code>powershell.exe</code> process could be considered suspicious and can make for great detections. Parent processes for the DCOMExec script, however, will be variable depending on which DCOM endpoint is chosen, so that needs to be taken into consideration as well.</p>
 <h2 id="detections-summary">Detections Summary</h2>
 <p>The following are potential detection capabilities for these Impacket scripts:</p>
@@ -350,14 +418,14 @@ Once the above service command is run, the Python script pulls the output file v
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools" data-via="_misthi0s" data-hashtags="detections,impacket,smb,wmi,dcom,rce"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-hashtag="detections"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f2023-03-08-hunting-impacket-rce-tools%2f&amp;text=Hunting%20for%20Impacket%27s%20Remote%20Code%20Execution%20Tools" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools" data-via="_misthi0s" data-hashtags="detections,impacket,smb,wmi,dcom,rce"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" data-hashtag="detections"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" data-title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i><a href="/tags/detections/">Detections</a>, <a href="/tags/impacket/">Impacket</a>, <a href="/tags/smb/">Smb</a>, <a href="/tags/wmi/">Wmi</a>, <a href="/tags/dcom/">Dcom</a>, <a href="/tags/rce/">Rce</a></section>
-        <section class="post-back">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/detections/">Detections</a>,&nbsp;<a href="/tags/impacket/">Impacket</a>,&nbsp;<a href="/tags/smb/">Smb</a>,&nbsp;<a href="/tags/wmi/">Wmi</a>,&nbsp;<a href="/tags/dcom/">Dcom</a>,&nbsp;<a href="/tags/rce/">Rce</a></section>
+        <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
@@ -365,20 +433,20 @@ Once the above service command is run, the Python script pulls the output file v
     <div class="post-nav"><a href="/posts/2023-02-08-from-bat-to-asyncrat/" class="prev" rel="prev" title="From BAT to AsyncRAT"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>From BAT to AsyncRAT</a>
             <a href="/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" class="next" rel="next" title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1">Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-</div></article></div>
+</article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.148.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreferrer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.148.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.0"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
         </div>
     </footer></div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
                 <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a>
-        </div>
-
-        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-GPNGKH3S27', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-GPNGKH3S27" async></script></body>
 </html>

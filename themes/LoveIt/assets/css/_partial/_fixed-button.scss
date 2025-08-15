@@ -1,19 +1,12 @@
 #fixed-buttons {
   display: none;
-  z-index: 100;
-  position: absolute;
-}
-
-#fixed-buttons-hidden {
-  display: none;
 }
 
 .fixed-button {
-  display: block;
+  display: none;
   z-index: 100;
   position: fixed;
   right: 1.5rem;
-  bottom: 1.5rem;
   font-size: 1rem;
   line-height: 1.3rem;
   padding: .6rem .6rem;
@@ -41,16 +34,13 @@
       color: $global-font-color-dark;
     }
   }
+}
 
-  &:nth-last-of-type(1) {
-    bottom: 1.5rem;
-  }
+#back-to-top {
+  display: block;
+  bottom: 1.5rem;
+}
 
-  &:nth-last-of-type(2) {
-    bottom: 4.5rem;
-  }
-
-  &:nth-last-of-type(3) {
-    bottom: 7.5rem;
-  }
+#view-comments {
+  bottom: 4.5rem;
 }

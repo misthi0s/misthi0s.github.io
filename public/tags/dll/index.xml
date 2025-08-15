@@ -1,23 +1,26 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Dll - Tag - misthi0s.dev</title>
-        <link>http://localhost:1313/tags/dll/</link>
-        <description>Dll - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/dll/" rel="self" type="application/rss+xml" /><item>
-    <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL</title>
-    <link>http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
-    <pubDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</pubDate>
-    <author>misthi0s</author>
-    <guid>http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/</guid>
-    <description><![CDATA[<p>In this installment of &ldquo;Golang Quick Tips &amp; Tricks&rdquo;, we&rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &ldquo;CreateProcess&rdquo; within the &ldquo;kernel32.dll&rdquo; library file to do this. Creating a DLL allows you to easily re-purpose common functions that your different programs need to use without having to re-write it in every single program that needs it.</p>]]></description>
-</item>
-<item>
-    <title>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</title>
-    <link>http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</link>
-    <pubDate>Sun, 12 May 2024 12:42:00 &#43;0000</pubDate>
-    <author>misthi0s</author>
-    <guid>http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</guid>
-    <description><![CDATA[<p>Reflective DLL injection is a common technique used by malware that allows an attacker to inject a DLL into a running process without first having to write that DLL to disk. Keeping the DLL binary in memory as opposed to writing to disk provides a few different advantages, particularly in the case of security tools. Files written to disk are commonly scanned by anti-malware tools on creation as well as loading, making malicious DLLs more likely to be discovered and quarantined if created on the system. Keeping the DLL completely within memory during each point of the infection makes it less likely that any security products on the target will discover and stop it. Likewise, by keeping the DLL within memory and never writing it to disk, it can make it harder for incident responders or malware analysts to determine what the DLL&rsquo;s purpose is. This second point, however, is still possible if one knows how to extract it from memory or from the originating location where the DLL&rsquo;s contents are stored.</p>]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dll on misthi0s.dev</title>
+    <link>https://misthi0s.github.io/tags/dll/</link>
+    <description>Recent content in Dll on misthi0s.dev</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Dec 2024 12:42:00 +0000</lastBuildDate>
+    <atom:link href="https://misthi0s.github.io/tags/dll/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL</title>
+      <link>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</guid>
+      <description>&lt;p&gt;In this installment of &amp;ldquo;Golang Quick Tips &amp;amp; Tricks&amp;rdquo;, we&amp;rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &amp;ldquo;CreateProcess&amp;rdquo; within the &amp;ldquo;kernel32.dll&amp;rdquo; library file to do this. Creating a DLL allows you to easily re-purpose common functions that your different programs need to use without having to re-write it in every single program that needs it.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</title>
+      <link>https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</link>
+      <pubDate>Sun, 12 May 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/</guid>
+      <description>&lt;p&gt;Reflective DLL injection is a common technique used by malware that allows an attacker to inject a DLL into a running process without first having to write that DLL to disk. Keeping the DLL binary in memory as opposed to writing to disk provides a few different advantages, particularly in the case of security tools. Files written to disk are commonly scanned by anti-malware tools on creation as well as loading, making malicious DLLs more likely to be discovered and quarantined if created on the system. Keeping the DLL completely within memory during each point of the infection makes it less likely that any security products on the target will discover and stop it. Likewise, by keeping the DLL within memory and never writing it to disk, it can make it harder for incident responders or malware analysts to determine what the DLL&amp;rsquo;s purpose is. This second point, however, is still possible if one knows how to extract it from memory or from the originating location where the DLL&amp;rsquo;s contents are stored.&lt;/p&gt;</description>
+    </item>
+  </channel>
 </rss>

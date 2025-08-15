@@ -1,15 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Golang - Tag - misthi0s.dev</title>
-        <link>http://localhost:1313/tags/golang/</link>
-        <description>Golang - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/golang/" rel="self" type="application/rss+xml" /><item>
-    <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL</title>
-    <link>http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
-    <pubDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</pubDate>
-    <author>misthi0s</author>
-    <guid>http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/</guid>
-    <description><![CDATA[<p>In this installment of &ldquo;Golang Quick Tips &amp; Tricks&rdquo;, we&rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &ldquo;CreateProcess&rdquo; within the &ldquo;kernel32.dll&rdquo; library file to do this. Creating a DLL allows you to easily re-purpose common functions that your different programs need to use without having to re-write it in every single program that needs it.</p>]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on misthi0s.dev</title>
+    <link>https://misthi0s.github.io/tags/golang/</link>
+    <description>Recent content in Golang on misthi0s.dev</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Dec 2024 12:42:00 +0000</lastBuildDate>
+    <atom:link href="https://misthi0s.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL</title>
+      <link>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
+      <pubDate>Thu, 26 Dec 2024 12:42:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</guid>
+      <description>&lt;p&gt;In this installment of &amp;ldquo;Golang Quick Tips &amp;amp; Tricks&amp;rdquo;, we&amp;rsquo;ll go over how to compile your Go project as a Dynamic Link Library, or DLL for short. DLLs are binary files that contain functions and data that can be used by other programs. For instance, if you are making a program that needs to launch a different process, you will likely need to call the function &amp;ldquo;CreateProcess&amp;rdquo; within the &amp;ldquo;kernel32.dll&amp;rdquo; library file to do this. Creating a DLL allows you to easily re-purpose common functions that your different programs need to use without having to re-write it in every single program that needs it.&lt;/p&gt;</description>
+    </item>
+  </channel>
 </rss>

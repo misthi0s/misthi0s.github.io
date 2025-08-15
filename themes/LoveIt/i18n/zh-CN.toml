@@ -62,9 +62,6 @@ other = "zh_CN"
 
 [giscusLang]
 other = "zh-CN"
-
-[walineLang]
-other = "zh-CN"
 # === partials/comment.html ===
 
 # === partials/assets.html ===
@@ -203,7 +200,4 @@ other = "更改"
 
 [deleted]
 other = "删除"
-
-[deprecated]
-other = "弃用"
 # === shortcodes/version.html ===

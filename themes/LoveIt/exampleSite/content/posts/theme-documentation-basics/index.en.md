@@ -72,10 +72,10 @@ git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
 {{< admonition note "LoveIt theme's compatibility" >}}
 
 | LoveIt branch or version | Supported Hugo versions |
-|:-------------------------|:-----------------------:|
-| master(Unstable)         |        ≥ 0.128.0        |
-| **0.3.X(Recommended)**   |    0.128.0 - 0.145.0    |
-| 0.2.X(Outdated)          |    0.68.0 - 0.127.0     |
+|:---- |:----:|
+| master(Unstable) | ≥ 0.128.0 |
+| **0.3.X(Recommended)** | 0.128.0 - 0.143.1 |
+| 0.2.X(Outdated) | 0.68.0 - 0.127.0 |
 
 {{< /admonition >}}
 
@@ -325,7 +325,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # ICP info only in China (HTML format is supported)
     icp = ""
     # license info (HTML format is supported)
-    license = '<a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+    license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
   # {{< version 0.2.0 >}} Section (all posts) page config
   [params.section]
@@ -416,8 +416,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   [params.social]
     GitHub = "xxxx"
     Linkedin = ""
-    X = "xxxx" # {{< version 0.3.1 >}}
-    Twitter = "" # {{< version 0.3.1 deprecated >}}
+    Twitter = "xxxx"
     Instagram = "xxxx"
     Facebook = "xxxx"
     Telegram = "xxxx"
@@ -483,16 +482,14 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     ORCID = ""
     Pleroma = ""
     Kaggle = ""
-    MediaWiki = ""
+    MediaWiki= ""
     Plume = ""
     HackTheBox = ""
-    RootMe = ""
-    Malt = "" # {{< version 0.3.0 >}}
-    TikTok = "" # {{< version 0.3.0 >}}
-    TryHackMe = "" # {{< version 0.3.0 >}}
-    Codeberg = "" # {{< version 0.3.0 >}}
-    HuggingFace = "" # {{< version 0.3.1 >}}
-    Threads = "" # {{< version 0.3.1 >}}
+    RootMe= ""
+    Malt = ""
+    TikTok = ""
+    TryHackMe = ""
+    Codeberg = ""
     Phone = ""
     Email = "xxxx@xxxx.com"
     RSS = true # {{< version 0.2.0 >}}
@@ -563,9 +560,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # {{< version 0.2.0 changed >}} social share links in post page
     [params.page.share]
       enable = true
-      X = true # {{< version 0.3.1 >}}
-      Twitter = false # {{< version 0.3.1 deprecated >}}
-      Threads = true # {{< version 0.3.1 >}}
+      Twitter = true
       Facebook = true
       Linkedin = false
       Whatsapp = false
@@ -587,9 +582,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       Evernote = false
       Skype = false
       Trello = false
-      Diaspora = true # {{< version 0.3.1 >}}
       Mix = false
-      Telegram = true # {{< version 0.3.1 >}}
     # {{< version 0.2.0 changed >}} Comment config
     [params.page.comment]
       enable = false
@@ -725,15 +718,12 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 
   # {{< version 0.2.0 >}} Analytics config
   [params.analytics]
-    # {{< version 0.3.1 deleted >}}
-    enable = true
+    enable = false
     # Google Analytics
     [params.analytics.google]
       id = ""
-      # {{< version 0.3.1 deleted >}} whether to anonymize IP
+      # whether to anonymize IP
       anonymizeIP = true
-      # {{< version 0.3.1 >}} whether to respect the browser’s “do not track” setting
-      respectDoNotTrack = false
     # Fathom Analytics
     [params.analytics.fathom]
       id = ""
@@ -808,18 +798,18 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 
 # {{< link "https://gohugo.io/content-management/urls#permalinks" "Permalinks config" >}}
 [Permalinks]
-  # posts = ":year/:month/:contentbasename"
-  posts = ":contentbasename"
+  # posts = ":year/:month/:filename"
+  posts = ":filename"
 
 # {{< link "https://gohugo.io/about/hugo-and-gdpr/" "Privacy config" >}}
 [privacy]
-  # {{< version 0.3.1 changed >}} privacy of the Google Analytics (can also be configured in params.analytics.google)
+  # {{< version 0.2.0 deleted >}} privacy of the Google Analytics (replaced by params.analytics.google)
   [privacy.googleAnalytics]
     # ...
   [privacy.twitter]
-    # ...
+    enableDNT = true
   [privacy.youtube]
-    # ...
+    privacyEnhanced = true
 
 # Options to make output .md files
 [mediaTypes]
@@ -839,6 +829,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   page = ["HTML", "MarkDown"]
   section = ["HTML", "RSS"]
   taxonomy = ["HTML", "RSS"]
+  taxonomyTerm = ["HTML"]
 ```
 
 {{< admonition >}}
@@ -950,32 +941,31 @@ In `assets/css/_custom.scss`, you can add some css style code to customize the s
 
 {{< version 0.2.10 changed >}}
 
-| Language            | Hugo Code | HTML `lang` Attribute |          Theme Docs           |        Lunr.js Support        |
-|:--------------------|:---------:|:---------------------:|:-----------------------------:|:-----------------------------:|
-| English             |   `en`    |         `en`          | :(far fa-check-square fa-fw): | :(far fa-check-square fa-fw): |
-| Simplified Chinese  |  `zh-cn`  |        `zh-CN`        | :(far fa-check-square fa-fw): | :(far fa-check-square fa-fw): |
-| Traditional Chinese |  `zh-tw`  |        `zh-TW`        |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| French              |   `fr`    |         `fr`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Polish              |   `pl`    |         `pl`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Portuguese (Brazil) |  `pt-br`  |        `pt-BR`        |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Italian             |   `it`    |         `it`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Spanish             |   `es`    |         `es`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| German              |   `de`    |         `de`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| German              |   `de`    |         `de`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Serbian             |   `sr`    |         `sr`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Russian             |   `ru`    |         `ru`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Romanian            |   `ro`    |         `ro`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Vietnamese          |   `vi`    |         `vi`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Arabic              |   `ar`    |         `ar`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Catalan             |   `ca`    |         `ca`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Thai                |   `th`    |         `th`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Telugu              |   `te`    |         `te`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Indonesian          |   `id`    |         `id`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Turkish             |   `tr`    |         `tr`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Korean              |   `ko`    |         `ko`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Hindi               |   `hi`    |         `hi`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
-| Dutch               |   `nl`    |         `nl`          |    :(far fa-square fa-fw):    | :(far fa-check-square fa-fw): |
-| Bengali             |   `hi`    |         `hi`          |    :(far fa-square fa-fw):    |    :(far fa-square fa-fw):    |
+| Language             | Hugo Code | HTML `lang` Attribute | Theme Docs                    | Lunr.js Support               |
+|:-------------------- |:---------:|:---------------------:|:-----------------------------:|:-----------------------------:|
+| English              | `en`      | `en`                  | :(far fa-check-square fa-fw): | :(far fa-check-square fa-fw): |
+| Simplified Chinese   | `zh-cn`   | `zh-CN`               | :(far fa-check-square fa-fw): | :(far fa-check-square fa-fw): |
+| Traditional Chinese  | `zh-tw`   | `zh-TW`               | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| French               | `fr`      | `fr`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Polish               | `pl`      | `pl`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Portuguese (Brazil)  | `pt-br`   | `pt-BR`               | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Italian              | `it`      | `it`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Spanish              | `es`      | `es`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| German               | `de`      | `de`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| German               | `de`      | `de`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Serbian              | `sr`      | `sr`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Russian              | `ru`      | `ru`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Romanian             | `ro`      | `ro`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Vietnamese           | `vi`      | `vi`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Arabic               | `ar`      | `ar`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Catalan              | `ca`      | `ca`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Thai                 | `th`      | `th`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Telugu               | `te`      | `te`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Indonesian           | `id`      | `id`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Turkish              | `tr`      | `tr`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
+| Korean               | `ko`      | `ko`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Hindi                | `hi`      | `hi`                  | :(far fa-square fa-fw):       | :(far fa-square fa-fw):       |
+| Dutch                | `nl`      | `nl`                  | :(far fa-square fa-fw):       | :(far fa-check-square fa-fw): |
 
 ### 4.2 Basic Configuration
 

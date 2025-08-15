@@ -80,8 +80,8 @@
 
 * 支持 **[Gravatar](https://gravatar.com)** 头像
 * 支持本地**头像**
-* 支持多达 **81** 种社交链接
-* 支持多达 **27** 种网站分享
+* 支持多达 **76** 种社交链接
+* 支持多达 **24** 种网站分享
 * 支持 **[Disqus](https://disqus.com)** 评论系统
 * 支持 **[Gitalk](https://github.com/gitalk/gitalk)** 评论系统
 * 支持 **[Valine](https://valine.js.org/)** 评论系统
@@ -123,14 +123,6 @@
 hugo server --source=exampleSite
 ```
 
-## 兼容性
-
-| LoveIt 分支或版本  |    支持的 Hugo 版本    |
-|:--------------|:-----------------:|
-| master(不稳定)   |     ≥ 0.128.0     |
-| **0.3.X(推荐)** | 0.128.0 - 0.145.0 |
-| 0.2.X(过时)     | 0.68.0 - 0.127.0  |
-
 ## 多语言和国际化
 
 LoveIt 支持下列语言:
@@ -157,7 +149,6 @@ LoveIt 支持下列语言:
 * 韩语
 * 印地语
 * 荷兰语
-* 孟加拉语
 * [贡献一种新的语言](https://github.com/dillonzq/LoveIt/pulls)
 
 [语言兼容性](https://hugoloveit.com/zh-cn/theme-documentation-basics/#language-compatibility)
@@ -176,7 +167,7 @@ LoveIt 根据 **MIT** 许可协议授权。 更多信息请查看 [LICENSE 文�
 
 LoveIt 主题中用到了以下项目，感谢它们的作者：
 
-* [modern-normalize](https://github.com/sindresorhus/modern-normalize)
+* [normalize.css](https://github.com/necolas/normalize.css)
 * [Font Awesome](https://fontawesome.com/)
 * [Simple Icons](https://github.com/simple-icons/simple-icons)
 * [Animate.css](https://daneden.github.io/animate.css/)

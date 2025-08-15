@@ -33,46 +33,32 @@ Hugo ships with a set of predefined shortcodes that represent very common usage.
 
 ## 1 figure {#figure}
 
-[Documentation of `figure`](https://gohugo.io/shortcodes/figure/)
+[Documentation of `figure`](https://gohugo.io/content-management/shortcodes#figure)
 
 Example `figure` input:
 
 ```markdown
-{{</* figure
-    src="/images/zion-national-park.jpg"
-    alt="A photograph of Zion National Park"
-    link="https://www.nps.gov/zion/index.htm"
-    caption="Zion National Park"
-    class="ma0 w-75"
-*/>}}
+{{</* figure src="/images/lighthouse.jpg" title="Lighthouse (figure)" */>}}
 ```
 
 The rendered output looks like this:
 
-{{< figure
-    src="/images/zion-national-park.jpg"
-    alt="A photograph of Zion National Park"
-    link="https://www.nps.gov/zion/index.htm"
-    caption="Zion National Park"
-    class="ma0 w-75"
->}}
+{{< figure src="/images/lighthouse.jpg" title="Lighthouse (figure)" >}}
 
 The HTML looks like this:
 
 ```html
-<figure class="ma0 w-75">
-    <a href="https://www.nps.gov/zion/index.htm">
-        <img src="/images/zion-national-park.jpg" alt="A photograph of Zion National Park">
-    </a>
+<figure>
+    <img src="/images/lighthouse.jpg"/>
     <figcaption>
-        <p>Zion National Park</p>
+        <h4>Lighthouse (figure)</h4>
     </figcaption>
 </figure>
 ```
 
 ## 2 gist
 
-[Documentation of `gist`](https://gohugo.io/shortcodes/gist/)
+[Documentation of `gist`](https://gohugo.io/content-management/shortcodes#gist)
 
 Example `gist` input:
 
@@ -92,51 +78,49 @@ The HTML looks like this:
 
 ## 3 highlight
 
-[Documentation of `highlight`](https://gohugo.io/shortcodes/highlight/)
+[Documentation of `highlight`](https://gohugo.io/content-management/shortcodes#instagram)
 
 Example `highlight` input:
 
 ```markdown
-{{</* highlight go */>}}
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, 世界")
-}
+{{</* highlight html */>}}
+<section id="main">
+    <div>
+        <h1 id="title">{{ .Title }}</h1>
+        {{ range .Pages }}
+            {{ .Render "summary"}}
+        {{ end }}
+    </div>
+</section>
 {{</* /highlight */>}}
 ```
 
 The rendered output looks like this:
 
-{{< highlight go >}}
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, 世界")
-}
+{{< highlight html >}}
+<section id="main">
+    <div>
+        <h1 id="title">{{ .Title }}</h1>
+        {{ range .Pages }}
+            {{ .Render "summary"}}
+        {{ end }}
+    </div>
+</section>
 {{< /highlight >}}
 
 ## 4 instagram
 
-[Documentation of `instagram`](https://gohugo.io/shortcodes/instagram/)
+[Documentation of `instagram`](https://gohugo.io/content-management/shortcodes#instagram)
 
-Example `instagram` input:
-
-```markdown
-{{</* instagram CxOWiQNP2MO */>}}
-```
-
-The rendered output looks like this:
-
-{{< instagram CxOWiQNP2MO >}}
+{{< admonition question "Instagram’s API was deprecated since October 24th, 2020" >}}
+The instagram-shortcode refers an endpoint of Instagram’s API, that’s deprecated since October 24th, 2020.
+Thus, no images can be fetched from this API endpoint, resulting in an error when the instagram-shortcode is used.
+For more information please have a look at GitHub issue [#7879](https://github.com/gohugoio/hugo/issues/7879).
+{{< /admonition >}}
 
 ## 5 param
 
-[Documentation of `param`](https://gohugo.io/shortcodes/param/)
+[Documentation of `param`](https://gohugo.io/content-management/shortcodes#param)
 
 Example `param` input:
 
@@ -148,23 +132,27 @@ The rendered output looks like this:
 
 {{< param description >}}
 
-## 6 x
+## 6 ref and relref {#ref-and-relref}
 
-[Documentation of `x`](https://gohugo.io/shortcodes/x/)
+[Documentation of `ref` and `relref`](https://gohugo.io/content-management/shortcodes#ref-and-relref)
 
-Example `x` input:
+## 7 tweet
+
+[Documentation of `tweet`](https://gohugo.io/content-management/shortcodes#tweet)
+
+Example `tweet` input:
 
 ```markdown
-{{</* x user=GoHugoIO id=917359331535966209 */>}}
+{{</* tweet user=GoHugoIO id=917359331535966209 */>}}
 ```
 
 The rendered output looks like this:
 
-{{< x user=GoHugoIO id=917359331535966209 >}}
+{{< tweet user=GoHugoIO id=917359331535966209 >}}
 
-## 7 vimeo
+## 8 vimeo
 
-[Documentation of `vimeo`](https://gohugo.io/shortcodes/vimeo/)
+[Documentation of `vimeo`](https://gohugo.io/content-management/shortcodes#vimeo)
 
 Example `vimeo` input:
 
@@ -176,9 +164,9 @@ The rendered output looks like this:
 
 {{< vimeo 146022717 >}}
 
-## 8 youtube
+## 9 youtube
 
-[Documentation of `youtube`](https://gohugo.io/shortcodes/youtube/)
+[Documentation of `youtube`](https://gohugo.io/content-management/shortcodes#youtube)
 
 Example `youtube` input:
 
@@ -189,11 +177,3 @@ Example `youtube` input:
 The rendered output looks like this:
 
 {{< youtube w7Ft2ymGmfc >}}
-
-## 9 ref
-
-[Documentation of `ref`](https://gohugo.io/shortcodes/ref/)
-
-## 10  relref
-
-[Documentation of `relref`](https://gohugo.io/shortcodes/relref/)

@@ -1,15 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Bat - Tag - misthi0s.dev</title>
-        <link>http://localhost:1313/tags/bat/</link>
-        <description>Bat - Tag - misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/bat/" rel="self" type="application/rss+xml" /><item>
-    <title>From BAT to AsyncRAT</title>
-    <link>http://localhost:1313/posts/2023-02-08-from-bat-to-asyncrat/</link>
-    <pubDate>Wed, 08 Feb 2023 21:37:00 &#43;0000</pubDate>
-    <author>misthi0s</author>
-    <guid>http://localhost:1313/posts/2023-02-08-from-bat-to-asyncrat/</guid>
-    <description><![CDATA[<p>While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found <a href="https://tria.ge/230131-vwe3wahc28/behavioral2" target="_blank" rel="noopener noreferrer ">here</a>.</p>]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bat on misthi0s.dev</title>
+    <link>https://misthi0s.github.io/tags/bat/</link>
+    <description>Recent content in Bat on misthi0s.dev</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Feb 2023 21:37:00 +0000</lastBuildDate>
+    <atom:link href="https://misthi0s.github.io/tags/bat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From BAT to AsyncRAT</title>
+      <link>https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/</link>
+      <pubDate>Wed, 08 Feb 2023 21:37:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/posts/2023-02-08-from-bat-to-asyncrat/</guid>
+      <description>&lt;p&gt;While perusing public samples from the Triage database, I stumbled across an interesting payload that was labelled as AsyncRAT. AsyncRAT is an open-source Remote Access Tool (or Trojan may be more apt) written in C#, so I was curious as to what the infection process would look like starting as a Windows Batch file. For anyone who wants to follow along, the sample on Triage can be found &lt;a href=&#34;https://tria.ge/230131-vwe3wahc28/behavioral2&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
 </rss>

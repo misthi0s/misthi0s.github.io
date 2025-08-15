@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/">
+        <title>Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/">
   <meta property="og:site_name" content="misthi0s.dev">
   <meta property="og:title" content="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell">
   <meta property="og:description" content="In this post, we’ll go over a fun little project I’ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there’s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed. While this example will be rather simplistic in nature, it will hopefully outline how easy such a technique can be performed and provide some insight into one of many ways that threat actors will try to get their payload executed on their target.">
@@ -26,9 +26,9 @@
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" /><link rel="prev" href="http://localhost:1313/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="next" href="http://localhost:1313/posts/2024-12-26-golang-tips-tricks-compile-dll/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" /><link rel="prev" href="https://misthi0s.github.io/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" /><link rel="next" href="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -36,9 +36,9 @@
         "inLanguage": "en-us",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:1313\/posts\/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell\/"
-        },"genre": "posts","keywords": "execution, .net, powershell, encoding, reflection","wordcount":  1395 ,
-        "url": "http:\/\/localhost:1313\/posts\/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell\/","datePublished": "2024-12-01T12:42:00+00:00","dateModified": "2024-12-01T12:42:00+00:00","publisher": {
+            "@id": "https:\/\/misthi0s.github.io\/posts\/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell\/"
+        },"genre": "posts","keywords": "execution, .net, powershell, encoding, reflection","wordcount":  1470 ,
+        "url": "https:\/\/misthi0s.github.io\/posts\/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell\/","datePublished": "2024-12-01T12:42:00+00:00","dateModified": "2024-12-01T12:42:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -46,7 +46,7 @@
             },"description": ""
     }
     </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
@@ -69,28 +69,24 @@
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/">Blog</a><a class="menu-item" href="/categories/">Categories</a><a class="menu-item" href="/tags/">Tags</a><a class="menu-item" href="/projects/">Projects</a><a class="menu-item" href="/about/">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>Switch Theme</a></div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/projects/" title="">Projects</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
     </div>
 </header><main class="main">
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><div class="single-card"><h1 class="single-title animate__animated animate__flipInX">Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell</h1><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span><span class="post-category">included in <a href="/categories/execution/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Execution</a></span></div>
-                <div class="post-meta-line"><span class="post-publish">
-                            <i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i><time datetime="2024-12-01">2024-12-01</time>
-                        </span><span class="post-word-count">
-                            <i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>1395 words
-                        </span><span class="post-reading-time">
-                            <i class="far fa-clock fa-fw" aria-hidden="true"></i>7 minutes
-                        </span></div>
-            </div><div class="details toc" id="toc-static"  data-kept="">
-                    <div class="details-summary toc-title">
-                        <span>Contents</span>
-                        <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/execution/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Execution</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-12-01">2024-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1470 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#creating-the-main-payload">Creating the Main Payload</a></li>
     <li><a href="#encoding-the-payload">Encoding the Payload</a></li>
@@ -99,15 +95,26 @@
     <li><a href="#putting-it-all-together">Putting It All Together</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed. While this example will be rather simplistic in nature, it will hopefully outline how easy such a technique can be performed and provide some insight into one of many ways that threat actors will try to get their payload executed on their target.</p>
+            </div><div class="content" id="content"><p>In this post, we&rsquo;ll go over a fun little project I&rsquo;ve been working on; encoding an executable and using a PowerShell script to decode it and execute it in-memory. This is a common technique employed by malware to try to evade security tools on the infected system. By not writing a malicious executable to disk, there&rsquo;s less of a chance that any sort of endpoint security tool will detect and quarantine it before it can be executed. While this example will be rather simplistic in nature, it will hopefully outline how easy such a technique can be performed and provide some insight into one of many ways that threat actors will try to get their payload executed on their target.</p>
 <h2 id="creating-the-main-payload">Creating the Main Payload</h2>
 <p>For this example, we&rsquo;ll be using a benign C# executable as our &ldquo;malicious&rdquo; payload. The main requirement of this payload is to prove that it executed properly, so it doesn&rsquo;t really matter what it does, as long as it produces something tangible for us to see. To achieve this, the program will simply launch a message box stating that the execution was successful. The C# code for this executable can be seen below:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">using System.Windows.Forms;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">using System.Windows.Forms;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">namespace MsgBox
 </span></span><span class="line"><span class="cl">{
@@ -118,8 +125,10 @@
 </span></span><span class="line"><span class="cl">            MessageBox.Show(&#34;Successful execution!&#34;, &#34;misthi0s&#34;, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 </span></span><span class="line"><span class="cl">        }
 </span></span><span class="line"><span class="cl">    }
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></div></div>
-<p>Successful execution of this program produces the following:</p>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Successful execution of this program produces the following:</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -129,30 +138,65 @@
         alt="/images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png"
         title="/images/1e07f6a2dcb7889d15e621db429b4da6fa9c0125.png" /></p>
 <h2 id="encoding-the-payload">Encoding the Payload</h2>
-<p>To help obfuscate the payload, we&rsquo;ll encode it by transposing each byte of the binary to something else. Obfuscation is another technique heavily employed by malware to hide its malicious nature, and encoding is one such way to achieve this. While we could use something like Base64 encoding, that&rsquo;s a bit too well-known and monitored for, so we&rsquo;ll employ our own encoding algorithm instead. For this, we&rsquo;ll use a tool that I created called Astartes. <a href="https://github.com/misthi0s/Astartes" target="_blank" rel="noopener noreferrer ">Astartes</a> is a Python-based encoding tool that will take each byte of an input dataset and convert it to the name of an Adeptus Astartes chapter (for those unfamiliar with Warhammer 40k, an Adeptus Astartes is a Space Marine).</p>
+<p>To help obfuscate the payload, we&rsquo;ll encode it by transposing each byte of the binary to something else. Obfuscation is another technique heavily employed by malware to hide its malicious nature, and encoding is one such way to achieve this. While we could use something like Base64 encoding, that&rsquo;s a bit too well-known and monitored for, so we&rsquo;ll employ our own encoding algorithm instead. For this, we&rsquo;ll use a tool that I created called Astartes. <a href="https://github.com/misthi0s/Astartes" target="_blank" rel="noopener noreffer ">Astartes</a> is a Python-based encoding tool that will take each byte of an input dataset and convert it to the name of an Adeptus Astartes chapter (for those unfamiliar with Warhammer 40k, an Adeptus Astartes is a Space Marine).</p>
 <p>To obfuscate our payload even further, Astartes uses a seed to randomize the master list of chapter names on execution, requiring a person to know the seed used to properly decode the information. We&rsquo;ll use the seed &ldquo;Sororitas&rdquo; (another 40k reference) to encode our payload; the full command-line for this Astartes execution can be seen below:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python astartes.py --file D:\repo\_CS\MessageBox\MessageBox\bin\Release\MessageBox.exe --seed Sororitas</span></span></code></pre></div></div>
-<p>This will create a file called <code>astartes_encoded.txt</code> that contains our encoded <code>MessageBox.exe</code> payload. A small snippet of this file can be seen below:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CRIMSONLEGION,CHARNELGUARD,RAPTORS,NIGHTSWORDS,BURNINGBLOOD,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,BLOODTIGERS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,SONSOFTHEPHOENIX,SONSOFTHEPHOENIX,NIGHTSWORDS,NIGHTSWORDS,WHITESCARS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,DOOMEAGLES,NIGHTSWORDS,NIGHTSWORDS,...</span></span></code></pre></div></div>
-<p>As mentioned before, each value (comma-separated) represents a byte from the <code>MessageBox.exe</code> binary, concealing its true nature in a seemingly random collection of strings.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python astartes.py --file D:\repo\_CS\MessageBox\MessageBox\bin\Release\MessageBox.exe --seed Sororitas
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This will create a file called <code>astartes_encoded.txt</code> that contains our encoded <code>MessageBox.exe</code> payload. A small snippet of this file can be seen below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CRIMSONLEGION,CHARNELGUARD,RAPTORS,NIGHTSWORDS,BURNINGBLOOD,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,BLOODTIGERS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,SONSOFTHEPHOENIX,SONSOFTHEPHOENIX,NIGHTSWORDS,NIGHTSWORDS,WHITESCARS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,NIGHTSWORDS,DOOMEAGLES,NIGHTSWORDS,NIGHTSWORDS,...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>As mentioned before, each value (comma-separated) represents a byte from the <code>MessageBox.exe</code> binary, concealing its true nature in a seemingly random collection of strings.</p>
 <h2 id="creating-the-powershell-script">Creating the PowerShell Script</h2>
 <p>Now that we have the encoded blob of our malicious payload, we need to create a PowerShell script to decode it and execute it in-memory. Below is the full PowerShell script that will do this (explanation of major components to follow):</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Initialize empty byte array</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Initialize empty byte array</span>
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">byte</span><span class="p">[]]</span> <span class="o">$</span><span class="n">DecodedBytes</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Get encoded blob</span>
@@ -183,15 +227,32 @@
 </span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span> <span class="o">=</span> <span class="o">$</span><span class="n">Assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">()</span><span class="o">.</span><span class="n">Where</span><span class="p">({</span> <span class="o">$</span><span class="n">_</span><span class="o">.</span><span class="n">Name</span> <span class="o">-</span><span class="n">eq</span> <span class="s1">&#39;Program&#39;</span> <span class="p">},</span> <span class="s1">&#39;First&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">GetMethod</span><span class="p">(</span><span class="s1">&#39;Main&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Reflection</span><span class="o">.</span><span class="n">BindingFlags</span><span class="p">]</span> <span class="s1">&#39;Static, Public, NonPublic&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Execute the exe</span>
-</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span><span class="o">.</span><span class="n">Invoke</span><span class="p">(</span><span class="o">$</span><span class="n">null</span><span class="p">,</span> <span class="o">$</span><span class="n">null</span><span class="p">)</span></span></span></code></pre></div></div>
-<h2 id="powershell-script-explained">PowerShell Script Explained</h2>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span><span class="o">.</span><span class="n">Invoke</span><span class="p">(</span><span class="o">$</span><span class="n">null</span><span class="p">,</span> <span class="o">$</span><span class="n">null</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="powershell-script-explained">PowerShell Script Explained</h2>
 <p>The following section handles the decoding of the payload:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Get encoded blob
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># Get encoded blob
 </span></span><span class="line"><span class="cl">$Encoded = Get-Content -Path D:\repo\_Python\Astartes\astartes_encoded.txt
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># Get decoding key
@@ -206,17 +267,30 @@
 </span></span><span class="line"><span class="cl">$Array | ForEach-Object {
 </span></span><span class="line"><span class="cl">	$Decoded = $DecodingKey.indexOf($_)
 </span></span><span class="line"><span class="cl">	$DecodedBytes += [byte[]]$Decoded
-</span></span><span class="line"><span class="cl">}</span></span></code></pre></div></div>
-<p>For this example, we&rsquo;re first getting the encoded contents from the file <code>D:\repo\_Python\Astartes\astartes_encoded.txt</code> and storing it into variable <code>$Encoded</code>. The encoded string can (and most likely would, in a real world scenario) be saved directly in the PowerShell script, but I chose to do it this way for brevity&rsquo;s sake.</p>
-<p>Next, we need to get the decoding key to actually be able to decode the payload. This key will be the master list of chapter names, randomized according to the seed provided, to let us translate each chapter name to the byte value that was encoded. Astartes supports accessing this list via a web request (and includes an example <a href="https://github.com/misthi0s/Astartes/blob/main/examples/server_test/server.py" target="_blank" rel="noopener noreferrer ">server script</a> to achieve this), which is what is going on with the command <code>$Response = IWR -URI http://127.0.0.1:5000/?_=Sororitas</code>. Just like the encoded string, this list can be hardcoded into the script as a variable, but would also provide anyone analyzing the script the master decoder key, losing a bit of OpSec in the process.</p>
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For this example, we&rsquo;re first getting the encoded contents from the file <code>D:\repo\_Python\Astartes\astartes_encoded.txt</code> and storing it into variable <code>$Encoded</code>. The encoded string can (and most likely would, in a real world scenario) be saved directly in the PowerShell script, but I chose to do it this way for brevity&rsquo;s sake.</p>
+<p>Next, we need to get the decoding key to actually be able to decode the payload. This key will be the master list of chapter names, randomized according to the seed provided, to let us translate each chapter name to the byte value that was encoded. Astartes supports accessing this list via a web request (and includes an example <a href="https://github.com/misthi0s/Astartes/blob/main/examples/server_test/server.py" target="_blank" rel="noopener noreffer ">server script</a> to achieve this), which is what is going on with the command <code>$Response = IWR -URI http://127.0.0.1:5000/?_=Sororitas</code>. Just like the encoded string, this list can be hardcoded into the script as a variable, but would also provide anyone analyzing the script the master decoder key, losing a bit of OpSec in the process.</p>
 <p>After some formatting commands, we&rsquo;ll have two array variables: <code>$Array</code> containing the encoded blob and <code>$DecodingKey</code> containing the decoder list. The following <code>ForEach-Object</code> loop will go through each value in <code>$Array</code>, determine where that value exists in <code>$DecodingKey</code>, then get the index value of that item. This index value will be the exact byte value of that part of the encoded executable. In this example, this means that the string <code>NIGHTSWORDS</code> represents the byte value <code>0</code>, <code>GORGONS</code> represents <code>1</code>, <code>LEGIONOFTHEDAMNED</code> represents <code>2</code>, and so on. Once the entire <code>$Array</code> variable has been processed through this loop, we&rsquo;ll have the array variable <code>$DecodedBytes</code>, which will be the full byte representation of the <code>MessageBox.exe</code> binary.</p>
 <p>The next portion of the script will handle the in-memory execution of our <code>MessageBox.exe</code> binary:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Convert byte array to Base64 then convert back.</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="c1"># Convert byte array to Base64 then convert back.</span>
 </span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">Base64String</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Convert</span><span class="p">]::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="o">$</span><span class="n">DecodedBytes</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">FullBytes</span> <span class="o">=</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">Convert</span><span class="p">]::</span><span class="n">FromBase64String</span><span class="p">(</span><span class="o">$</span><span class="n">Base64String</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -227,21 +301,25 @@
 </span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span> <span class="o">=</span> <span class="o">$</span><span class="n">Assembly</span><span class="o">.</span><span class="n">GetTypes</span><span class="p">()</span><span class="o">.</span><span class="n">Where</span><span class="p">({</span> <span class="o">$</span><span class="n">_</span><span class="o">.</span><span class="n">Name</span> <span class="o">-</span><span class="n">eq</span> <span class="s1">&#39;Program&#39;</span> <span class="p">},</span> <span class="s1">&#39;First&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">GetMethod</span><span class="p">(</span><span class="s1">&#39;Main&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">Reflection</span><span class="o">.</span><span class="n">BindingFlags</span><span class="p">]</span> <span class="s1">&#39;Static, Public, NonPublic&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Execute the exe</span>
-</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span><span class="o">.</span><span class="n">Invoke</span><span class="p">(</span><span class="o">$</span><span class="n">null</span><span class="p">,</span> <span class="o">$</span><span class="n">null</span><span class="p">)</span></span></span></code></pre></div></div>
-<p>For some reason, this script would only work if I first re-encoded the payload bytes to Base64 and then decoded them back into the original bytes. I&rsquo;m really not sure why this was required, but it was the only way to get it to work (I suspect some weird PowerShell behavior, as loading the binary directly from the source worked without doing this, and I confirmed that the decoded bytes and the directly loaded bytes of the payload were 100% exactly the same).</p>
-<p>Once this is done, the <code>MessageBox.exe</code> byte blob is loaded via Reflective Code Loading by the code <code>$Assembly = [System.Reflection.Assembly]::Load($FullBytes)</code>. Reflection is a technique used extensively by malware, and is something that I&rsquo;ve even covered a sample doing in a <a href="https://misthi0s.dev/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" target="_blank" rel="noopener noreferrer ">previous blog post</a>.</p>
+</span></span><span class="line"><span class="cl"><span class="o">$</span><span class="n">EntryPoint</span><span class="o">.</span><span class="n">Invoke</span><span class="p">(</span><span class="o">$</span><span class="n">null</span><span class="p">,</span> <span class="o">$</span><span class="n">null</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For some reason, this script would only work if I first re-encoded the payload bytes to Base64 and then decoded them back into the original bytes. I&rsquo;m really not sure why this was required, but it was the only way to get it to work (I suspect some weird PowerShell behavior, as loading the binary directly from the source worked without doing this, and I confirmed that the decoded bytes and the directly loaded bytes of the payload were 100% exactly the same).</p>
+<p>Once this is done, the <code>MessageBox.exe</code> byte blob is loaded via Reflective Code Loading by the code <code>$Assembly = [System.Reflection.Assembly]::Load($FullBytes)</code>. Reflection is a technique used extensively by malware, and is something that I&rsquo;ve even covered a sample doing in a <a href="https://misthi0s.dev/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" target="_blank" rel="noopener noreffer ">previous blog post</a>.</p>
 <p>To actually execute the loaded assembly, the <code>Main</code> function needs to be found and accessed, so the program knows where the starting point of the payload is. This is achieved by the code <code>$EntryPoint = $Assembly.GetTypes().Where({ $_.Name -eq 'Program' }, 'First').GetMethod('Main', [Reflection.BindingFlags] 'Static, Public, NonPublic')</code></p>
 <p>Finally, now that the entry point of the payload has been found, it needs to be executed. This can be done with the <code>Invoke</code> command found in the line: <code>$EntryPoint.Invoke($null, $null)</code>. The second parameter of <code>Invoke</code> denotes the arguments that the loaded program requires, but since ours has no input arguments, <code>$null</code> is used.</p>
 <h2 id="putting-it-all-together">Putting It All Together</h2>
 <p>If everything works properly, upon script execution, our encoded payload should be decoded and then executed in-memory by the running PowerShell process. All that&rsquo;s left to do is to test it out.</p>
 <p>First, we need to make sure the web server is running to obtain the master decoder list. This can be done by running the <code>server.py</code> script in the Astartes repo with the following command:</p>
-<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
-    <div class="code-header language-">
-        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
-        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
-        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python server.py</span></span></code></pre></div></div>
-<p>Now, we simply execute the PowerShell script and, if everything works, we should see our message box.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">python server.py
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now, we simply execute the PowerShell script and, if everything works, we should see our message box.</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -260,14 +338,14 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-via="_misthi0s" data-hashtags="execution,.net,powershell,encoding,reflection"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-hashtag="execution"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f2024-12-01-alternate-execution-methods-encoding-in-memory-powershell%2f&amp;text=Alternate%20Execution%20Methods%20-%20Encoding%20Payloads%20and%20Executing%20In-Memory%20via%20PowerShell" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell" data-via="_misthi0s" data-hashtags="execution,.net,powershell,encoding,reflection"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-hashtag="execution"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/" data-title="Alternate Execution Methods - Encoding Payloads and Executing In-Memory via PowerShell"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i><a href="/tags/execution/">Execution</a>, <a href="/tags/.net/">.Net</a>, <a href="/tags/powershell/">Powershell</a>, <a href="/tags/encoding/">Encoding</a>, <a href="/tags/reflection/">Reflection</a></section>
-        <section class="post-back">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/execution/">Execution</a>,&nbsp;<a href="/tags/.net/">.Net</a>,&nbsp;<a href="/tags/powershell/">Powershell</a>,&nbsp;<a href="/tags/encoding/">Encoding</a>,&nbsp;<a href="/tags/reflection/">Reflection</a></section>
+        <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
@@ -275,20 +353,20 @@
     <div class="post-nav"><a href="/posts/2024-05-12-powershell-reflective-dll-injection-sample-1/" class="prev" rel="prev" title="Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Deep Analysis of a Powershell-Based Reflective DLL Injection Sample, Part 1</a>
             <a href="/posts/2024-12-26-golang-tips-tricks-compile-dll/" class="next" rel="next" title="Golang Quick Tips &amp; Tricks - Compile Project as DLL">Golang Quick Tips & Tricks - Compile Project as DLL<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-</div></article></div>
+</article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreferrer" title="Hugo 0.148.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreferrer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.148.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.0"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
         </div>
     </footer></div>
 
         <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
                 <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a>
-        </div>
-
-        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-GPNGKH3S27', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-GPNGKH3S27" async></script></body>
 </html>
