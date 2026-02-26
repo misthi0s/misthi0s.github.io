@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Extracting Embedded Resources with Ghidra - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/">
+  <meta property="og:site_name" content="misthi0s.dev">
+  <meta property="og:title" content="Extracting Embedded Resources with Ghidra">
+  <meta property="og:description" content="Malware commonly embeds files into their malicious binaries to help reduce its overall footprint of artifacts written to a system. These embedded files can be written to the disk by the process, but more commonly are manipulated in memory, whether that means a DLL being reflectively loaded into the process or a chunk of shellcode injected into another process. One way this is done is via resource files. Resource files are a common method within C\C&#43;&#43; programs to include additional file assets within the main binary, whether that be icons, images, or in the case of a lot of malware samples, other binaries. In Windows, these resource files are accessed by the program through the use of a number of Resource-specific Win32 APIs. In this blog post, we’ll examine a binary that does just this and use Ghidra to extract this resource to the disk for further analysis.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-25T12:42:00+00:00">
+    <meta property="article:modified_time" content="2026-02-25T12:42:00+00:00">
+    <meta property="article:tag" content="Reversing">
+    <meta property="article:tag" content="Tips">
+    <meta property="article:tag" content="Tricks">
+    <meta property="article:tag" content="Programming">
+    <meta property="article:tag" content="Ghidra">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Extracting Embedded Resources with Ghidra">
+  <meta name="twitter:description" content="Malware commonly embeds files into their malicious binaries to help reduce its overall footprint of artifacts written to a system. These embedded files can be written to the disk by the process, but more commonly are manipulated in memory, whether that means a DLL being reflectively loaded into the process or a chunk of shellcode injected into another process. One way this is done is via resource files. Resource files are a common method within C\C&#43;&#43; programs to include additional file assets within the main binary, whether that be icons, images, or in the case of a lot of malware samples, other binaries. In Windows, these resource files are accessed by the program through the use of a number of Resource-specific Win32 APIs. In this blog post, we’ll examine a binary that does just this and use Ghidra to extract this resource to the disk for further analysis.">
+      <meta name="twitter:site" content="@_misthi0s">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/" /><link rel="prev" href="https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Extracting Embedded Resources with Ghidra",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/misthi0s.github.io\/posts\/2026-02-25-extract-resource-ghidra\/"
+        },"genre": "posts","keywords": "reversing, tips, tricks, programming, ghidra","wordcount":  1001 ,
+        "url": "https:\/\/misthi0s.github.io\/posts\/2026-02-25-extract-resource-ghidra\/","datePublished": "2026-02-25T12:42:00+00:00","dateModified": "2026-02-25T12:42:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "misthi0s"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Blog </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/projects/"> Projects </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="misthi0s.dev">misthi0s.dev</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Blog</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/projects/" title="">Projects</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Extracting Embedded Resources with Ghidra</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/reverse-engineering/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Reverse Engineering</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-02-25">2026-02-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1001 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#finding-the-resource">Finding the Resource</a></li>
+    <li><a href="#extracting-the-resource">Extracting the Resource</a></li>
+    <li><a href="#exporting-the-resource-to-file">Exporting the Resource to File</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Malware commonly embeds files into their malicious binaries to help reduce its overall footprint of artifacts written to a system. These embedded files can be written to the disk by the process, but more commonly are manipulated in memory, whether that means a DLL being reflectively loaded into the process or a chunk of shellcode injected into another process. One way this is done is via resource files. Resource files are a common method within C\C++ programs to include additional file assets within the main binary, whether that be icons, images, or in the case of a lot of malware samples, other binaries. In Windows, these resource files are accessed by the program through the use of a number of Resource-specific Win32 APIs. In this blog post, we&rsquo;ll examine a binary that does just this and use Ghidra to extract this resource to the disk for further analysis.</p>
+<h2 id="setup">Setup</h2>
+<p>To show how this is done, we&rsquo;ll be using the following small C++ program that is used to access the embedded resource:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;resource.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">HRSRC</span> <span class="n">hResInfo</span> <span class="o">=</span> <span class="n">FindResource</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">MAKEINTRESOURCE</span><span class="p">(</span><span class="n">IDR_RCDATA1</span><span class="p">),</span> <span class="n">RT_RCDATA</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">HGLOBAL</span> <span class="n">hResData</span> <span class="o">=</span> <span class="n">LoadResource</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span><span class="o">*</span> <span class="n">pResourceData</span> <span class="o">=</span> <span class="n">LockResource</span><span class="p">(</span><span class="n">hResData</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">pResourceData</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;[-] Unable to get resource data!&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DWORD</span> <span class="n">dwSize</span> <span class="o">=</span> <span class="n">SizeofResource</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">hResInfo</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">dwSize</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>FindResource</code>, <code>LoadResource</code>, <code>LockResource</code>, and <code>SizeofResource</code> are the internal Windows APIs that can be used to access the resource embedded within the binary. Below is a short explanation of what each of these API functions do:</p>
+<ul>
+<li><em>FindResource</em>: Determine the location of a resource with the specified type and name in the binary</li>
+<li><em>LoadResource</em>: Obtain a handle that can be used to obtain a pointer to the first byte of the specified resource in the process&rsquo; memory</li>
+<li><em>LockResource</em>: Obtain the pointer to the specified resource in the process&rsquo; memory</li>
+<li><em>SizeofResource</em>: Retrieve the size of the resource, in bytes</li>
+</ul>
+<p>In this instance, variable <code>IDR_RCDATA1</code> represents the embedded resource (of type <code>RT_RCDATA</code>) in the binary; this is configured in the <code>resource.h</code> header file as well as the <code>.rc</code> resource file.</p>
+<p>Now that we understand what the code looks like, let&rsquo;s open up the binary in Ghidra.</p>
+<h2 id="finding-the-resource">Finding the Resource</h2>
+<p>Below is what the C++ code above looks like in the decompiler:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/bd38f753a76e90cdad2cf099d20f9a7d786eafd0.PNG"
+        data-srcset="/images/bd38f753a76e90cdad2cf099d20f9a7d786eafd0.PNG, /images/bd38f753a76e90cdad2cf099d20f9a7d786eafd0.PNG 1.5x, /images/bd38f753a76e90cdad2cf099d20f9a7d786eafd0.PNG 2x"
+        data-sizes="auto"
+        alt="/images/bd38f753a76e90cdad2cf099d20f9a7d786eafd0.PNG"
+        title="/images/bd38f753a76e90cdad2cf099d20f9a7d786eafd0.PNG" /></p>
+<p>In our program, this was easy to find since it&rsquo;s a simple program with the code in the <code>main()</code> function. However, in cases where the resource may be embedded within a large binary, the easiest way to get to this extraction mechanism would likely be to find references to one of the resource Windows APIs, such as <code>LockResource</code>. Regardless of how you get there, the main function call we care about is the <code>FindResource</code> one.</p>
+<p>Looking at the C++ code above, the second argument to the <code>FindResource</code> function gives the name of the embedded resource. This is the argument that we&rsquo;ll focus on in this call. In the decompiled code for this example, we can see that it references the hex value <code>0x65</code>:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/50fe1f02d72a458483ad8e99cadfa7cbbc63f36d.PNG"
+        data-srcset="/images/50fe1f02d72a458483ad8e99cadfa7cbbc63f36d.PNG, /images/50fe1f02d72a458483ad8e99cadfa7cbbc63f36d.PNG 1.5x, /images/50fe1f02d72a458483ad8e99cadfa7cbbc63f36d.PNG 2x"
+        data-sizes="auto"
+        alt="/images/50fe1f02d72a458483ad8e99cadfa7cbbc63f36d.PNG"
+        title="/images/50fe1f02d72a458483ad8e99cadfa7cbbc63f36d.PNG" /></p>
+<p>Keep track of this value as it will be crucial for the next step.</p>
+<p>In the <code>Symbol Tree</code> window in Ghidra, expand <code>Labels</code> and go down to the <code>R</code> folder, if there are multiple folders in the tree. Expanding the <code>R</code> folder, we can see a number of symbols, atleast two of which should start with <code>Rsrc</code>. Remember that <code>65</code> value from earlier? This is where we&rsquo;ll use it. Find the <code>Rsrc</code> symbol that contains the value from the previous step; in our case, this would be <code>Rsrc_RC_Data_65_409</code>:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/3bfdffdc8c3f518bfa85d34aee858561690f7b17.PNG"
+        data-srcset="/images/3bfdffdc8c3f518bfa85d34aee858561690f7b17.PNG, /images/3bfdffdc8c3f518bfa85d34aee858561690f7b17.PNG 1.5x, /images/3bfdffdc8c3f518bfa85d34aee858561690f7b17.PNG 2x"
+        data-sizes="auto"
+        alt="/images/3bfdffdc8c3f518bfa85d34aee858561690f7b17.PNG"
+        title="/images/3bfdffdc8c3f518bfa85d34aee858561690f7b17.PNG" /></p>
+<p>Clicking on this label will take us to the starting point of the resource in Ghidra&rsquo;s disassembler!</p>
+<h2 id="extracting-the-resource">Extracting the Resource</h2>
+<p>Now that we have the location of the resource in the binary, we can work on extracting it. Right-click the label in the <code>Symbol Tree</code> (the <code>Rsrc_RC_Data_65_409</code> in our example), and click <code>Make Selection</code>. This will make the location in the disassembler highlighted in green:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/d0af8ac2d559d3a6a18967940bf7edf96ea1f3bf.PNG"
+        data-srcset="/images/d0af8ac2d559d3a6a18967940bf7edf96ea1f3bf.PNG, /images/d0af8ac2d559d3a6a18967940bf7edf96ea1f3bf.PNG 1.5x, /images/d0af8ac2d559d3a6a18967940bf7edf96ea1f3bf.PNG 2x"
+        data-sizes="auto"
+        alt="/images/d0af8ac2d559d3a6a18967940bf7edf96ea1f3bf.PNG"
+        title="/images/d0af8ac2d559d3a6a18967940bf7edf96ea1f3bf.PNG" /></p>
+<p>Those who are familiar with PE files will recognize the first two bytes, <code>4D 5A</code> of this resource as the &ldquo;magic bytes&rdquo; of a PE file. This means that, in this case, the embedded resource is another binary, either an EXE or DLL file.</p>
+<p>With the resource selected, right-click in the disassembler and click <code>Extract and Import</code>. This will open up the following dialog box:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/9b77c65ab107a16092da761e5d56a32991118d99.PNG"
+        data-srcset="/images/9b77c65ab107a16092da761e5d56a32991118d99.PNG, /images/9b77c65ab107a16092da761e5d56a32991118d99.PNG 1.5x, /images/9b77c65ab107a16092da761e5d56a32991118d99.PNG 2x"
+        data-sizes="auto"
+        alt="/images/9b77c65ab107a16092da761e5d56a32991118d99.PNG"
+        title="/images/9b77c65ab107a16092da761e5d56a32991118d99.PNG" /></p>
+<p>You can rename the program or keep it as is, whatever you prefer. Regardless of what you do, once you click <code>Ok</code>, Ghidra will open up a new code browser with the extracted resource in it, letting you perform any further analysis you want on the actual embedded resource!</p>
+<h2 id="exporting-the-resource-to-file">Exporting the Resource to File</h2>
+<p>Since our embedded resource is another PE file, analyzing it in its own Ghidra window makes sense. However, what if it wasn&rsquo;t a PE file? Or what if it is, but it&rsquo;s encrypted? If you want to instead save the embedded resource to the filesystem, you can do so from within this new Ghidra window.</p>
+<p>In the Ghidra window of the embedded resource, click <code>File</code>, then <code>Export Program</code>. The following dialog box will open after doing so:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/ea2ab7e7402d027ca8bc4f88d39c99a0fc76a5d2.PNG"
+        data-srcset="/images/ea2ab7e7402d027ca8bc4f88d39c99a0fc76a5d2.PNG, /images/ea2ab7e7402d027ca8bc4f88d39c99a0fc76a5d2.PNG 1.5x, /images/ea2ab7e7402d027ca8bc4f88d39c99a0fc76a5d2.PNG 2x"
+        data-sizes="auto"
+        alt="/images/ea2ab7e7402d027ca8bc4f88d39c99a0fc76a5d2.PNG"
+        title="/images/ea2ab7e7402d027ca8bc4f88d39c99a0fc76a5d2.PNG" /></p>
+<p>From here, make sure the <code>Format</code> is set to <code>Original File</code> and set whatever output filename you want. Once you click <code>Ok</code>, the embedded resource will now exist on your filesystem as its own file, at the location you just specified! This can be a great option to do if you need to perform additional manipulation on the file to analyze it.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Embedding resources within a file is a great way to reduce artifact footprints on a system and allow for easier ways to reflectively load or otherwise manipulate files and processes completely in memory. If you come across a binary that has an embedded resource and uses common Windows APIs to access it, performing these steps in Ghidra can be a great way to extract that resource and analyze it further for any malicious behavior.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2026-02-25</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/" data-title="Extracting Embedded Resources with Ghidra" data-via="_misthi0s" data-hashtags="reversing,tips,tricks,programming,ghidra"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/" data-hashtag="reversing"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/" data-title="Extracting Embedded Resources with Ghidra"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/" data-title="Extracting Embedded Resources with Ghidra"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/" data-title="Extracting Embedded Resources with Ghidra"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/reversing/">Reversing</a>,&nbsp;<a href="/tags/tips/">Tips</a>,&nbsp;<a href="/tags/tricks/">Tricks</a>,&nbsp;<a href="/tags/programming/">Programming</a>,&nbsp;<a href="/tags/ghidra/">Ghidra</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/2024-12-26-golang-tips-tricks-compile-dll/" class="prev" rel="prev" title="Golang Quick Tips &amp; Tricks - Compile Project as DLL"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Golang Quick Tips & Tricks - Compile Project as DLL</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.154.5">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.0"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-GPNGKH3S27', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-GPNGKH3S27" async></script></body>
+</html>

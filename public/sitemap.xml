@@ -2,18 +2,22 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://misthi0s.github.io/categories/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/categories/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/ghidra/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/posts/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/programming/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/categories/reverse-engineering/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/reversing/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/tips/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
+            <loc>https://misthi0s.github.io/tags/tricks/</loc><lastmod>2026-02-25T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/dll/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/go/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/categories/golang/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/golang/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
-            <loc>https://misthi0s.github.io/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
-            <loc>https://misthi0s.github.io/posts/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
-            <loc>https://misthi0s.github.io/tags/programming/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
-            <loc>https://misthi0s.github.io/tags/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
-            <loc>https://misthi0s.github.io/tags/tips/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
-            <loc>https://misthi0s.github.io/tags/tricks/</loc><lastmod>2024-12-26T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/.net/</loc><lastmod>2024-12-01T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/posts/2024-12-01-alternate-execution-methods-encoding-in-memory-powershell/</loc><lastmod>2024-12-01T12:42:00&#43;00:00</lastmod></url><url>
             <loc>https://misthi0s.github.io/tags/encoding/</loc><lastmod>2024-12-01T12:42:00&#43;00:00</lastmod></url><url>

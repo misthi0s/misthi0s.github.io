@@ -3,7 +3,15 @@
         <title>All Posts - misthi0s.dev</title>
         <link>https://misthi0s.github.io/posts/</link>
         <description>All Posts | misthi0s.dev</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 25 Feb 2026 12:42:00 &#43;0000</lastBuildDate><atom:link href="https://misthi0s.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Extracting Embedded Resources with Ghidra</title>
+    <link>https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/</link>
+    <pubDate>Wed, 25 Feb 2026 12:42:00 &#43;0000</pubDate>
+    <author>misthi0s</author>
+    <guid>https://misthi0s.github.io/posts/2026-02-25-extract-resource-ghidra/</guid>
+    <description><![CDATA[<p>Malware commonly embeds files into their malicious binaries to help reduce its overall footprint of artifacts written to a system. These embedded files can be written to the disk by the process, but more commonly are manipulated in memory, whether that means a DLL being reflectively loaded into the process or a chunk of shellcode injected into another process. One way this is done is via resource files. Resource files are a common method within C\C++ programs to include additional file assets within the main binary, whether that be icons, images, or in the case of a lot of malware samples, other binaries. In Windows, these resource files are accessed by the program through the use of a number of Resource-specific Win32 APIs. In this blog post, we&rsquo;ll examine a binary that does just this and use Ghidra to extract this resource to the disk for further analysis.</p>]]></description>
+</item>
+<item>
     <title>Golang Quick Tips &amp; Tricks - Compile Project as DLL</title>
     <link>https://misthi0s.github.io/posts/2024-12-26-golang-tips-tricks-compile-dll/</link>
     <pubDate>Thu, 26 Dec 2024 12:42:00 &#43;0000</pubDate>
