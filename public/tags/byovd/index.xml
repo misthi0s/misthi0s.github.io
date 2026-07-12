@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BYOVD on misthi0s.dev</title>
+    <link>https://misthi0s.github.io/tags/byovd/</link>
+    <description>Recent content in BYOVD on misthi0s.dev</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 12 Jul 2026 12:00:00 +0000</lastBuildDate>
+    <atom:link href="https://misthi0s.github.io/tags/byovd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DriverChecker - Find Malicious Drivers on a System</title>
+      <link>https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/</link>
+      <pubDate>Sun, 12 Jul 2026 12:00:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m proud to introduce DriverChecker, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found &lt;a href=&#34;https://github.com/misthi0s/DriverChecker&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;here&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h2 id=&#34;detection-techniques&#34;&gt;Detection Techniques&lt;/h2&gt;&#xA;&lt;p&gt;Below is a list of the current modules that DriverChecker uses to try to find maliciously loaded drivers:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -6,8 +6,15 @@
     <description>Recent content in Categories on misthi0s.dev</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Feb 2026 12:42:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jul 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://misthi0s.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tools</title>
+      <link>https://misthi0s.github.io/categories/tools/</link>
+      <pubDate>Sun, 12 Jul 2026 12:00:00 +0000</pubDate>
+      <guid>https://misthi0s.github.io/categories/tools/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Reverse Engineering</title>
       <link>https://misthi0s.github.io/categories/reverse-engineering/</link>
