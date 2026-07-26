@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>DriverChecker - Find Malicious Drivers on a System - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/">
+        <title>Preysight - Find Malicious Drivers on a System - misthi0s.dev</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/">
   <meta property="og:site_name" content="misthi0s.dev">
-  <meta property="og:title" content="DriverChecker - Find Malicious Drivers on a System">
-  <meta property="og:description" content="I’m proud to introduce DriverChecker, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found here.
-Detection Techniques Below is a list of the current modules that DriverChecker uses to try to find maliciously loaded drivers:">
+  <meta property="og:title" content="Preysight - Find Malicious Drivers on a System">
+  <meta property="og:description" content="EDIT: As of version 1.0, the tool has been renamed from DriverChecker to Preysight. This post has been updated to reflect the change in name, though there may be some references to the old name as well.
+I’m proud to introduce Preysight, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found here.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -18,11 +18,12 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
     <meta property="article:tag" content="Cpp">
     <meta property="article:tag" content="Drivers">
     <meta property="article:tag" content="BYOVD">
+    <meta property="article:tag" content="Preysight">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="DriverChecker - Find Malicious Drivers on a System">
-  <meta name="twitter:description" content="I’m proud to introduce DriverChecker, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found here.
-Detection Techniques Below is a list of the current modules that DriverChecker uses to try to find maliciously loaded drivers:">
+  <meta name="twitter:title" content="Preysight - Find Malicious Drivers on a System">
+  <meta name="twitter:description" content="EDIT: As of version 1.0, the tool has been renamed from DriverChecker to Preysight. This post has been updated to reflect the change in name, though there may be some references to the old name as well.
+I’m proud to introduce Preysight, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found here.">
       <meta name="twitter:site" content="@_misthi0s">
 <meta name="application-name" content="My cool site">
 <meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -33,12 +34,12 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "DriverChecker - Find Malicious Drivers on a System",
+        "headline": "Preysight - Find Malicious Drivers on a System",
         "inLanguage": "en-us",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/misthi0s.github.io\/posts\/2026-07-12-driverchecker-malicious-drivers-tool\/"
-        },"genre": "posts","keywords": "tools, cpp, drivers, BYOVD","wordcount":  978 ,
+        },"genre": "posts","keywords": "tools, cpp, drivers, BYOVD, Preysight","wordcount":  1172 ,
         "url": "https:\/\/misthi0s.github.io\/posts\/2026-07-12-driverchecker-malicious-drivers-tool\/","datePublished": "2026-07-12T12:00:00+00:00","dateModified": "2026-07-12T12:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -78,10 +79,10 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">DriverChecker - Find Malicious Drivers on a System</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Preysight - Find Malicious Drivers on a System</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>misthi0s</a></span>&nbsp;<span class="post-category">included in <a href="/categories/tools/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Tools</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-07-12">2026-07-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;978 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;5 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-07-12">2026-07-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1172 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;6 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -95,6 +96,7 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
         <li><a href="#file-extension">File Extension</a></li>
         <li><a href="#file-path">File Path</a></li>
         <li><a href="#trust-verification-failed">Trust Verification Failed</a></li>
+        <li><a href="#expired-signing-certificate">Expired Signing Certificate</a></li>
         <li><a href="#loldrivers">LOLDrivers</a></li>
       </ul>
     </li>
@@ -107,9 +109,10 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
     <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>I&rsquo;m proud to introduce DriverChecker, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found <a href="https://github.com/misthi0s/DriverChecker" target="_blank" rel="noopener noreffer ">here</a>.</p>
+            </div><div class="content" id="content"><p><strong>EDIT</strong>: As of version 1.0, the tool has been renamed from DriverChecker to Preysight. This post has been updated to reflect the change in name, though there may be some references to the old name as well.</p>
+<p>I&rsquo;m proud to introduce Preysight, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found <a href="https://github.com/misthi0s/Preysight" target="_blank" rel="noopener noreffer ">here</a>.</p>
 <h2 id="detection-techniques">Detection Techniques</h2>
-<p>Below is a list of the current modules that DriverChecker uses to try to find maliciously loaded drivers:</p>
+<p>Below is a list of the current modules that Preysight uses to try to find maliciously loaded drivers:</p>
 <table>
   <thead>
       <tr>
@@ -135,6 +138,10 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
           <td>Any drivers that do not pass the Windows trust verification system via digital signatures and authenticode</td>
       </tr>
       <tr>
+          <td>Expired Signing Certificate</td>
+          <td>Any drivers that were signed by an already expired signing certificate</td>
+      </tr>
+      <tr>
           <td>LOLDrivers</td>
           <td>Any loaded drivers that are explicitly listed on the LOLDrivers.io website</td>
       </tr>
@@ -148,6 +155,8 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
 <p>Drivers, and especially kernel drivers, should be placed in a directory that is protected with appropriate file permissions, only allowing an administrator or SYSTEM to modify the files. As such, most Windows drivers are placed in the C:\Windows\System32\drivers directory, or sometimes C:\Program Files, to make sure they cannot be tampered with. Malware, on the other hand, generally needs to drop files to the filesystem in places that are world writable, or atleast writable by a standard user. Common locations for this generally include: C:\ProgramData, C:\Users\&lt;user&gt;\AppData, C:\Users\Public, and so on. This module looks for any loaded drivers that were loaded from a non-standard location, potentially indicating a maliciously loaded driver.</p>
 <h3 id="trust-verification-failed">Trust Verification Failed</h3>
 <p>Driver Signature Enforcement (DSE) has been a component since Windows Vista that requires all drivers loaded into the operating system to be digitally signed. Since Windows 10, this driver signing policy has become even more strict, also requiring a digital signature to be present on the driver from Microsoft via the Windows Hardware Developer Center. This module verifies that all loaded drivers have such a digital signature, by using the WinVerifyTrust API to check to see if the driver file has an embedded signature or one from a catalog file. According to Windows policy, any kernel mode boot-start driver (one that loads during the boot process) must have an embedded signature, whereas any kernel mode non-boot-start driver can have either an embedded or catalog-based signature. More information on this differentiation can be found <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/install/kernel-mode-code-signing-requirements--windows-vista-and-later-" target="_blank" rel="noopener noreffer ">here</a>. This module is unlikely to find any such drivers loaded, as Microsoft has significantly locked down what can load into the kernel in a standard manner. That being said, it is possible to disable DSE on a system, allowing any driver to be loaded into the kernel, so this module can help discover a computer that may be in this state.</p>
+<h3 id="expired-signing-certificate">Expired Signing Certificate</h3>
+<p>Private keys for legitimate signing certificates are commonly stolen by threat actors to help make their malicious payloads look more legitimate. By signing payloads with these legitimate signing certificates, these malicious payloads can more easily bypass a number of Windows security features, even if the certificate has already expired. While drivers require a higher level of scrutiny to load into the operating system, it is still possible to do this thanks to the July 29 2015 exception. This is a policy implemented by Microsoft that allows for any non-revoked certificate that was issued or expired before the July 2015 date to sign binaries, as long as they chain to a supported cross-signed certificate authority. This ability to sign malicious payloads with old, expired signing certificates is commonly used by threat actors to get their driver loaded into modern operating systems.</p>
 <h3 id="loldrivers">LOLDrivers</h3>
 <p>The website <a href="https://www.loldrivers.io/" target="_blank" rel="noopener noreffer ">LOLDrivers.io</a> maintains a list of known, legitimately signed drivers that can be used to perform malicious activity on a system. Whether this is killing security services, allowing arbitrary read/write from anywhere in memory, manipulating kernel callbacks, there are many techniques that these types of drivers can allow a threat actor to perform on a system when it is loaded. These are known as Bring Your Own Vulnerable Driver (BYOVD) techniques and have become increasingly popular among threat actors, particularly for killing security products (known as EDR Killers) on an infected system. This module will reach out to LOLDrivers to obtain the most up-to-date list of vulnerable drivers and compare that list against all currently loaded drivers to determine if any many be present on the system. There may be some false positives with this module, as a number of legitimate Windows drivers that are actively used by the operating system or various applications may contain such a vulnerability that would allow a threat actor to compromise the system.</p>
 <h2 id="examples">Examples</h2>
@@ -175,7 +184,7 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
         title="/images/a738e724d3398178bf495a3b1d18431854e8972b.png" /></p>
 <p>The above malware sample write-up can be found <a href="https://www.welivesecurity.com/en/eset-research/killing-me-gently-inside-gentlemens-edr-killer-framework/" target="_blank" rel="noopener noreffer ">here</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>DriverChecker will be continually updated to include new modules to help identify any suspicious or malicious drivers loaded on to a system. If you have any ideas for enhancements, shoot me an email or open up an issue on the GitHub repository.</p>
+<p>Preysight will be continually updated to include new modules to help identify any suspicious or malicious drivers loaded on to a system. If you have any ideas for enhancements, shoot me an email or open up an issue on the GitHub repository.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -185,13 +194,13 @@ Detection Techniques Below is a list of the current modules that DriverChecker u
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="DriverChecker - Find Malicious Drivers on a System" data-via="_misthi0s" data-hashtags="tools,cpp,drivers,BYOVD"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-hashtag="tools"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="DriverChecker - Find Malicious Drivers on a System"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="DriverChecker - Find Malicious Drivers on a System"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="DriverChecker - Find Malicious Drivers on a System"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="Preysight - Find Malicious Drivers on a System" data-via="_misthi0s" data-hashtags="tools,cpp,drivers,BYOVD,Preysight"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-hashtag="tools"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="Preysight - Find Malicious Drivers on a System"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="Preysight - Find Malicious Drivers on a System"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://misthi0s.github.io/posts/2026-07-12-driverchecker-malicious-drivers-tool/" data-title="Preysight - Find Malicious Drivers on a System"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/tools/">Tools</a>,&nbsp;<a href="/tags/cpp/">Cpp</a>,&nbsp;<a href="/tags/drivers/">Drivers</a>,&nbsp;<a href="/tags/byovd/">BYOVD</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/tools/">Tools</a>,&nbsp;<a href="/tags/cpp/">Cpp</a>,&nbsp;<a href="/tags/drivers/">Drivers</a>,&nbsp;<a href="/tags/byovd/">BYOVD</a>,&nbsp;<a href="/tags/preysight/">Preysight</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>

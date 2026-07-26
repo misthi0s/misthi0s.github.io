@@ -1,5 +1,5 @@
 ---
-title: DriverChecker - Find Malicious Drivers on a System
+title: Preysight - Find Malicious Drivers on a System
 author: misthi0s
 categories:
 - tools
@@ -8,14 +8,17 @@ tags:
 - cpp
 - drivers
 - BYOVD
+- Preysight
 date: 2026-07-12 12:00:00
 ---
 
-I'm proud to introduce DriverChecker, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found [here](https://github.com/misthi0s/DriverChecker).
+**EDIT**: As of version 1.0, the tool has been renamed from DriverChecker to Preysight. This post has been updated to reflect the change in name, though there may be some references to the old name as well.
+
+I'm proud to introduce Preysight, a tool that will scan all loaded drivers on a system for any that may be suspicious/malicious in nature! This blog post will supplement the GitHub repository for the tool, outlining the various modules that the tool uses to try to detect any potentially suspicious drivers. The GitHub repository can be found [here](https://github.com/misthi0s/Preysight).
 
 ## Detection Techniques
 
-Below is a list of the current modules that DriverChecker uses to try to find maliciously loaded drivers:
+Below is a list of the current modules that Preysight uses to try to find maliciously loaded drivers:
 
 | Technique | Description |
 | --------- | ----------- |
@@ -23,6 +26,7 @@ Below is a list of the current modules that DriverChecker uses to try to find ma
 | File Extension | Any loaded driver that has an abnormal file extension associated with it (IE, not .sys) |
 | File Path | Driver that was loaded from a non-standard file path (IE, not C:\Windows\System32\drivers) |
 | Trust Verification Failed | Any drivers that do not pass the Windows trust verification system via digital signatures and authenticode |
+| Expired Signing Certificate | Any drivers that were signed by an already expired signing certificate |
 | LOLDrivers | Any loaded drivers that are explicitly listed on the LOLDrivers.io website |
 
 ### Nonexistent Files
@@ -40,6 +44,10 @@ Drivers, and especially kernel drivers, should be placed in a directory that is 
 ### Trust Verification Failed
 
 Driver Signature Enforcement (DSE) has been a component since Windows Vista that requires all drivers loaded into the operating system to be digitally signed. Since Windows 10, this driver signing policy has become even more strict, also requiring a digital signature to be present on the driver from Microsoft via the Windows Hardware Developer Center. This module verifies that all loaded drivers have such a digital signature, by using the WinVerifyTrust API to check to see if the driver file has an embedded signature or one from a catalog file. According to Windows policy, any kernel mode boot-start driver (one that loads during the boot process) must have an embedded signature, whereas any kernel mode non-boot-start driver can have either an embedded or catalog-based signature. More information on this differentiation can be found [here](https://learn.microsoft.com/en-us/windows-hardware/drivers/install/kernel-mode-code-signing-requirements--windows-vista-and-later-). This module is unlikely to find any such drivers loaded, as Microsoft has significantly locked down what can load into the kernel in a standard manner. That being said, it is possible to disable DSE on a system, allowing any driver to be loaded into the kernel, so this module can help discover a computer that may be in this state.
+
+### Expired Signing Certificate
+
+Private keys for legitimate signing certificates are commonly stolen by threat actors to help make their malicious payloads look more legitimate. By signing payloads with these legitimate signing certificates, these malicious payloads can more easily bypass a number of Windows security features, even if the certificate has already expired. While drivers require a higher level of scrutiny to load into the operating system, it is still possible to do this thanks to the July 29 2015 exception. This is a policy implemented by Microsoft that allows for any non-revoked certificate that was issued or expired before the July 2015 date to sign binaries, as long as they chain to a supported cross-signed certificate authority. This ability to sign malicious payloads with old, expired signing certificates is commonly used by threat actors to get their driver loaded into modern operating systems.
 
 ### LOLDrivers
 
@@ -67,4 +75,4 @@ The above malware sample write-up can be found [here](https://www.welivesecurity
 
 ## Conclusion
 
-DriverChecker will be continually updated to include new modules to help identify any suspicious or malicious drivers loaded on to a system. If you have any ideas for enhancements, shoot me an email or open up an issue on the GitHub repository.
+Preysight will be continually updated to include new modules to help identify any suspicious or malicious drivers loaded on to a system. If you have any ideas for enhancements, shoot me an email or open up an issue on the GitHub repository.
